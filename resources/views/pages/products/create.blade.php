@@ -232,6 +232,16 @@
                                 @enderror
                             </div>
 
+                            <div class="col-lg-12 mb-4">
+                                <label for="image_alt" class="form-label fw-semibold">{{ __('Image Alt') }}</label>
+                                <input type="text" id="image_alt" name="image_alt"
+                                    class="form-control form-control-lg @error('image_alt') is-invalid @enderror"
+                                    value="{{ old('image_alt', $data->image_alt ?? '') }}">
+                                @error('image_alt')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <!-- SEO -->
                             <div class="col-lg-6 mb-4">
                                 <label for="meta_title" class="form-label fw-semibold">{{ __('Meta Title') }}</label>
@@ -311,53 +321,37 @@
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                const maxSize = 300 * 1024; // 300 KB in bytes
 
-                function validateFile(input, errorContainerId) {
-                    const files = input.files;
-                    let errorMessage = '';
-
-                    for (let i = 0; i < files.length; i++) {
-                        if (files[i].size > maxSize) {
-                            errorMessage = `File "${files[i].name}" is too large. Maximum allowed size is 300 KB.`;
-                            input.value = ''; // Clear the file input
-                            break;
-                        }
-                    }
-
-                    const errorContainer = document.getElementById(errorContainerId);
-                    if (errorContainer) {
-                        errorContainer.textContent = errorMessage;
-                    }
-                }
-
-                // Thumbnail
+                // Thumbnail validation
                 const thumbnailInput = document.getElementById('thumbnail');
                 if (thumbnailInput) {
-                    // Create a container for error if not exists
-                    let thumbError = document.createElement('div');
-                    thumbError.id = 'thumbnail_error';
-                    thumbError.classList.add('text-danger', 'mt-1');
-                    thumbnailInput.parentNode.appendChild(thumbError);
+                    if (!document.getElementById('thumbnail_error')) {
+                        let thumbError = document.createElement('div');
+                        thumbError.id = 'thumbnail_error';
+                        thumbError.classList.add('text-danger', 'mt-1');
+                        thumbnailInput.parentNode.appendChild(thumbError);
+                    }
 
                     thumbnailInput.addEventListener('change', function() {
                         validateFile(thumbnailInput, 'thumbnail_error');
                     });
                 }
 
-                // Gallery Images
+                // Gallery images validation
                 const galleryInput = document.getElementById('gallery_images');
                 if (galleryInput) {
-                    // Create a container for error if not exists
-                    let galleryError = document.createElement('div');
-                    galleryError.id = 'gallery_images_error';
-                    galleryError.classList.add('text-danger', 'mt-1');
-                    galleryInput.parentNode.appendChild(galleryError);
+                    if (!document.getElementById('gallery_images_error')) {
+                        let galleryError = document.createElement('div');
+                        galleryError.id = 'gallery_images_error';
+                        galleryError.classList.add('text-danger', 'mt-1');
+                        galleryInput.parentNode.appendChild(galleryError);
+                    }
 
                     galleryInput.addEventListener('change', function() {
                         validateFile(galleryInput, 'gallery_images_error');
                     });
                 }
+
             });
         </script>
 
@@ -391,7 +385,7 @@
                                     if (data.success) {
                                         container.remove(); // Remove image from DOM
                                         toastr.success(data.message ||
-                                        'Image removed successfully');
+                                            'Image removed successfully');
                                     } else {
                                         toastr.error(data.message || 'Something went wrong');
                                     }

@@ -31,7 +31,7 @@
 
     <!-- Products -->
     <div data-kt-menu-trigger="click"
-        class="menu-item menu-accordion {{ request()->routeIs('admin-category.*', 'admin-products.*') ? 'here show' : '' }}">
+        class="menu-item menu-accordion {{ request()->routeIs('admin-category.*', 'admin-products.*', 'admin-offers.*') ? 'here show' : '' }}">
         <!--begin:Menu link-->
         <span class="menu-link">
             <span class="menu-icon">
@@ -43,33 +43,54 @@
         <!--end:Menu link-->
 
         <!--begin:Menu sub-->
-        <div class="menu-sub menu-sub-accordion">
-            <!--begin:View All-->
-            <div class="menu-item">
-                <a class="menu-link {{ request()->routeIs('admin-category.list') ? 'active' : '' }}"
-                    href="{{ route('admin-category.list') }}">
-                    <span class="menu-bullet">
-                        <span class="bullet bullet-dot"></span>
-                    </span>
-                    <span class="menu-title">{{ __('Categories') }}</span>
-                </a>
+        @can('read category')
+            <div class="menu-sub menu-sub-accordion">
+                <!--begin:View All-->
+                <div class="menu-item">
+                    <a class="menu-link {{ request()->routeIs('admin-category.list') ? 'active' : '' }}"
+                        href="{{ route('admin-category.list') }}">
+                        <span class="menu-bullet">
+                            <span class="bullet bullet-dot"></span>
+                        </span>
+                        <span class="menu-title">{{ __('Categories') }}</span>
+                    </a>
+                </div>
+                <!--end:View All-->
             </div>
-            <!--end:View All-->
-        </div>
+        @endcan
 
-        <div class="menu-sub menu-sub-accordion">
-            <!--begin:View All-->
-            <div class="menu-item">
-                <a class="menu-link {{ request()->routeIs('admin-products.list') ? 'active' : '' }}"
-                    href="{{ route('admin-products.list') }}">
-                    <span class="menu-bullet">
-                        <span class="bullet bullet-dot"></span>
-                    </span>
-                    <span class="menu-title">{{ __('Products') }}</span>
-                </a>
+        @can('read product')
+            <div class="menu-sub menu-sub-accordion">
+                <!--begin:View All-->
+                <div class="menu-item">
+                    <a class="menu-link {{ request()->routeIs('admin-products.list') ? 'active' : '' }}"
+                        href="{{ route('admin-products.list') }}">
+                        <span class="menu-bullet">
+                            <span class="bullet bullet-dot"></span>
+                        </span>
+                        <span class="menu-title">{{ __('Products') }}</span>
+                    </a>
+                </div>
+                <!--end:View All-->
             </div>
-            <!--end:View All-->
-        </div>
+        @endcan
+
+        @can('read offer')
+            <div class="menu-sub menu-sub-accordion">
+                <!--begin:View All-->
+                <div class="menu-item">
+                    <a class="menu-link {{ request()->routeIs('admin-offers.list') ? 'active' : '' }}"
+                        href="{{ route('admin-offers.list') }}">
+                        <span class="menu-bullet">
+                            <span class="bullet bullet-dot"></span>
+                        </span>
+                        <span class="menu-title">{{ __('Offers') }}</span>
+                    </a>
+                </div>
+                <!--end:View All-->
+            </div>
+        @endcan
+
         <!--end:Menu sub-->
 
 

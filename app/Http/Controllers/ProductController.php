@@ -19,17 +19,22 @@ class ProductController extends Controller
 
     public function index(ProductDataTable $dataTable)
     {
+        $this->authorize('read product');
         return $dataTable->render('pages.products.index');
     }
 
     public function create()
     {
+        $this->authorize('create product');
+
         $categories = Category::where('status', true)->get();
         return view('pages.products.create', compact('categories'));
     }
 
     public function store(Request $request)
     {
+        $this->authorize('create product');
+
         $request->validate([
             'category_id'       => 'required|exists:categories,id',
             'name'              => 'required|string|max:255',
@@ -45,6 +50,7 @@ class ProductController extends Controller
             'is_active'         => 'required|boolean',
             'thumbnail'         => 'nullable|image|mimes:jpg,jpeg,png,webp|max:300',
             'gallery_images.*'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:300',
+            'image_alt'         => 'nullable|string',
             'meta_title'        => 'nullable|string|max:255',
             'meta_keywords'     => 'nullable|string|max:255',
             'meta_description'  => 'nullable|string',
@@ -82,6 +88,7 @@ class ProductController extends Controller
                 $product->gallery_images = json_encode($gallery);
             }
 
+            $product->image_alt = $request->image_alt;
             // SEO
             $product->meta_title = $request->meta_title;
             $product->meta_keywords = $request->meta_keywords;
@@ -111,6 +118,8 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
+        $this->authorize('write product');
+
         try {
             $categories = Category::where('status', true)->get();
             return view('pages.products.create', [
@@ -134,6 +143,8 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
+        $this->authorize('write product');
+
         $request->validate([
             'category_id'       => 'required|exists:categories,id',
             'name'              => 'required|string|max:255',
@@ -149,6 +160,7 @@ class ProductController extends Controller
             'is_active'         => 'required|boolean',
             'thumbnail'         => 'nullable|image|mimes:jpg,jpeg,png,webp|max:300', // 300 KB
             'gallery_images.*'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:300', // 300 KB
+            'image_alt'         => 'nullable|string',
             'meta_title'        => 'nullable|string|max:255',
             'meta_keywords'     => 'nullable|string|max:255',
             'meta_description'  => 'nullable|string',
@@ -187,6 +199,7 @@ class ProductController extends Controller
 
             $product->gallery_images = json_encode($existingGallery);
 
+            $product->image_alt = $request->image_alt;
             // SEO
             $product->meta_title = $request->meta_title;
             $product->meta_keywords = $request->meta_keywords;
@@ -258,6 +271,8 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        $this->authorize('delete product');
+
         DB::beginTransaction();
 
         try {

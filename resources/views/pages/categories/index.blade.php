@@ -26,11 +26,13 @@
                 <!--begin::Toolbar-->
                 <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
                     <!--begin::Add user-->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#kt_modal_add_category">
-                        {!! getIcon('plus', 'fs-2', '', 'i') !!}
-                        {{ __('Add Category') }}
-                    </button>
+                    @can('create category')
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#kt_modal_add_category">
+                            {!! getIcon('plus', 'fs-2', '', 'i') !!}
+                            {{ __('Add Category') }}
+                        </button>
+                    @endcan
                     <!--end::Add user-->
                 </div>
                 <!--end::Toolbar-->
@@ -246,7 +248,7 @@
                         }
                         console.warn(
                             'DataTable instance not found: ensure window.LaravelDataTables["category-table"] exists.'
-                            );
+                        );
                     } catch (err) {
                         console.error('reloadCategoryTable error:', err);
                     }
@@ -270,7 +272,7 @@
                         clearErrors(addForm);
                         const fd = new FormData(addForm);
 
-                        fetch(`{{route('admin-category.store')}}`, {
+                        fetch(`{{ route('admin-category.store') }}`, {
                                 method: 'POST',
                                 headers: {
                                     'X-CSRF-TOKEN': csrfToken
@@ -408,7 +410,7 @@
                 document.addEventListener('click', function(e) {
                     const btn = e.target.closest(
                         '[data-kt-action="delete_category"], .delete-category-btn, [data-action="delete-category"]'
-                        );
+                    );
                     if (!btn) return;
                     e.preventDefault();
 

@@ -11,31 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('offers', function (Blueprint $table) {
             $table->id();
-
-            // Category Relation
-            $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-
-            // Product Identity
-            $table->string('name');
+            $table->string('title');
             $table->string('slug')->unique();
-            $table->string('sku')->nullable()->unique();
-
             // Descriptions
             $table->text('short_description')->nullable();
             $table->longText('description')->nullable();
-
-            // Pricing
-            $table->decimal('price', 10, 2)->default(0);
-            $table->unsignedInteger('discount_percent')->nullable();
-            $table->decimal('sale_price', 10, 2)->nullable();
-
-            // Inventory
-            $table->integer('stock_qty')->default(0);
-            $table->boolean('in_stock')->default(true);
-
             // Media
             $table->string('thumbnail')->nullable();
             $table->json('gallery_images')->nullable();
@@ -52,12 +34,9 @@ return new class extends Migration
             // Audit Fields
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
-            $table->unsignedBigInteger('deleted_by')->nullable();
-
-            // Timestamps
             $table->timestamps();
 
-            // Soft Delete
+            $table->unsignedBigInteger('deleted_by')->nullable();
             $table->softDeletes();
         });
     }
@@ -67,6 +46,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('offers');
     }
 };

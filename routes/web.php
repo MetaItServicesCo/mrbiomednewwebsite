@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\OfferController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -52,7 +53,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/store', 'store')->name('store');
         Route::get('/{product}/edit', 'edit')->name('edit');
         Route::put('/{product}/update', 'update')->name('update');
-        Route::delete('/{product}', 'destroy')->name('destroy');
+        Route::delete('/{product}/delete', 'destroy')->name('destroy');
+        Route::post('/remove-gallery-image', 'removeGalleryImage')->name('remove-gallery-image');
+    });
+
+    // ===========================
+    // Offers
+    // ===========================
+    Route::controller(OfferController::class)->prefix('admin/offers')->as('admin-offers.')->group(function () {
+        Route::get('/', 'index')->name('list');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/{offer}/edit', 'edit')->name('edit');
+        Route::put('/{offer}/update', 'update')->name('update');
+        Route::delete('/{offer}/delete', 'destroy')->name('destroy');
         Route::post('/remove-gallery-image', 'removeGalleryImage')->name('remove-gallery-image');
     });
 

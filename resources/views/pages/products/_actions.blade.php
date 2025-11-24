@@ -7,31 +7,35 @@
 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4"
     data-kt-menu="true">
     <!--begin::Menu item-->
-    <div class="menu-item px-3">
-        <a href="{{ route('admin-products.edit', $product->id) }}" class="menu-link px-3">
-            {{ __('Edit') }}
-        </a>
-    </div>
+    @can('write product')
+        <div class="menu-item px-3">
+            <a href="{{ route('admin-products.edit', $product->id) }}" class="menu-link px-3">
+                {{ __('Edit') }}
+            </a>
+        </div>
+    @endcan
 
     <!--end::Menu item-->
 
     <!--begin::Menu item-->
     <!--begin::Menu item-->
-    <div class="menu-item px-3">
-        <a href="#" class="menu-link px-3"
-            onclick="event.preventDefault(); 
+    @can('delete product')
+        <div class="menu-item px-3">
+            <a href="#" class="menu-link px-3"
+                onclick="event.preventDefault(); 
                 if(confirm('Are you sure you want to delete this product?')) {
                     document.getElementById('delete-product-{{ $product->id }}').submit();
                 }">
-            {{ __('Delete') }}
-        </a>
+                {{ __('Delete') }}
+            </a>
 
-        <form id="delete-product-{{ $product->id }}" action="{{ route('admin-products.destroy', $product->id) }}"
-            method="POST" style="display: none;">
-            @csrf
-            @method('DELETE')
-        </form>
-    </div>
+            <form id="delete-product-{{ $product->id }}" action="{{ route('admin-products.destroy', $product->id) }}"
+                method="POST" style="display: none;">
+                @csrf
+                @method('DELETE')
+            </form>
+        </div>
+    @endcan
 
 
     <!--end::Menu item-->

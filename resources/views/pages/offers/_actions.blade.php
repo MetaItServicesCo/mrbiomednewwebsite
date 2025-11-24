@@ -7,11 +7,9 @@
 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4"
     data-kt-menu="true">
     <!--begin::Menu item-->
-    @can('write category')
+    @can('write offer')
         <div class="menu-item px-3">
-            <a href="#" class="menu-link px-3 edit-category-btn" data-id="{{ $c->id }}"
-                data-name="{{ $c->name }}" data-status="{{ $c->status }}" data-bs-toggle="modal"
-                data-bs-target="#kt_modal_edit_category">
+            <a href="{{ route('admin-offers.edit', $offer->id) }}" class="menu-link px-3">
                 {{ __('Edit') }}
             </a>
         </div>
@@ -20,14 +18,27 @@
     <!--end::Menu item-->
 
     <!--begin::Menu item-->
-    @can('delete category')
+    <!--begin::Menu item-->
+    @can('delete offer')
         <div class="menu-item px-3">
-            <a href="#" class="menu-link px-3" data-kt-category-id="{{ $c->id }}"
-                data-kt-action="delete_category">
+            <a href="#" class="menu-link px-3"
+                onclick="event.preventDefault(); 
+            if(confirm('Are you sure you want to delete this offer?')) {
+                document.getElementById('delete-offer-{{ $offer->id }}').submit();
+            }">
                 {{ __('Delete') }}
             </a>
+
+            <form id="delete-offer-{{ $offer->id }}" action="{{ route('admin-offers.destroy', $offer->id) }}"
+                method="POST" style="display: none;">
+                @csrf
+                @method('DELETE')
+            </form>
         </div>
     @endcan
+
+
+
     <!--end::Menu item-->
 
     <!--end::Menu item-->

@@ -2,33 +2,35 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Product extends Model
+class Offer extends Model
 {
-    use HasFactory, SoftDeletes;
-
+    use SoftDeletes;
+    
     protected $fillable = [
-        'category_id',
-        'name',
+        'title',
         'slug',
-        'sku',
+
+        // Descriptions
         'short_description',
         'description',
-        'price',
-        'discount_percent',
-        'sale_price',
-        'stock_qty',
-        'in_stock',
+
+        // Media
         'thumbnail',
         'gallery_images',
         'image_alt',
+
+        // Status
         'is_active',
+
+        // SEO
         'meta_title',
         'meta_keywords',
         'meta_description',
+
+        // Audit fields
         'created_by',
         'updated_by',
         'deleted_by',
@@ -36,21 +38,9 @@ class Product extends Model
 
     protected $casts = [
         'gallery_images' => 'array',
-        'in_stock' => 'boolean',
         'is_active' => 'boolean',
     ];
 
-    /*
-    |--------------------------------------------------------------------------
-    | Relationships
-    |--------------------------------------------------------------------------
-    */
-
-    // Product belongs to a category
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
 
     // Who created the product
     public function createdBy()

@@ -12,19 +12,15 @@ class CategoryController extends Controller
 {
     public function index(CategoryDataTable $dataTable)
     {
+        $this->authorize('read category');
+
         return $dataTable->render('pages.categories.index');
     }
 
     public function store(Request $request)
     {
 
-        if (!auth()->user()->hasRole('administrator')) {
-            return response()->json([
-                'success' => false,
-                'message' => __('You do not have permission to perform this action.')
-            ], 403);
-        }
-
+        $this->authorize('create category');
 
         $validator = Validator::make($request->all(), [
             'name'   => 'required|string|max:255',
@@ -52,6 +48,8 @@ class CategoryController extends Controller
 
     public function update(Request $request, Category $category)
     {
+        $this->authorize('write category');
+
         try {
 
             // ---------- Permission Check ----------
@@ -102,6 +100,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         try {
+            $this->authorize('delete category');
 
             // ---------- Permission Check ----------
             if (!auth()->user()->hasRole('administrator')) {

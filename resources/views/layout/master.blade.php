@@ -86,8 +86,8 @@
     @endif
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-
-            document.querySelectorAll('#product_description')
+            let editors = {};
+            document.querySelectorAll('#product_description, #offer_description')
                 .forEach(el => {
                     ClassicEditor.create(el)
                         .then(editor => {
@@ -99,6 +99,32 @@
 
         });
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const maxSize = 300 * 1024; // 300 KB
+
+            // Global function for file validation
+            window.validateFile = function(input, errorContainerId) {
+                const files = input.files;
+                let errorMessage = '';
+
+                for (let i = 0; i < files.length; i++) {
+                    if (files[i].size > maxSize) {
+                        errorMessage = `File "${files[i].name}" is too large. Maximum allowed size is 300 KB.`;
+                        input.value = '';
+                        break;
+                    }
+                }
+
+                const errorContainer = document.getElementById(errorContainerId);
+                if (errorContainer) {
+                    errorContainer.textContent = errorMessage;
+                }
+            };
+        });
+    </script>
+
 
     <script>
         document.addEventListener('livewire:init', () => {

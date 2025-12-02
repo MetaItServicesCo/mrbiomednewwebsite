@@ -3,6 +3,24 @@
 @section('title', 'Home')
 
 @push('frontend-styles')
+<style>
+    .image-dots .dot {
+    width: 12px;
+    height: 12px;
+    background: #888;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.image-dots .dot.active {
+    background: #006A9E;
+    transform: scale(1.2);
+}
+
+</style>
 @endpush
 
 @section('frontend-content')
@@ -146,33 +164,38 @@
                 <div class="col-lg-6 col-md-6 mt-4 mt-lg-0 text-center">
 
                     <div class="image-slider-wrapper">
-                        <div class="image-slide-track">
+                            <div class="image-slide-track">
 
-                            <div class="image-slide-item">
-                                <img src="{{ asset('frontend/images/medical-img.jpg') }}" alt="Medical Image 1"
-                                    class="info-img img-fluid">
+                                <div class="image-slide-item">
+                                    <img src="{{ asset('frontend/images/medical-img.jpg') }}" class="info-img img-fluid">
+                                </div>
+
+                                <div class="image-slide-item">
+                                    <img src="{{ asset('frontend/images/medical-img.jpg') }}" class="info-img img-fluid">
+                                </div>
+
+                                <div class="image-slide-item">
+                                    <img src="{{ asset('frontend/images/medical-img.jpg') }}" class="info-img img-fluid">
+                                </div>
+
+                                <div class="image-slide-item">
+                                    <img src="{{ asset('frontend/images/medical-img.jpg') }}" class="info-img img-fluid">
+                                </div>
+
                             </div>
+                        </div>
 
-                            <div class="image-slide-item">
-                                <img src="{{ asset('frontend/images/medical-img.jpg') }}" alt="Medical Image 1"
-                                    class="info-img img-fluid">
-                            </div>
-
-                            <div class="image-slide-item">
-                                <img src="{{ asset('frontend/images/medical-img.jpg') }}" alt="Medical Image 1"
-                                    class="info-img img-fluid">
-                            </div>
-
-                            <div class="image-slide-item">
-                                <img src="{{ asset('frontend/images/medical-img.jpg') }}" alt="Medical Image 1"
-                                    class="info-img img-fluid">
+                        <!-- Dots -->
+                            <div class="image-dots text-center mt-3">
+                                <span class="dot active" data-index="0"></span>
+                                <span class="dot" data-index="1"></span>
+                                <span class="dot" data-index="2"></span>
+                                <span class="dot" data-index="3"></span>
                             </div>
 
                         </div>
-                    </div>
-                </div>
 
-            </div>
+                    </div>
         </div>
     </section>
     <section class="features-section
@@ -690,6 +713,8 @@
 
                 <!-- Next Button -->
                 <button class="offer-next"><i class="bi bi-chevron-right"></i></button>
+                <!-- PAGINATION DOTS -->
+                <div class="offer-pagination"></div>
 
             </div>
         </div>
@@ -698,8 +723,15 @@
     <section class="xray-section py-5">
 
         <div class="container-fluid xray-box p-4 mt-5">
-            <div class="text-center mb-5">
-                <h2 class="main-heading">X-Ray <span>Rent, Sales & Repairing Services</span> </h2>
+            <div class="container text-center mb-5">
+             <div class="row">
+                <div class="col-md-8 mx-auto">
+   <h2 class="main-heading">X-Ray <span>Rent, Sales & Repairing Services</span> </h2>
+                  <p class=" xray-desc">   centers.quipment available for hospitals and emergency healthcare centers.
+                 centers.quipment available for hospitals and emergency healthcare centersemergency healthcare centers.
+                 centers.quipment available for hospitals and emergency healthcare centers</p>
+                </div>
+             </div>
             </div>
             <div class="container">
                 <div class="row g-4">
@@ -707,11 +739,11 @@
                     <!-- Card 1 -->
                     <div class="col-lg-3 col-md-6">
                         <div class="xray-card p-3">
-                            <h3 class="xray-title reveal-lines">
+                            <h3 class="xray-title ">
                                 X-Ray Rent, Sales & Repair Services in Austin TX
                             </h3>
 
-                            <p class="xray-desc reveal-lines">
+                            <p class="xray-desc ">
                                 Affordable X-Ray equipment suitable for clinics, hospitals and home-based centers.
                                 Quality X-Ray equipment available for hospitals and emergency healthcare
                                 centers.quipment available for hospitals and emergency healthcare centers.
@@ -780,8 +812,15 @@
     <section class="xray-section py-5">
 
         <div class="container-fluid xray-box p-4 mt-5">
-            <div class="text-center mb-5">
-                <h2 class="main-heading">C-Arm <span>Rent, Sales, and Repairing Services</span> </h2>
+            <div class="container text-center mb-5">
+              <div class="row">
+                <div class="col-md-8 mx-auto">
+                      <h2 class="main-heading">C-Arm <span>Rent, Sales, and Repairing Services</span> </h2>
+                <p class="xray-desc">   centers.quipment available for hospitals and emergency healthcare centers.
+                 centers.quipment available for hospitals and emergency healthcare centersemergency healthcare centers.
+                 centers.quipment available for hospitals and emergency healthcare centers</p>
+                </div>
+              </div>
             </div>
             <div class="container">
                 <div class="row g-4 justify-content-center">
@@ -793,7 +832,7 @@
                                 X-Ray Rent, Sales & Repair Services in Austin TX
                             </h3>
 
-                            <p class="xray-desc reveal-lines">
+                            <p class="xray-desc ">
                                 Affordable X-Ray equipment suitable for clinics, hospitals and home-based centers.
                                 Quality X-Ray equipment available for hospitals and emergency healthcare
                                 centers.quipment available for hospitals and emergency healthcare centers.
@@ -805,11 +844,11 @@
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <div class="xray-card p-3">
-                            <h3 class="xray-title reveal-lines">
+                            <h3 class="xray-title ">
                                 X-Ray Rent, Sales & Repair Services in Austin TX
                             </h3>
 
-                            <p class="xray-desc reveal-lines">
+                            <p class="xray-desc ">
                                 Affordable X-Ray equipment suitable for clinics, hospitals and home-based centers.
                                 Quality X-Ray equipment available for hospitals and emergency healthcare
                                 centers.quipment available for hospitals and emergency healthcare centers.
@@ -1234,7 +1273,7 @@
                             <i class="bi bi-check choose-icon"></i>
 
                             <!-- <div class="choose-icon">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
                             <h4 class="choose-heading">20 Years Experience</h4>
                         </div>
                         <p class="choose-desc">
@@ -1336,23 +1375,21 @@
         <div class="content-wrapper text-center">
 
             <!-- 10+ Years -->
-            <div class="shadow-div">
+            {{-- <div class="shadow-div">
                 <h2 class="years-text">10+ Years.</h2>
 
-                <!-- Curved Double Lines -->
 
             </div>
             <div class="line-wrapper">
                 <div class="line-straight"></div>
-                {{-- <div class="line-curve"></div> --}}
-            </div>
+            </div> --}}
 
 
 
 
 
             <!-- Review Box -->
-            <div class="review-box mx-auto">
+            {{-- <div class="review-box mx-auto">
 
                 <!-- Left Box (4.9 + star) -->
                 <div class="rating-box d-flex g-1 justify-content-center align-items-center">
@@ -1368,7 +1405,7 @@
                     <p class="review-text mb-0">310 reviews on</p>
                 </div>
 
-            </div>
+            </div> --}}
         </div>
     </section>
 
@@ -1385,21 +1422,11 @@
                         <h5 class="faqs-subheading">About Our Profile?</h5>
                         <p class="faq-para">
                             We provide sales, rental, and repair services for medical equipment with ISO certified
-
                         </p>
                     </div>
+
                     <div class="faqs-list">
-                        <!-- FAQ Item 1 -->
-                        <div class="faq-item">
-                            <div class="faq-title">
-                                What services does Mr Biomed Tech offer?
-                                <i class="bi bi-chevron-down faq-icon"></i>
-                            </div>
-                            <div class="faq-content">
-                                We provide sales, rental, and repair services for medical equipment with ISO certified
-                                products and 24/7 support.
-                            </div>
-                        </div>
+                        <!-- Sample FAQs -->
                         <div class="faq-item">
                             <div class="faq-title">
                                 What services does Mr Biomed Tech offer?
@@ -1411,7 +1438,6 @@
                             </div>
                         </div>
 
-                        <!-- FAQ Item 2 -->
                         <div class="faq-item">
                             <div class="faq-title">
                                 How can I request a service?
@@ -1422,17 +1448,7 @@
                                 service.
                             </div>
                         </div>
-                        <div class="faq-item">
-                            <div class="faq-title">
-                                What services does Mr Biomed Tech offer?
-                                <i class="bi bi-chevron-down faq-icon"></i>
-                            </div>
-                            <div class="faq-content">
-                                We provide sales, rental, and repair services for medical equipment with ISO certified
-                                products and 24/7 support.
-                            </div>
-                        </div>
-                        <!-- FAQ Item 3 -->
+
                         <div class="faq-item">
                             <div class="faq-title">
                                 Are your products guaranteed?
@@ -1441,6 +1457,36 @@
                             <div class="faq-content">
                                 Yes, all our equipment comes with manufacturer warranty and quality assurance for
                                 reliability.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-title">
+                                What is the delivery time?
+                                <i class="bi bi-chevron-down faq-icon"></i>
+                            </div>
+                            <div class="faq-content">
+                                Delivery depends on product availability, usually 3-7 business days.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-title">
+                                Can I return a product?
+                                <i class="bi bi-chevron-down faq-icon"></i>
+                            </div>
+                            <div class="faq-content">
+                                Yes, returns are possible within 14 days under our return policy.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-title">
+                                Do you offer installation services?
+                                <i class="bi bi-chevron-down faq-icon"></i>
+                            </div>
+                            <div class="faq-content">
+                                Yes, our team provides installation and training for all equipment.
                             </div>
                         </div>
                     </div>
@@ -1848,105 +1894,30 @@
 
 
 
-    <script>
-        const offerTrack = document.querySelector(".offer-slider-track");
-        const offerCards = document.querySelectorAll(".offer-card");
-        const offerPrev = document.querySelector(".offer-prev");
-        const offerNext = document.querySelector(".offer-next");
-        const offerWrapper = document.querySelector(".offer-slider-wrapper"); // NEW
 
-        let offerIndex = 0;
-        let offerVisibleCards = 4;
+   <script>
+let mainIndex = 0;
+const mainTrack = document.querySelector(".slider-track");
+const mainSlides = document.querySelectorAll(".slide");
+const mainTotal = mainSlides.length;
 
-        function getCardWidth() {
-            return offerCards[0].offsetWidth + 20;
-        }
+function mainAutoSlide() {
+    mainIndex++;
+    mainTrack.style.transition = "transform 0.8s ease-in-out";
+    mainTrack.style.transform = `translateX(-${mainIndex * 100}%)`;
 
-        let offerCardWidth = getCardWidth();
+    if (mainIndex === mainTotal - 1) {
+        setTimeout(() => {
+            mainTrack.style.transition = "none";
+            mainIndex = 0;
+            mainTrack.style.transform = `translateX(0%)`;
+        }, 800);
+    }
+}
 
-        function updateVisibleCards() {
-            if (window.innerWidth < 576) offerVisibleCards = 1;
-            else if (window.innerWidth < 992) offerVisibleCards = 2;
-            else offerVisibleCards = 4;
+setInterval(mainAutoSlide, 4000);
+</script>
 
-            offerCardWidth = getCardWidth();
-        }
-        updateVisibleCards();
-        window.addEventListener("resize", updateVisibleCards);
-
-        const totalCards = offerCards.length / 2;
-
-        function slideToIndex() {
-            offerTrack.style.transition = "transform 1s linear";
-            offerTrack.style.transform = `translateX(-${offerIndex * offerCardWidth}px)`;
-        }
-
-        function autoSlide() {
-            offerIndex++;
-            slideToIndex();
-
-            if (offerIndex >= totalCards) {
-                setTimeout(() => {
-                    offerTrack.style.transition = "none";
-                    offerIndex = 0;
-                    offerTrack.style.transform = `translateX(0)`;
-                }, 1000);
-            }
-        }
-
-        offerNext.onclick = autoSlide;
-
-        offerPrev.onclick = () => {
-            offerIndex--;
-            if (offerIndex < 0) {
-                offerTrack.style.transition = "none";
-                offerIndex = totalCards - 1;
-            }
-            slideToIndex();
-        };
-
-
-        let sliderInterval = setInterval(autoSlide, 3000);
-
-        function pauseSlider() {
-            clearInterval(sliderInterval);
-            sliderInterval = null;
-        }
-
-        function resumeSlider() {
-            if (!sliderInterval) {
-                sliderInterval = setInterval(autoSlide, 3000);
-            }
-        }
-
-        [offerWrapper, offerPrev, offerNext].forEach(el => {
-            el.addEventListener("mouseenter", pauseSlider);
-            el.addEventListener("mouseleave", resumeSlider);
-        });
-    </script>
-    <script>
-        let index = 0;
-        const track = document.querySelector(".slider-track");
-        const slides = document.querySelectorAll(".slide");
-        const total = slides.length;
-
-        function autoSlide() {
-            index++;
-            track.style.transition = "transform 0.8s ease-in-out";
-            track.style.transform = `translateX(-${index * 100}%)`;
-
-            if (index === total - 1) {
-
-                setTimeout(() => {
-                    track.style.transition = "none";
-                    index = 0;
-                    track.style.transform = `translateX(0%)`;
-                }, 800);
-            }
-        }
-
-        setInterval(autoSlide, 4000);
-    </script>
 
 
 
@@ -1981,46 +1952,69 @@
         });
     </script>
 
-    <script>
-        let currentImageIndex = 0;
-        const sliderContainer = document.querySelector(".image-slider-wrapper");
-        const imageTrack = document.querySelector(".image-slide-track");
-        const imageSlides = document.querySelectorAll(".image-slide-item");
-        const totalSlides = imageSlides.length;
+<script>
+let currentImageIndex = 0;
 
-        const slideDuration = 5000;
-        let slideInterval;
+const imageTrack = document.querySelector(".image-slide-track");
+const slides = document.querySelectorAll(".image-slide-item");
+const totalSlides = slides.length;
 
-        function moveSlide() {
-            currentImageIndex++;
-            imageTrack.style.transition = "transform 0.8s ease-in-out";
-            imageTrack.style.transform = `translateX(-${currentImageIndex * 25}%)`;
+const dots = document.querySelectorAll(".image-dots .dot");
 
+const slideDuration = 3000;
+let slider;
 
-            if (currentImageIndex === totalSlides - 1) {
+// Update dots
+function updateDots() {
+    dots.forEach(dot => dot.classList.remove("active"));
+    dots[currentImageIndex].classList.add("active");
+}
 
-                setTimeout(() => {
-                    imageTrack.style.transition = "none";
-                    currentImageIndex = 0;
-                    imageTrack.style.transform = `translateX(0%)`;
-                }, 800);
-            }
+// Jump to slide
+function goToSlide(index, withTransition = true) {
+
+    if (withTransition) {
+        imageTrack.style.transition = "transform 0.8s ease-in-out";
+    } else {
+        imageTrack.style.transition = "none";  // no jerk when jumping
+    }
+
+    imageTrack.style.transform = `translateX(-${index * 25}%)`;
+    updateDots();
+}
+
+// Auto slide
+function autoSlide() {
+    slider = setInterval(() => {
+
+        currentImageIndex++;
+
+        if (currentImageIndex < totalSlides) {
+            goToSlide(currentImageIndex, true);
+        } else {
+            // Last slide se pehle slide pr jump WITHOUT TRANSITION
+            currentImageIndex = 0;
+            goToSlide(currentImageIndex, false);
         }
 
-        function startSliding() {
-            if (!slideInterval) {
-                slideInterval = setInterval(moveSlide, slideDuration);
-            }
-        }
+    }, slideDuration);
+}
 
-        function stopSliding() {
-            clearInterval(slideInterval);
-            slideInterval = null;
-        }
+// Click dots
+dots.forEach(dot => {
+    dot.addEventListener("click", function () {
+        clearInterval(slider);
+        currentImageIndex = parseInt(this.dataset.index);
+        goToSlide(currentImageIndex, true);
+        autoSlide();
+    });
+});
 
-        sliderContainer.addEventListener('mouseenter', stopSliding);
-        sliderContainer.addEventListener('mouseleave', startSliding);
+// Initialize
+goToSlide(0, false);
+autoSlide();
+</script>
 
-        startSliding();
-    </script>
+
+
 @endpush

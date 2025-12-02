@@ -229,6 +229,7 @@
             padding: 20px;
             top: -45px;
             /* Move further up on small screens to accommodate stacking */
+            height: 99px;
         }
 
         .custom-footer {
@@ -285,7 +286,8 @@
         .contact-container {
             padding: 10px !important;
             top: -45px;
-            /* Move further up on small screens to accommodate stacking */
+
+            height: 115px;
         }
 
         .custom-footer {

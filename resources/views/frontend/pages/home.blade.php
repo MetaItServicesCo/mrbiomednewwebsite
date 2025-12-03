@@ -3,24 +3,23 @@
 @section('title', 'Home')
 
 @push('frontend-styles')
-<style>
-    .image-dots .dot {
-    width: 12px;
-    height: 12px;
-    background: #888;
-    border-radius: 50%;
-    display: inline-block;
-    margin: 0 6px;
-    cursor: pointer;
-    transition: 0.3s;
-}
+    <style>
+        .image-dots .dot {
+            width: 12px;
+            height: 12px;
+            background: #888;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-.image-dots .dot.active {
-    background: #006A9E;
-    transform: scale(1.2);
-}
-
-</style>
+        .image-dots .dot.active {
+            background: #006A9E;
+            transform: scale(1.2);
+        }
+    </style>
 @endpush
 
 @section('frontend-content')
@@ -45,7 +44,7 @@
                     </p>
 
                     <!-- Images + Customer Count -->
-                    <div class="d-flex align-items-center mt-4">
+                    <div class="d-flex align-items-center mt-">
                         <!-- Stacked Images -->
                         <div class="stack-images position-relative" style="width: 160px; height: 70px;">
                             <!-- Image Containers -->
@@ -164,38 +163,38 @@
                 <div class="col-lg-6 col-md-6 mt-4 mt-lg-0 text-center">
 
                     <div class="image-slider-wrapper">
-                            <div class="image-slide-track">
+                        <div class="image-slide-track">
 
-                                <div class="image-slide-item">
-                                    <img src="{{ asset('frontend/images/medical-img.jpg') }}" class="info-img img-fluid">
-                                </div>
-
-                                <div class="image-slide-item">
-                                    <img src="{{ asset('frontend/images/medical-img.jpg') }}" class="info-img img-fluid">
-                                </div>
-
-                                <div class="image-slide-item">
-                                    <img src="{{ asset('frontend/images/medical-img.jpg') }}" class="info-img img-fluid">
-                                </div>
-
-                                <div class="image-slide-item">
-                                    <img src="{{ asset('frontend/images/medical-img.jpg') }}" class="info-img img-fluid">
-                                </div>
-
+                            <div class="image-slide-item">
+                                <img src="{{ asset('frontend/images/medical-img.jpg') }}" class="info-img img-fluid">
                             </div>
-                        </div>
 
-                        <!-- Dots -->
-                            <div class="image-dots text-center mt-3">
-                                <span class="dot active" data-index="0"></span>
-                                <span class="dot" data-index="1"></span>
-                                <span class="dot" data-index="2"></span>
-                                <span class="dot" data-index="3"></span>
+                            <div class="image-slide-item">
+                                <img src="{{ asset('frontend/images/medical-img.jpg') }}" class="info-img img-fluid">
+                            </div>
+
+                            <div class="image-slide-item">
+                                <img src="{{ asset('frontend/images/medical-img.jpg') }}" class="info-img img-fluid">
+                            </div>
+
+                            <div class="image-slide-item">
+                                <img src="{{ asset('frontend/images/medical-img.jpg') }}" class="info-img img-fluid">
                             </div>
 
                         </div>
-
                     </div>
+
+                    <!-- Dots -->
+                    <div class="image-dots text-center mt-3">
+                        <span class="dot active" data-index="0"></span>
+                        <span class="dot" data-index="1"></span>
+                        <span class="dot" data-index="2"></span>
+                        <span class="dot" data-index="3"></span>
+                    </div>
+
+                </div>
+
+            </div>
         </div>
     </section>
     <section class="features-section
@@ -720,18 +719,19 @@
         </div>
     </section>
 
-    <section class="xray-section py-5">
+    <section class="xray-section py-">
 
         <div class="container-fluid xray-box p-4 mt-5">
             <div class="container text-center mb-5">
-             <div class="row">
-                <div class="col-md-8 mx-auto">
-   <h2 class="main-heading">X-Ray <span>Rent, Sales & Repairing Services</span> </h2>
-                  <p class=" xray-desc">   centers.quipment available for hospitals and emergency healthcare centers.
-                 centers.quipment available for hospitals and emergency healthcare centersemergency healthcare centers.
-                 centers.quipment available for hospitals and emergency healthcare centers</p>
+                <div class="row">
+                    <div class="col-md-8 mx-auto">
+                        <h2 class="main-heading">X-Ray <span>Rent, Sales & Repairing Services</span> </h2>
+                        <p class=" xray-desc"> centers.quipment available for hospitals and emergency healthcare centers.
+                            centers.quipment available for hospitals and emergency healthcare centersemergency healthcare
+                            centers.
+                            centers.quipment available for hospitals and emergency healthcare centers</p>
+                    </div>
                 </div>
-             </div>
             </div>
             <div class="container">
                 <div class="row g-4">
@@ -809,18 +809,19 @@
             </div>
         </div>
     </section>
-    <section class="xray-section py-5">
+    <section class="xray-section py-">
 
         <div class="container-fluid xray-box p-4 mt-5">
             <div class="container text-center mb-5">
-              <div class="row">
-                <div class="col-md-8 mx-auto">
-                      <h2 class="main-heading">C-Arm <span>Rent, Sales, and Repairing Services</span> </h2>
-                <p class="xray-desc">   centers.quipment available for hospitals and emergency healthcare centers.
-                 centers.quipment available for hospitals and emergency healthcare centersemergency healthcare centers.
-                 centers.quipment available for hospitals and emergency healthcare centers</p>
+                <div class="row">
+                    <div class="col-md-8 mx-auto">
+                        <h2 class="main-heading">C-Arm <span>Rent, Sales, and Repairing Services</span> </h2>
+                        <p class="xray-desc"> centers.quipment available for hospitals and emergency healthcare centers.
+                            centers.quipment available for hospitals and emergency healthcare centersemergency healthcare
+                            centers.
+                            centers.quipment available for hospitals and emergency healthcare centers</p>
+                    </div>
                 </div>
-              </div>
             </div>
             <div class="container">
                 <div class="row g-4 justify-content-center">
@@ -1273,7 +1274,7 @@
                             <i class="bi bi-check choose-icon"></i>
 
                             <!-- <div class="choose-icon">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
                             <h4 class="choose-heading">20 Years Experience</h4>
                         </div>
                         <p class="choose-desc">
@@ -1730,6 +1731,7 @@
                         </div>
                     </div>
 
+
                 </div>
             </div>
 
@@ -1840,83 +1842,28 @@
 @endsection
 
 @push('frontend-scripts')
-    {{-- <script>
-        (function() {
+    <script>
+        let mainIndex = 0;
+        const mainTrack = document.querySelector(".slider-track");
+        const mainSlides = document.querySelectorAll(".slide");
+        const mainTotal = mainSlides.length;
 
+        function mainAutoSlide() {
+            mainIndex++;
+            mainTrack.style.transition = "transform 0.8s ease-in-out";
+            mainTrack.style.transform = `translateX(-${mainIndex * 100}%)`;
 
-            const slider = document.getElementById("reviewSlider");
-
-            let slides = Array.from(slider.children);
-            const visible = 5;
-            const slideWidth = 180; // 140 + 40 gap
-            let index = 0;
-
-            // Duplicate slides for infinite scroll
-            slides.forEach(slide => slider.appendChild(slide.cloneNode(true)));
-            slides = Array.from(document.querySelectorAll(".tooltip-slide"));
-
-            function updateSlider() {
-
-                // remove all actives
-                slides.forEach(s => s.classList.remove("active"));
-
-                // center slide index
-                const center = index + Math.floor(visible / 2);
-
-                if (slides[center]) slides[center].classList.add("active");
-
-                // Always center the middle image
-                const offset = (visible * slideWidth) / 2 - (slideWidth / 2);
-                const moveX = index * slideWidth;
-
-                slider.style.transform = `translateX(-${moveX - offset}px)`;
-
-                index++;
-
-                // infinite loop reset
-                if (index >= slides.length - visible) {
-                    setTimeout(() => {
-                        slider.style.transition = "none";
-                        index = 0;
-                        slider.style.transform = `translateX(-${-offset}px)`;
-
-                        setTimeout(() => slider.style.transition = "0.6s ease", 50);
-                    }, 600);
-                }
+            if (mainIndex === mainTotal - 1) {
+                setTimeout(() => {
+                    mainTrack.style.transition = "none";
+                    mainIndex = 0;
+                    mainTrack.style.transform = `translateX(0%)`;
+                }, 800);
             }
+        }
 
-            setInterval(updateSlider, 2000);
-            updateSlider();
-
-        })();
-    </script> --}}
-
-
-
-
-
-   <script>
-let mainIndex = 0;
-const mainTrack = document.querySelector(".slider-track");
-const mainSlides = document.querySelectorAll(".slide");
-const mainTotal = mainSlides.length;
-
-function mainAutoSlide() {
-    mainIndex++;
-    mainTrack.style.transition = "transform 0.8s ease-in-out";
-    mainTrack.style.transform = `translateX(-${mainIndex * 100}%)`;
-
-    if (mainIndex === mainTotal - 1) {
-        setTimeout(() => {
-            mainTrack.style.transition = "none";
-            mainIndex = 0;
-            mainTrack.style.transform = `translateX(0%)`;
-        }, 800);
-    }
-}
-
-setInterval(mainAutoSlide, 4000);
-</script>
+        setInterval(mainAutoSlide, 4000);
+    </script>
 
 
 
@@ -1952,69 +1899,66 @@ setInterval(mainAutoSlide, 4000);
         });
     </script>
 
-<script>
-let currentImageIndex = 0;
+    <script>
+        let currentImageIndex = 0;
 
-const imageTrack = document.querySelector(".image-slide-track");
-const slides = document.querySelectorAll(".image-slide-item");
-const totalSlides = slides.length;
+        const imageTrack = document.querySelector(".image-slide-track");
+        const slides = document.querySelectorAll(".image-slide-item");
+        const totalSlides = slides.length;
 
-const dots = document.querySelectorAll(".image-dots .dot");
+        const dots = document.querySelectorAll(".image-dots .dot");
 
-const slideDuration = 3000;
-let slider;
+        const slideDuration = 3000;
+        let slider;
 
-// Update dots
-function updateDots() {
-    dots.forEach(dot => dot.classList.remove("active"));
-    dots[currentImageIndex].classList.add("active");
-}
-
-// Jump to slide
-function goToSlide(index, withTransition = true) {
-
-    if (withTransition) {
-        imageTrack.style.transition = "transform 0.8s ease-in-out";
-    } else {
-        imageTrack.style.transition = "none";  // no jerk when jumping
-    }
-
-    imageTrack.style.transform = `translateX(-${index * 25}%)`;
-    updateDots();
-}
-
-// Auto slide
-function autoSlide() {
-    slider = setInterval(() => {
-
-        currentImageIndex++;
-
-        if (currentImageIndex < totalSlides) {
-            goToSlide(currentImageIndex, true);
-        } else {
-            // Last slide se pehle slide pr jump WITHOUT TRANSITION
-            currentImageIndex = 0;
-            goToSlide(currentImageIndex, false);
+        // Update dots
+        function updateDots() {
+            dots.forEach(dot => dot.classList.remove("active"));
+            dots[currentImageIndex].classList.add("active");
         }
 
-    }, slideDuration);
-}
+        // Jump to slide
+        function goToSlide(index, withTransition = true) {
 
-// Click dots
-dots.forEach(dot => {
-    dot.addEventListener("click", function () {
-        clearInterval(slider);
-        currentImageIndex = parseInt(this.dataset.index);
-        goToSlide(currentImageIndex, true);
+            if (withTransition) {
+                imageTrack.style.transition = "transform 0.8s ease-in-out";
+            } else {
+                imageTrack.style.transition = "none"; // no jerk when jumping
+            }
+
+            imageTrack.style.transform = `translateX(-${index * 25}%)`;
+            updateDots();
+        }
+
+        // Auto slide
+        function autoSlide() {
+            slider = setInterval(() => {
+
+                currentImageIndex++;
+
+                if (currentImageIndex < totalSlides) {
+                    goToSlide(currentImageIndex, true);
+                } else {
+                    // Last slide se pehle slide pr jump WITHOUT TRANSITION
+                    currentImageIndex = 0;
+                    goToSlide(currentImageIndex, false);
+                }
+
+            }, slideDuration);
+        }
+
+        // Click dots
+        dots.forEach(dot => {
+            dot.addEventListener("click", function() {
+                clearInterval(slider);
+                currentImageIndex = parseInt(this.dataset.index);
+                goToSlide(currentImageIndex, true);
+                autoSlide();
+            });
+        });
+
+        // Initialize
+        goToSlide(0, false);
         autoSlide();
-    });
-});
-
-// Initialize
-goToSlide(0, false);
-autoSlide();
-</script>
-
-
-
+    </script>
 @endpush

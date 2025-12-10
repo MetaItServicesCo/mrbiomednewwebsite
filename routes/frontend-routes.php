@@ -16,5 +16,11 @@ Route::middleware('guest')->group(function () {
     Route::view('/location', 'frontend.pages.location')->name('location');
     Route::view('/locationdetail', 'frontend.pages.locationdetail')->name('locationdetail');
     Route::view('/contact-us', 'frontend.pages.contact-us')->name('contact-us');
+    Route::view('/privacy', 'frontend.pages.privacypolicy')->name('privacy');
+    Route::view('/terms', 'frontend.pages.termspage')->name('terms');
+    Route::view('/disclaimer', 'frontend.pages.disclaimer')->name('disclaimer');
+    Route::view('/blog', 'frontend.pages.blog')->name('blog');
+    Route::view('/blogdetail', 'frontend.pages.blogdetail')->name('blogdetail');
+    Route::view('/feedback', 'frontend.pages.feedback')->name('feedback');
 
 });

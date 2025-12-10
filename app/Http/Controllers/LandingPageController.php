@@ -35,7 +35,7 @@ class LandingPageController extends Controller
             abort(403, 'You do not have permission to view this page.');
         } catch (\Throwable $e) {
             // Log any other errors
-            Log::error('LandingPage index error: ' . $e->getMessage(), [
+            Log::error('LandingPage index error: '.$e->getMessage(), [
                 'trace' => $e->getTraceAsString(),
             ]);
 
@@ -43,7 +43,6 @@ class LandingPageController extends Controller
             return redirect()->back()->withErrors(['general_error' => 'Unable to load landing page data. Please try again later.']);
         }
     }
-
 
     public function storeOrUpdate(Request $request)
     {
@@ -62,7 +61,6 @@ class LandingPageController extends Controller
             'meta_description' => 'nullable|string',
         ];
 
-
         $validated = $request->validate($rules);
 
         try {
@@ -71,9 +69,9 @@ class LandingPageController extends Controller
             // Fetch first entry or create new
             $landingPage = LandingPage::first();
 
-            if (!$landingPage) {
+            if (! $landingPage) {
                 $this->authorize('create landing page');
-                $landingPage = new LandingPage();
+                $landingPage = new LandingPage;
                 $landingPage->created_by = auth()->id();
             } else {
                 $this->authorize('write landing page');
@@ -83,7 +81,7 @@ class LandingPageController extends Controller
             // Fill normal fields
             $landingPage->fill($request->except([
                 'hero_slider_images',
-                'content_slider_images'
+                'content_slider_images',
             ]));
 
             // Handle Hero Slider Images
@@ -113,6 +111,7 @@ class LandingPageController extends Controller
             DB::commit();
 
             $message = $landingPage->wasRecentlyCreated ? 'Landing page created successfully.' : 'Landing page updated successfully.';
+
             return redirect()->back()->with('success', $message);
         } catch (\Illuminate\Auth\Access\AuthorizationException $e) {
             // If user is not authorized
@@ -120,7 +119,7 @@ class LandingPageController extends Controller
         } catch (\Throwable $e) {
             DB::rollBack();
 
-            Log::error('LandingPage storeOrUpdate error: ' . $e->getMessage(), [
+            Log::error('LandingPage storeOrUpdate error: '.$e->getMessage(), [
                 'trace' => $e->getTraceAsString(),
                 'request' => $request->all(),
             ]);
@@ -137,20 +136,20 @@ class LandingPageController extends Controller
 
         $request->validate([
             'landing_page_id' => 'required|integer|exists:landing_pages,id',
-            'image'           => 'required|string',
-            'column'          => 'required|string',
-            'path'            => 'required|string', // path of the file relative to storage/app/public
+            'image' => 'required|string',
+            'column' => 'required|string',
+            'path' => 'required|string', // path of the file relative to storage/app/public
         ]);
 
         try {
             $landingPage = LandingPage::findOrFail($request->landing_page_id);
             $column = $request->column;
             $imageToRemove = $request->image;
-            $path = rtrim($request->path, '/') . '/'; // ensure trailing slash
+            $path = rtrim($request->path, '/').'/'; // ensure trailing slash
 
             // Get existing images as array
             $images = $landingPage->{$column};
-            if (!is_array($images)) {
+            if (! is_array($images)) {
                 $images = json_decode($images, true) ?? [];
             }
 
@@ -164,23 +163,23 @@ class LandingPageController extends Controller
             $landingPage->save();
 
             // Delete file from storage
-            if (Storage::disk('public')->exists($path . $imageToRemove)) {
-                Storage::disk('public')->delete($path . $imageToRemove);
+            if (Storage::disk('public')->exists($path.$imageToRemove)) {
+                Storage::disk('public')->delete($path.$imageToRemove);
             }
 
             return response()->json([
                 'success' => true,
-                'message' => 'Image removed successfully.'
+                'message' => 'Image removed successfully.',
             ]);
         } catch (\Throwable $e) {
-            Log::error('removeSliderImage error: ' . $e->getMessage(), [
+            Log::error('removeSliderImage error: '.$e->getMessage(), [
                 'request' => $request->all(),
-                'trace' => $e->getTraceAsString()
+                'trace' => $e->getTraceAsString(),
             ]);
 
             return response()->json([
                 'success' => false,
-                'message' => 'Something went wrong while removing the image.'
+                'message' => 'Something went wrong while removing the image.',
             ]);
         }
     }
@@ -209,7 +208,6 @@ class LandingPageController extends Controller
         $categories = Cache::remember('landing_page_categories', 3600, function () {
             return Category::where('status', true)->select(['name', 'slug'])->get();
         });
-
 
         // $data = LandingPage::select([
         //     'hero_heading',
@@ -293,7 +291,6 @@ class LandingPageController extends Controller
             ->latest()
             ->take(4)
             ->get();
-
 
         return view('frontend.pages.home', compact(
             'data',

@@ -627,10 +627,10 @@
                     <h1 class="hero-main-heading  mb-4">
                         {!! highlightBracketText($data->intro_heading ?? '') !!}
                     </h1>
-                    <p class="hero-description ">
-                        {!! $data->intro_text ?? '' !!}
+                    {!! $data->intro_text ?? '' !!}
+                    {{-- <p class="hero-description ">
 
-                    </p>
+                    </p> --}}
                 </div>
 
 
@@ -650,38 +650,7 @@
             </div>
         </div>
 
-
-        <section class="medical-equipment-section py-5">
-            <div class="container">
-
-                <!-- Heading -->
-
-                <div class="row">
-                    <div class="col-8 mx-auto">
-                        <h2 class="equipment-heading text-center mb-">
-                            {!! highlightBracketText($data->product_heading ?? '') !!}
-                        </h2>
-                    </div>
-                </div>
-                <!-- 3 Columns -->
-                <div class="row justify-content-center">
-
-                    @foreach ($categoryColumns as $column)
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <ul class="equipment-list">
-                                @foreach ($column as $item)
-                                    <li>
-                                        <i class="bi bi-check yes-icon"></i>
-                                        {{ $item->name }}
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endforeach
-
-                </div>
-            </div>
-        </section>
+        <x-rental-product-list-columns />
 
     </section>
 
@@ -755,7 +724,7 @@
 
             </div>
 
-            <div class="row pb-3 pt-0 mt-0">
+            {{-- <div class="row pb-3 pt-0 mt-0">
                 <h3 class="rental-heading">Rental <span>Equipment</span> </h3>
 
                 <div class="product-filter-tabs  d-flex justify-content-center flex-wrap gap-2 mt-4">
@@ -875,7 +844,9 @@
 
                     </div>
                 </div>
-            </section>
+            </section> --}}
+
+            <x-rental-equipment-products-section />
     </section>
 
 
@@ -1127,7 +1098,8 @@
     </section>
 
     {{-- ============ Recent News Section ============ --}}
-    <x-recent-blogs :blogs="$blogs" />
+    <!-- Default: 4 blogs -->
+    <x-recent-blogs-section />
 
 
 @endsection

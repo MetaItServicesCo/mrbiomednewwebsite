@@ -55,6 +55,11 @@
             .cat-item {
                 min-width: 90px;
             }
+
+            .latest-blog-heading {
+                font-size: 40px !important;
+
+            }
         }
 
 
@@ -91,127 +96,17 @@
             cursor: grab;
         }
 
-        /* ================ feature section css ============================ */
 
-
-
-        .latest-blog-heading {
-            font-size: 48px;
-            font-weight: 700;
-            font-family: Arial;
-            line-height: 48px;
-
-        }
-
-        .latest-blog-heading span {
-            color: #036CA0;
-        }
-
-        .featured-card {
-            background: #fff;
-            border-radius: 12px;
-            padding: 15px;
-            /* box-shadow: 0px 3px 12px rgba(0, 0, 0, 0.08); */
-            transition: all 0.6s ease-in-out;
-        }
-
-        .featured-card:hover {
-            box-shadow: 0px 8px 20px rgba(3, 108, 160, 0.25);
-            transform: scale(1.04);
-            cursor: pointer;
-        }
-
-        .featured-img {
-            width: 180px;
-            height: 100px;
-            border-radius: 10px;
-            object-fit: cover;
-            margin-right: 15px;
-        }
-
-        .cate-btn {
-            background: #0168A4;
-            border: none;
-            /* padding: 5px 12px; */
-            width: 100%;
-            max-width: 132px;
-            height: 24px;
-            border-radius: 8px;
-            margin-right: 5px;
-            font-size: 12px;
-            font-weight: 400;
-            font-family: Inter;
-            line-height: 100%;
-            color: #ffffff;
-            transition: all 0.4s ease-in-out;
-        }
-
-        .cate-btn:hover {
-            background: #015484;
-            transform: scale(1.05)
-        }
-
-        .featured-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin: 0;
-            font-family: Inter;
-            line-height: 100%;
-            color: #000000;
-        }
-
-        .featured-desc {
-            font-size: 12px;
-            font-weight: 700;
-            font-family: Arial;
-            line-height: 160%;
-            color: #000000B2;
-            margin: 8px 0;
-        }
-
-        .read-time {
-            font-size: 12px;
-            font-weight: 700;
-            font-family: Arial;
-            line-height: 160%;
-            color: #00000080;
-            color: #333;
-        }
-
-        .post-date {
-            font-size: 12px;
-            font-weight: 700;
-            font-family: Arial;
-            line-height: 160%;
-            color: #00000080;
-        }
-
-        .social-icons i {
-            font-size: 16px;
-            margin-left: 10px;
-            cursor: pointer;
-            color: #FE0000;
-        }
-
-        .social-icons i:hover {
-            color: #0168A4;
-            transform: scale(1.5)
-        }
-
-        @media (max-width: 575px) {
-            .featured-card {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .featured-img {
-                margin: 0 auto 10px auto;
-            }
-        }
 
 
         .news-card {
-            /* padding: 5px; */
+            border: 1px solid #0071A8 !important;
+            /* padding-left: 10px; */
+        }
+
+        .news-title {
+            padding-left: 10px;
+
         }
     </style>
 @endpush

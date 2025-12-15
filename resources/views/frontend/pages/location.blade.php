@@ -121,7 +121,25 @@
             .faqs-section {
                 margin-top: 166% !important;
             }
+
+            .areas-section .areas-title {
+                font-size: 37px !important;
+
+            }
+
+            .cities-heading {
+                color: #ffffff;
+                font-size: 40px !important;
+
+            }
+
+            .form-heading {
+                font-size: 23px !important;
+
+            }
         }
+
+        /* @media(max-width:767px) {} */
     </style>
 @endpush
 
@@ -178,36 +196,36 @@
             <div class="row justify-content-center">
 
                 <!-- Column 1 -->
-                <div class="col-lg-4 col-md-6 text-center mb-4">
+                <div class="col-lg-4 col-md-6 text-center mb-4 animate-card">
                     <img src="{{ asset('frontend/images/location/6.png') }}" class="city-img" alt="City 3">
                     <h4 class="city-title mt-3">Dallas, TX</h4>
                 </div>
 
                 <!-- Column 2 -->
-                <div class="col-lg-4 col-md-6 text-center mb-4">
+                <div class="col-lg-4 col-md-6 text-center mb-4 animate-card">
                     <img src="{{ asset('frontend/images/location/5.png') }}" class="city-img" alt="City 3">
                     <h4 class="city-title mt-3">Houston, TX</h4>
                 </div>
 
                 <!-- Column 3 -->
-                <div class="col-lg-4 col-md-6 text-center mb-4">
+                <div class="col-lg-4 col-md-6 text-center mb-4 animate-card">
                     <img src="{{ asset('frontend/images/location/4.png') }}" class="city-img" alt="City 3">
                     <h4 class="city-title mt-3">Austin, TX</h4>
                 </div>
 
-                <div class="col-lg-4 col-md-6 text-center mb-4">
+                <div class="col-lg-4 col-md-6 text-center mb-4 animate-card">
                     <img src="{{ asset('frontend/images/location/3.png') }}" class="city-img" alt="City 3">
                     <h4 class="city-title mt-3">Dallas, TX</h4>
                 </div>
 
                 <!-- Column 2 -->
-                <div class="col-lg-4 col-md-6 text-center mb-4">
+                <div class="col-lg-4 col-md-6 text-center mb-4 animate-card">
                     <img src="{{ asset('frontend/images/location/2.png') }}" class="city-img" alt="City 3">
                     <h4 class="city-title mt-3">Houston, TX</h4>
                 </div>
 
                 <!-- Column 3 -->
-                <div class="col-lg-4 col-md-6 text-center mb-4">
+                <div class="col-lg-4 col-md-6 text-center mb-4 animate-card">
                     <img src="{{ asset('frontend/images/location/1.png') }}" class="city-img" alt="City 3">
                     <h4 class="city-title mt-3">Austin, TX</h4>
                 </div>
@@ -253,7 +271,7 @@
             <div class="row g-2">
 
                 <!-- Left Column -->
-                <div class="col-lg-6">
+                <div class="col-lg-6 animate-card">
                     <h2 class="contact-heading mb-3">Contact Us</h2>
                     <p class="contact-desc mb-4">
                         Have questions or need support? Our team is ready to assist you with expert imaging services,
@@ -284,7 +302,7 @@
                 </div>
 
                 <!-- Right Column: Form -->
-                <div class="col-lg-6">
+                <div class="col-lg-6 animate-card">
                     <div class="form-wrapper p-4">
                         <h3 class="form-heading mb-3">Do You Want Quick Chat?</h3>
                         <p class="form-desc mb-4">
@@ -591,89 +609,191 @@
     {{-- ============= reveiw sectiion ================== --}}
 
     <section>
-        <h2 class="review-heading">Our Users Are <span>Happy And Healthy</span> </h2>
-        <section class="review-slider-section">
-            <div class="review-slider-wrapper">
-                <div class="review-slider" id="reviewSlider">
+        <h2 class="review-heading">Our Users Are <span>Happy And Healthy</span></h2>
 
-                    <div class="tooltip-slide">
-                        <img src="{{ asset('frontend/images/hero-img-1.jpg') }}" alt="Hero 1">
-                        <div class="tooltip-box">
-                            <div class="stars">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="far fa-star text-warning"></i>
+        <div class="container">
+
+            <div class="mx-auto main-wrapper" style="width:1100px;">
+
+                <div class="swiper reviewSwiper">
+                    <div class="swiper-wrapper">
+
+                        <!-- Slide 1 -->
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-1.jpg') }}" alt="">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas diff fa-star "></i>
+                                </div>
+                                <p>
+
+                                    <span class="quote">“</span> "Pharmacy Store is my go-to for over-the-counter
+                                    medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
                             </div>
-                            <p>Pharmacy Store is my go-to.</p>
+                        </div>
+
+                        <!-- Slide 2 -->
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-4.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff"></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Slide 3 -->
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-3.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff"></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Slide 4 -->
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-2.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff "></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Slide 5 -->
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-1.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas diff fa-star "></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-1.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff"></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-1.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff"></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-1.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff"></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-1.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff"></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="tooltip-slide">
-                        <img src="{{ asset('frontend/images/hero-img-4.jpg') }}" alt="Hero 1">
-                        <div class="tooltip-box">
-                            <div class="stars">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="far fa-star text-warning"></i>
-                            </div>
-                            <p>Great service.</p>
-                        </div>
-                    </div>
-
-                    <div class="tooltip-slide">
-                        <img src="{{ asset('frontend/images/hero-img-3.jpg') }}" alt="Hero 1">
-                        <div class="tooltip-box">
-                            <div class="stars">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="far fa-star text-warning"></i>
-                            </div>
-                            <p>Good products.</p>
-                        </div>
-                    </div>
-
-                    <div class="tooltip-slide">
-                        <img src="{{ asset('frontend/images/hero-img-2.jpg') }}" alt="Hero 1">
-                        <div class="tooltip-box">
-                            <div class="stars">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="far fa-star text-warning"></i>
-                            </div>
-                            <p>Reliable quality.</p>
-                        </div>
-                    </div>
-
-                    <div class="tooltip-slide">
-                        <img src="{{ asset('frontend/images/hero-img-1.jpg') }}" alt="Hero 1">
-                        <div class="tooltip-box">
-                            <div class="stars">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="far fa-star text-warning"></i>
-                            </div>
-                            <p>Affordable prices.</p>
-                        </div>
-                    </div>
-
                 </div>
             </div>
-
-        </section>
-
-        <div>
-
-
+        </div>
     </section>
 
     {{-- ============recent news section ============ --}}

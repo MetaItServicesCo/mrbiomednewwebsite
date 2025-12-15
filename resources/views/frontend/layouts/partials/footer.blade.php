@@ -411,6 +411,32 @@
         font-size: 1em;
         font-weight: bold;
     }
+
+    /* ======= animation ============ */
+    .rotate-text {
+        font-weight: 700;
+        color: #ffffff;
+        display: inline-block;
+        letter-spacing: 1px;
+    }
+
+    .letter {
+        opacity: 0;
+        display: inline-block;
+        animation: letterFade 0.09s forwards;
+    }
+
+    @keyframes letterFade {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 </style>
 
 
@@ -488,7 +514,11 @@
             </div>
 
             <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                <h4 class="footer-h4 mb-2 ">Do You Want Quick Chat?</h4>
+                <h4 class="footer-h4 mb-2">
+                    Do You Want
+                    <span class="rotate-text"></span>
+                </h4>
+
                 <p class="footer-p">Fill out the form below and we'll get back to you as soon as possible.
                 </p>
                 <form>
@@ -578,3 +608,78 @@
         </div>
     </div>
 </footer>
+<script>
+    const words = [
+        "Quick Chat?",
+        "Support?",
+        "Help?",
+        "Guidance?",
+        "Assistance?"
+    ];
+
+    const colors = [
+        "#fff", // yellow
+        "#00e5ff", // cyan
+        "#ff5e5e", // red
+        "#8aff8a", // light green
+        "#d28bff" // purple
+    ];
+
+    let index = 0;
+    const rotatingText = document.querySelector(".rotate-text");
+
+    function animateLetters(word, color) {
+        rotatingText.innerHTML = "";
+
+        [...word].forEach((letter, i) => {
+            const span = document.createElement("span");
+            span.textContent = letter;
+            span.classList.add("letter");
+            span.style.animationDelay = (i * 10 0) + "ms";
+            span.style.color = color; // ★ COLOR ADDED ★
+            rotatingText.appendChild(span);
+        });
+    }
+
+    function rotateWord() {
+        animateLetters(words[index], colors[index]);
+        index = (index + 1) % words.length;
+    }
+
+    rotateWord();
+    setInterval(rotateWord, 2500);
+</script>
+
+
+{{-- <script>
+    const words = [
+        "Quick Chat?",
+        "Support?",
+        "Help?",
+        "Guidance?",
+        "Assistance?"
+    ];
+
+    let index = 0;
+    const rotatingText = document.querySelector(".rotate-text");
+
+    function animateLetters(word) {
+        rotatingText.innerHTML = ""; 
+
+        [...word].forEach((letter, i) => {
+            const span = document.createElement("span");
+            span.textContent = letter;
+            span.classList.add("letter");
+            span.style.animationDelay = (i * 60) + "ms";
+            rotatingText.appendChild(span);
+        });
+    }
+
+    function rotateWord() {
+        animateLetters(words[index]);
+        index = (index + 1) % words.length;
+    }
+
+    rotateWord(); 
+    setInterval(rotateWord, 2500); 
+</script> --}}

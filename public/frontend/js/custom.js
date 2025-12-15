@@ -1,361 +1,123 @@
-// (function () {
-//     const slider = document.getElementById("reviewSlider");
+// ================ review slider function ======================
 
-//     let originalSlides = Array.from(slider.children);
+function initReviewSlider() {
 
-//     const visible = 8;
-//     const slideWidth = 10;
-//     let index = 0;
+    const sliderEl = document.querySelector(".reviewSwiper");
 
-//     originalSlides.forEach(slide => slider.appendChild(slide.cloneNode(true)));
-//     let slides = Array.from(document.querySelectorAll(".tooltip-slide"));
+    // Agar page me slider exist nahi karta → function stop
+    if (!sliderEl) return;
 
-//     const totalOriginalSlides = originalSlides.length;
+    var swiper = new Swiper(".reviewSwiper", {
+        slidesPerView: 5,
+        spaceBetween: 40,
+        centeredSlides: true,
+        loop: true,
+        speed: 5000,
 
-//     function updateSlider() {
+        autoplay: {
+            delay: 10,
+            disableOnInteraction: false,
+            reverseDirection: true,
+        },
 
-//         slides.forEach(s => s.classList.remove("active"));
+        on: {
+            click(swiper) {
+                swiper.slideTo(swiper.clickedIndex, 900);
+            },
 
-//         const centerIndexInSlidesArray = index + Math.floor(visible / 2);
+            slideChange(swiper) {
+                updateTooltip(swiper);
+            },
 
-//         if (slides[centerIndexInSlidesArray]) slides[centerIndexInSlidesArray].classList.add("active");
-
-//         const offset = (visible * slideWidth) / 2 - (slideWidth / 2);
-//         const moveX = index * slideWidth;
-
-//         slider.style.transform = `translateX(-${moveX - offset}px)`;
-
-//         index++;
-
-//         if (index >= totalOriginalSlides) {
-
-//             setTimeout(() => {
-//                 slider.style.transition = "none";
-
-
-//                 index = index - totalOriginalSlides;
-
-//                 const newMoveX = index * slideWidth;
-//                 slider.style.transform = `translateX(-${newMoveX - offset}px)`;
-
-//                 setTimeout(() => slider.style.transition = "0.6s ease", 50);
-//             }, 600);
-//         }
-//     }
-
-//     updateSlider();
-
-//     setInterval(updateSlider, 2000);
-
-// })();
-
-
-// const faqItems = document.querySelectorAll('.faq-item');
-
-// faqItems.forEach(item => {
-//     item.addEventListener('click', () => {
-//         const isActive = item.classList.contains('active');
-
-//         faqItems.forEach(i => i.classList.remove('active'));
-
-//         if (!isActive) {
-//             item.classList.add('active');
-//         }
-//     });
-// });
-
-
-// =========== show more faqs js ============
-
-
-// (function () {
-//     const slider = document.getElementById("reviewSlider");
-
-//     let originalSlides = Array.from(slider.children);
-
-//     const visible = 8;       // Visible slides
-//     const slideWidth = 106;  // Width of each slide
-//     let index = 0;
-
-//     // Duplicate slides for infinite effect
-//     originalSlides.forEach(slide => slider.appendChild(slide.cloneNode(true)));
-//     let slides = Array.from(document.querySelectorAll(".tooltip-slide"));
-
-//     const totalOriginalSlides = originalSlides.length;
-
-//     // Update slider: center current index
-//     function updateSlider() {
-//         slides.forEach(s => s.classList.remove("active", "show-tooltip"));
-
-//         const centerIndex = index + Math.floor(visible / 2);
-//         if (slides[centerIndex]) {
-//             slides[centerIndex].classList.add("active");
-//             slides[centerIndex].classList.add("show-tooltip");
-//         }
-
-//         const offset = (visible * slideWidth) / 2 - slideWidth / 2;
-//         const moveX = index * slideWidth;
-
-//         slider.style.transition = "0.6s ease";
-//         slider.style.transform = `translateX(-${moveX - offset}px)`;
-
-//         index++;
-
-//         // Infinite loop
-//         if (index >= totalOriginalSlides) {
-//             setTimeout(() => {
-//                 slider.style.transition = "none";
-//                 index = index - totalOriginalSlides;
-//                 const newMoveX = index * slideWidth;
-//                 slider.style.transform = `translateX(-${newMoveX - offset}px)`;
-//                 setTimeout(() => slider.style.transition = "0.6s ease", 50);
-//             }, 600);
-//         }
-//     }
-
-//     // 🔥 Click on any slide to move to center
-//     slides.forEach((slide, i) => {
-//         slide.addEventListener("click", () => {
-//             index = i;
-//             updateSlider();
-//         });
-//     });
-
-//     updateSlider();
-//     setInterval(updateSlider, 2000); // Auto-slide every 2 sec
-
-// })();
-
-
-(function () {
-    const slider = document.getElementById("reviewSlider");
-
-    let originalSlides = Array.from(slider.children);
-
-    const visible = 8;       // Visible slides in container
-    const slideWidth = 106;  // Width of each slide
-    let index = 0;           // Current index of leftmost visible slide
-
-    // Duplicate slides for infinite effect
-    originalSlides.forEach(slide => slider.appendChild(slide.cloneNode(true)));
-    let slides = Array.from(document.querySelectorAll(".tooltip-slide"));
-    const totalOriginalSlides = originalSlides.length;
-
-    function updateSlider() {
-        slides.forEach(s => s.classList.remove("active", "show-tooltip"));
-
-        // Calculate center slide index
-        const centerIndex = index + Math.floor(visible / 2);
-
-        // Only center slide gets tooltip
-        if (slides[centerIndex]) {
-            slides[centerIndex].classList.add("active");
-            slides[centerIndex].classList.add("show-tooltip");
+            init(swiper) {
+                updateTooltip(swiper);
+            }
         }
-
-        const offset = (visible * slideWidth) / 2 - slideWidth / 2;
-        const moveX = index * slideWidth;
-
-        slider.style.transition = "0.6s ease";
-        slider.style.transform = `translateX(-${moveX - offset}px)`;
-
-        index++;
-
-        // Loop when reaching end
-        if (index >= totalOriginalSlides) {
-            setTimeout(() => {
-                slider.style.transition = "none";
-                index = index - totalOriginalSlides;
-                const newMoveX = index * slideWidth;
-                slider.style.transform = `translateX(-${newMoveX - offset}px)`;
-                setTimeout(() => slider.style.transition = "0.6s ease", 50);
-            }, 600);
-        }
-    }
-
-    // Click: move clicked slide to center
-    slides.forEach((slide, i) => {
-        slide.addEventListener("click", () => {
-            index = i - Math.floor(visible / 2);
-            if (index < 0) index = 0;
-            updateSlider();
-        });
     });
+}
 
-    updateSlider();
+function updateTooltip(swiper) {
+    if (!swiper) return;
 
-    // Auto-slide every 2 seconds
-    setInterval(updateSlider, 2000);
+    document.querySelectorAll('.tooltip-slide')
+        .forEach(s => s.classList.remove('is-center'));
 
-})();
+    let centerSlide = swiper.slides[swiper.activeIndex];
 
+    if (centerSlide && centerSlide.classList.contains("tooltip-slide")) {
+        centerSlide.classList.add("is-center");
+    }
+}
 
-
-// ============= faqs ==================
-
-
-// document.addEventListener("DOMContentLoaded", function () {
-//     const faqItems = Array.from(document.querySelectorAll(".faqs-list .faq-item"));
-//     const seeMoreBtn = document.querySelector(".btn-see-more");
-//     const visibleCount = 4;
-//     const totalFAQs = faqItems.length;
-
-//     const originalBg = "#0071A8";
-//     const lessBg = "red";
-
-//     let currentVisible = visibleCount;
-
-//     // Hide extra FAQs initially
-//     faqItems.forEach((item, index) => {
-//         if (index >= visibleCount) item.style.display = "none";
-//     });
-
-//     // Accordion toggle (one open at a time)
-//     faqItems.forEach(item => {
-//         const title = item.querySelector(".faq-title");
-//         const content = item.querySelector(".faq-content");
-
-//         title.addEventListener("click", () => {
-//             faqItems.forEach(i => {
-//                 if (i !== item) {
-//                     i.classList.remove("active");
-//                     i.querySelector(".faq-content").style.maxHeight = "0px";
-//                 }
-//             });
-
-//             item.classList.toggle("active");
-//             if (item.classList.contains("active")) {
-//                 content.style.maxHeight = content.scrollHeight + "px";
-//             } else {
-//                 content.style.maxHeight = "0px";
-//             }
-//         });
-//     });
-
-//     // ⭐ FINAL UPDATED LOGIC — Show All at Once ⭐
-//     seeMoreBtn.addEventListener("click", () => {
-//         const hiddenItems = faqItems.filter(item => item.style.display === "none");
-
-//         if (hiddenItems.length > 0) {
-//             // 👉 Show ALL hidden FAQs at once
-//             hiddenItems.forEach(item => item.style.display = "block");
-
-//             currentVisible = totalFAQs;
-//             seeMoreBtn.textContent = "Show Less";
-//             seeMoreBtn.style.backgroundColor = lessBg;
-
-//         } else {
-//             // 👉 Hide all except first 4
-//             faqItems.forEach((item, index) => {
-//                 if (index >= visibleCount) {
-//                     item.style.display = "none";
-//                     item.classList.remove("active");
-//                     item.querySelector(".faq-content").style.maxHeight = "0px";
-//                 }
-//             });
-
-//             currentVisible = visibleCount;
-//             seeMoreBtn.textContent = "See More";
-//             seeMoreBtn.style.backgroundColor = originalBg;
-//         }
-//     });
-// });
+// Page load par slider initialize
+document.addEventListener("DOMContentLoaded", initReviewSlider);
 
 document.addEventListener("DOMContentLoaded", function () {
+    const faqItems = Array.from(document.querySelectorAll(".faqs-list .faq-item"));
+    const seeMoreBtn = document.querySelector(".btn-see-more");
+    const visibleCount = 4;
+    const totalFAQs = faqItems.length;
 
-    // Har faqs-section ke liye alag logic
-    document.querySelectorAll(".faqs-section").forEach(function (section) {
-        const faqItems = Array.from(section.querySelectorAll(".faqs-list .faq-item"));
-        const seeMoreBtn = section.querySelector(".btn-see-more");
+    const originalBg = "#0071A8";
+    const lessBg = "red";
 
-        if (!faqItems.length) {
-            return; // is section mein faqs hi nahi
-        }
+    let currentVisible = visibleCount;
 
-        const visibleCount = parseInt(section.getAttribute('data-visible') || '4', 10);
-        const totalFAQs = faqItems.length;
+    // Hide extra FAQs initially
+    faqItems.forEach((item, index) => {
+        if (index >= visibleCount) item.style.display = "none";
+    });
 
-        const btnMoreText = section.getAttribute('data-btn-more') || 'See More';
-        const btnLessText = section.getAttribute('data-btn-less') || 'Show Less';
+    // Accordion toggle (one open at a time)
+    faqItems.forEach(item => {
+        const title = item.querySelector(".faq-title");
+        const content = item.querySelector(".faq-content");
 
-        const originalBg = "#0168A4"; // tumhari CSS wali color
-        const lessBg = "#004972";
+        title.addEventListener("click", () => {
+            faqItems.forEach(i => {
+                if (i !== item) {
+                    i.classList.remove("active");
+                    i.querySelector(".faq-content").style.maxHeight = "0px";
+                }
+            });
 
-        let allVisible = false;
-
-        // --- Initially: sirf first N show karo
-        faqItems.forEach((item, index) => {
-            const content = item.querySelector(".faq-content");
-            content.style.maxHeight = "0px"; // start closed
-
-            if (index >= visibleCount) {
-                item.style.display = "none";
+            item.classList.toggle("active");
+            if (item.classList.contains("active")) {
+                content.style.maxHeight = content.scrollHeight + "px";
+            } else {
+                content.style.maxHeight = "0px";
             }
         });
+    });
 
-        // --- Accordion toggle (one open at a time)
-        faqItems.forEach(item => {
-            const title = item.querySelector(".faq-title");
-            const content = item.querySelector(".faq-content");
+    // ⭐ FINAL UPDATED LOGIC — Show All at Once ⭐
+    seeMoreBtn.addEventListener("click", () => {
+        const hiddenItems = faqItems.filter(item => item.style.display === "none");
 
-            title.addEventListener("click", () => {
-                // sab close karo except current
-                faqItems.forEach(i => {
-                    const c = i.querySelector(".faq-content");
-                    if (i !== item) {
-                        i.classList.remove("active");
-                        c.style.maxHeight = "0px";
-                    }
-                });
+        if (hiddenItems.length > 0) {
+            // 👉 Show ALL hidden FAQs at once
+            hiddenItems.forEach(item => item.style.display = "block");
 
-                item.classList.toggle("active");
-                if (item.classList.contains("active")) {
-                    content.style.maxHeight = content.scrollHeight + "px";
-                } else {
-                    content.style.maxHeight = "0px";
+            currentVisible = totalFAQs;
+            seeMoreBtn.textContent = "Show Less";
+            seeMoreBtn.style.backgroundColor = lessBg;
+
+        } else {
+            // 👉 Hide all except first 4
+            faqItems.forEach((item, index) => {
+                if (index >= visibleCount) {
+                    item.style.display = "none";
+                    item.classList.remove("active");
+                    item.querySelector(".faq-content").style.maxHeight = "0px";
                 }
             });
-        });
 
-        // --- See More / Show Less (all at once)
-        if (seeMoreBtn && totalFAQs > visibleCount) {
-
-            // initial button state
-            seeMoreBtn.textContent = btnMoreText;
+            currentVisible = visibleCount;
+            seeMoreBtn.textContent = "See More";
             seeMoreBtn.style.backgroundColor = originalBg;
-
-            seeMoreBtn.addEventListener("click", () => {
-                if (!allVisible) {
-                    // show ALL
-                    faqItems.forEach(item => {
-                        item.style.display = "block";
-                    });
-                    seeMoreBtn.textContent = btnLessText;
-                    seeMoreBtn.style.backgroundColor = lessBg;
-                    allVisible = true;
-                } else {
-                    // hide except first N
-                    faqItems.forEach((item, index) => {
-                        const content = item.querySelector(".faq-content");
-                        if (index >= visibleCount) {
-                            item.style.display = "none";
-                            item.classList.remove("active");
-                            content.style.maxHeight = "0px";
-                        }
-                    });
-                    seeMoreBtn.textContent = btnMoreText;
-                    seeMoreBtn.style.backgroundColor = originalBg;
-                    allVisible = false;
-                }
-            });
-        } else if (seeMoreBtn) {
-            // agar FAQs already <= visibleCount hain to button hide
-            seeMoreBtn.style.display = "none";
         }
-
     });
 });
-
 
 
 
@@ -645,7 +407,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-
 // ---------------------------------------------------------
 // When user selects a state, load its related cities via AJAX
 // ---------------------------------------------------------
@@ -714,8 +475,90 @@ $('#footer_state').on('change', function () {
 });
 
 
+// ============= animate card =========================
 
 
+// document.addEventListener("DOMContentLoaded", function () {
+//     const cards = document.querySelectorAll(".animate-card");
+
+//     const observer = new IntersectionObserver((entries, observer) => {
+//         entries.forEach((entry, index) => {
+//             if (entry.isIntersecting) {
+//                 const card = entry.target;
+
+//                 const delay = Array.from(cards).indexOf(card) * 300;
+//                 card.style.setProperty('--delay', `${delay}ms`);
+
+//                 setTimeout(() => {
+//                     card.classList.add("show");
+//                 }, delay);
+
+//                 observer.unobserve(card);
+//             }
+//         });
+//     }, {
+//         threshold: 0.2
+//     });
+
+//     cards.forEach(card => observer.observe(card));
+// });
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const cards = document.querySelectorAll(".animate-card");
+
+    const observer = new IntersectionObserver((entries, observer) => {
+
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+
+            const card = entry.target;
+
+            // Find parent row
+            const row = card.closest('.row');
+            if (!row) return;
+
+            // Cards only inside this row
+            const rowCards = row.querySelectorAll('.animate-card');
+
+            // Index inside its own row
+            const index = Array.from(rowCards).indexOf(card);
+
+            // Row-wise delay (reset)
+            const delay = index * 500; // 0, 300, 600...
+
+            card.style.setProperty('--delay', `${delay}ms`);
+            card.classList.add('show');
+
+            observer.unobserve(card); // animate once
+        });
+
+    }, {
+        threshold: 0.25
+    });
+
+    cards.forEach(card => observer.observe(card));
+});
 
 
+//  add fade-left & right js
 
+document.addEventListener("DOMContentLoaded", () => {
+
+    const elements = document.querySelectorAll('.fade-left, .fade-right');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+
+                // ❌ agar bar-bar nahi chahiye
+                // observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.2
+    });
+
+    elements.forEach(el => observer.observe(el));
+});

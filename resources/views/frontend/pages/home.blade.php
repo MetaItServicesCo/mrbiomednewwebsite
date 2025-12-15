@@ -50,7 +50,7 @@
                     </p>
 
                     <!-- Images + Customer Count -->
-                    <div class="d-flex align-items-center mt-">
+                    <div class="d-flex align-items-center mt- fade-left">
                         <!-- Stacked Images -->
                         <div class="stack-images position-relative" style="width: 160px; height: 70px;">
                             <!-- Image Containers -->
@@ -70,7 +70,7 @@
                         </div>
 
                         <!-- Customer Count -->
-                        <div class="ms-5">
+                        <div class="ms-5 fade-right">
                             <h6 class="customer-count">100k+</h6>
                             <p class="customer-text">Satisfied Customers</p>
                         </div>
@@ -81,13 +81,13 @@
                     <div class="mt-5 d-flex align-items-center gap-4">
 
                         <!-- Service Request -->
-                        <div class="d-flex align-items-center gap-2">
+                        <div class="d-flex align-items-center gap-2 fade-left">
                             <i class="bi bi-key" id="service-icon"></i>
                             <button class="hero-btn">Service Request</button>
                         </div>
 
                         <!-- Login -->
-                        <div class="d-flex align-items-center gap-2">
+                        <div class="d-flex align-items-center gap-2 fade-right">
                             <i class="bi bi-person-fill" id="login-icon"></i>
                             <button class="hero-btn">Medrad Login</button>
                         </div>
@@ -98,7 +98,7 @@
                 </div>
 
                 <!-- RIGHT COLUMN -->
-                <div class="col-lg-6 mt-5 mt-lg-0 text-center">
+                <div class="col-lg-6 mt-5 mt-lg-0 text-center fade-right">
                     <div class="slider-container">
                         <div class="slider-track">
 
@@ -520,90 +520,191 @@
     {{-- ============= reveiw sectiion ================== --}}
 
     <section>
-        <h2 class="review-heading">Our Users Are <span>Happy And Healthy</span> </h2>
-        <section class="review-slider-section">
-            <div class="review-slider-wrapper">
-                <div class="review-slider" id="reviewSlider">
+        <h2 class="review-heading">Our Users Are <span>Happy And Healthy</span></h2>
 
-                    <div class="tooltip-slide">
-                        <img src="{{ asset('frontend/images/hero-img-1.jpg') }}" alt="Hero 1">
-                        <div class="tooltip-box">
-                            <div class="stars">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="far fa-star text-warning"></i>
+        <div class="container">
+
+            <div class="mx-auto main-wrapper" style="width:1100px;">
+
+                <div class="swiper reviewSwiper">
+                    <div class="swiper-wrapper">
+
+                        <!-- Slide 1 -->
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-1.jpg') }}" alt="">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas diff fa-star "></i>
+                                </div>
+                                <p>
+
+                                    <span class="quote">“</span> "Pharmacy Store is my go-to for over-the-counter
+                                    medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
                             </div>
-                            <p>Pharmacy Store is my go-to.</p>
+                        </div>
+
+                        <!-- Slide 2 -->
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-4.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff"></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Slide 3 -->
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-3.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff"></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Slide 4 -->
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-2.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff "></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Slide 5 -->
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-1.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas diff fa-star "></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-1.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff"></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-1.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff"></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-1.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff"></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-1.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff"></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="tooltip-slide">
-                        <img src="{{ asset('frontend/images/hero-img-4.jpg') }}" alt="Hero 1">
-                        <div class="tooltip-box">
-                            <div class="stars">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="far fa-star text-warning"></i>
-                            </div>
-                            <p>Great service.</p>
-                        </div>
-                    </div>
-
-                    <div class="tooltip-slide">
-                        <img src="{{ asset('frontend/images/hero-img-3.jpg') }}" alt="Hero 1">
-                        <div class="tooltip-box">
-                            <div class="stars">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="far fa-star text-warning"></i>
-                            </div>
-                            <p>Good products.</p>
-                        </div>
-                    </div>
-
-                    <div class="tooltip-slide">
-                        <img src="{{ asset('frontend/images/hero-img-2.jpg') }}" alt="Hero 1">
-                        <div class="tooltip-box">
-                            <div class="stars">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="far fa-star text-warning"></i>
-                            </div>
-                            <p>Reliable quality.</p>
-                        </div>
-                    </div>
-
-                    <div class="tooltip-slide">
-                        <img src="{{ asset('frontend/images/hero-img-1.jpg') }}" alt="Hero 1">
-                        <div class="tooltip-box">
-                            <div class="stars">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="far fa-star text-warning"></i>
-                            </div>
-                            <p>Affordable prices.</p>
-                        </div>
-                    </div>
-
-
                 </div>
             </div>
-
-        </section>
-
-        <div>
-
-
+        </div>
     </section>
 
     {{-- ============ Recent News Section ============ --}}
@@ -617,31 +718,39 @@
 
 @push('frontend-scripts')
     <script>
-        const track = document.querySelector(".slider-track");
-        const slides = document.querySelectorAll(".slide");
-        let index = 1; // start from real first slide
-        const total = slides.length;
+        document.addEventListener("DOMContentLoaded", function() {
 
-        // Initial position
-        track.style.transform = `translateX(-${index * 100}%)`;
+            const track = document.querySelector(".slider-track");
+            const slides = document.querySelectorAll(".slide");
 
-        function autoSlide() {
-            index++;
-            track.style.transition = "transform 0.7s ease-in-out";
+            if (!track || slides.length === 0) return;
+
+            let index = 1;
+            let total = slides.length;
+
+            // Initial translate
             track.style.transform = `translateX(-${index * 100}%)`;
 
-            // Reset when reach the last clone
-            if (index === total - 1) {
-                setTimeout(() => {
-                    track.style.transition = "none";
-                    index = 1; // back to real first slide
-                    track.style.transform = `translateX(-100%)`;
-                }, 700);
-            }
-        }
+            function autoSlide() {
+                index++;
+                track.style.transition = "transform 0.8s ease-in-out";
+                track.style.transform = `translateX(-${index * 100}%)`;
 
-        setInterval(autoSlide, 4000);
+                // If clone slide reached → instantly jump to first real slide
+                if (index >= total - 1) {
+                    setTimeout(() => {
+                        track.style.transition = "none";
+                        index = 1;
+                        track.style.transform = `translateX(-100%)`;
+                    }, 800);
+                }
+            }
+
+            setInterval(autoSlide, 3500);
+
+        });
     </script>
+
 
 
     <script>

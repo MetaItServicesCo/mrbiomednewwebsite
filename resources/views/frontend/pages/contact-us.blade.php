@@ -197,6 +197,85 @@
             transform: scale(1.1);
 
         }
+
+
+        /* =============== what we offer ======================= */
+
+        .custom-card {
+            width: 276px;
+            height: 436px;
+            border-radius: 30px;
+            border: 3px solid #076FA1;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            box-sizing: border-box;
+            box-shadow: 0px 4px 14.8px #5BC3C4;
+        }
+
+        .custom-card-header {
+            background: #0071A8;
+            padding: 18px 16px;
+            border-top-left-radius: 25px;
+            /* slightly less than overall radius so header fits */
+            border-top-right-radius: 25px;
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 67px;
+            /* max-width: 270px; */
+        }
+
+        .card-heading {
+            margin: 0;
+            font-size: 22px;
+            color: #FFFFFF;
+            font-weight: 700;
+            text-align: center;
+            line-height: 100%;
+            font-family: Inter;
+        }
+
+        .custom-card-body {
+            padding: 18px 20px;
+            flex: 1 1 auto;
+            overflow-y: auto;
+            /* if list is long, allow scroll inside card */
+        }
+
+        .service-list {
+            list-style: disc;
+            padding-left: 18px;
+            margin: 0;
+        }
+
+        .service-list li {
+            font-family: Inter;
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 100%;
+            letter-spacing: 0%;
+        }
+
+        /* Small device adjustments: center cards and allow full width if needed */
+        @media (max-width: 575.98px) {
+            .custom-card {
+                width: 100%;
+                max-width: 276px;
+                /* keeps card from getting too large on wide phones */
+                height: auto;
+                min-height: 436px;
+                /* keep visual height if you prefer fixed look */
+            }
+        }
+
+        /* Optional: keep consistent gap between cards when centered */
+        .offer-section .row>.col-12 {
+            display: flex;
+            justify-content: center;
+        }
     </style>
 @endpush
 
@@ -383,6 +462,7 @@
         </div>
     </section>
     {{-- ======================== offer slider ======================== --}}
+
     <section class="offer-section mt-5">
         <div class="container">
 
@@ -392,102 +472,91 @@
                 We provide top-quality medical equipment & services to meet all your healthcare needs.
             </p>
 
-            <!-- Slider Wrapper -->
-            <div class="offer-slider-wrapper position-relative">
-
-                <!-- Prev Button -->
-                <button class="offer-prev"><i class="bi bi-chevron-left"></i></button>
-
-                <!-- Slider Container -->
-                <div class="offer-slider-container">
-                    <div class="offer-slider-track">
-
-                        <!-- CARD 1 -->
-                        <div class="offer-card">
-                            <img src="{{ asset('frontend/images/slider-img-1.png') }}" alt="card-im"
-                                class="card-img img-fluid">
-                            <h4 class="card-title">Repairing Services</h4>
-                            <hr>
-                            <p class="card-desc">High quality ECG machines for accurate monitoring.</p>
-                            <button class="read-btn">Read More</button>
+            <!-- Cards row -->
+            <div class="row justify-content-center g-4">
+                <!-- Repeat this col 4 times (or loop in blade) -->
+                <div class="col-12 col-sm-6 col-md-6 col-lg-3 d-flex justify-content-center">
+                    <div class="custom-card">
+                        <div class="custom-card-header">
+                            <h3 class="card-heading">Repairing Services</h3>
                         </div>
-
-                        <!-- CARD 2 -->
-                        <div class="offer-card">
-                            <img src="{{ asset('frontend/images/slider-img-1.png') }}" alt="card-im"
-                                class="card-img img-fluid">
-                            <h4 class="card-title">Surgical Equipment </h4>
-                            <hr>
-                            <p class="card-desc">Advanced imaging technology for clear results.</p>
-                            <button class="read-btn">Read More</button>
+                        <div class="custom-card-body">
+                            <ul class="service-list">
+                                <li>Diagnostic check</li>
+                                <li>Spare part replacement</li>
+                                <li>Electrical repairs</li>
+                                <li>Calibration</li>
+                                <li>Preventive maintenance</li>
+                                <li>Emergency repair support</li>
+                                <li>On-site servicing</li>
+                            </ul>
                         </div>
-
-                        <!-- CARD 3 -->
-                        <div class="offer-card">
-                            <img src="{{ asset('frontend/images/slider-img-1.png') }}" alt="card-im"
-                                class="card-img img-fluid">
-                            <h4 class="card-title">Disposition Services</h4>
-                            <hr>
-                            <p class="card-desc">Portable ultrasound for quick examinations.</p>
-                            <button class="read-btn">Read More</button>
-                        </div>
-
-                        <!-- CARD 4 -->
-                        <div class="offer-card">
-                            <img src="{{ asset('frontend/images/slider-img-1.png') }}" alt="card-im"
-                                class="card-img img-fluid">
-                            <h4 class="card-title">ICU Monitor</h4>
-                            <hr>
-                            <p class="card-desc">Real-time monitoring for critical patients.</p>
-                            <button class="read-btn">Read More</button>
-                        </div>
-
-                        <!-- Duplicate first 4 cards for infinite loop -->
-                        <div class="offer-card">
-                            <img src="{{ asset('frontend/images/slider-img-1.png') }}" alt="card-im"
-                                class="card-img img-fluid">
-                            <h4 class="card-title">Medical Equipment </h4>
-                            <hr>
-                            <p class="card-desc">High quality ECG machines.</p>
-                            <button class="read-btn">Read More</button>
-                        </div>
-                        <div class="offer-card">
-                            <img src="{{ asset('frontend/images/slider-img-1.png') }}" alt="card-im"
-                                class="card-img img-fluid">
-                            <h4 class="card-title">X-ray Machine</h4>
-                            <hr>
-                            <p class="card-desc">Advanced imaging results.</p>
-                            <button class="read-btn">Read More</button>
-                        </div>
-                        <div class="offer-card">
-                            <img src="{{ asset('frontend/images/slider-img-1.png') }}" alt="card-im"
-                                class="card-img img-fluid">
-                            <h4 class="card-title">Ultrasound</h4>
-                            <hr>
-                            <p class="card-desc">Portable & fast.</p>
-                            <button class="read-btn">Read More</button>
-                        </div>
-                        <div class="offer-card">
-                            <img src="{{ asset('frontend/images/slider-img-1.png') }}" alt="card-im"
-                                class="card-img img-fluid">
-                            <h4 class="card-title">ICU Monitor</h4>
-                            <hr>
-                            <p class="card-desc">Critical monitoring.</p>
-                            <button class="read-btn">Read More</button>
-                        </div>
-
                     </div>
                 </div>
 
-                <!-- Next Button -->
-                <button class="offer-next"><i class="bi bi-chevron-right"></i></button>
-                <!-- PAGINATION DOTS -->
-                <div class="offer-pagination"></div>
+                <div class="col-12 col-sm-6 col-md-6 col-lg-3 d-flex justify-content-center">
+                    <div class="custom-card">
+                        <div class="custom-card-header">
+                            <h3 class="card-heading">Surgical Equipment </h3>
+                        </div>
+                        <div class="custom-card-body">
+                            <ul class="service-list">
+                                <li>Diagnostic check</li>
+                                <li>Spare part replacement</li>
+                                <li>Electrical repairs</li>
+                                <li>Calibration</li>
+                                <li>Preventive maintenance</li>
+                                <li>Emergency repair support</li>
+                                <li>On-site servicing</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-md-6 col-lg-3 d-flex justify-content-center">
+                    <div class="custom-card">
+                        <div class="custom-card-header">
+                            <h3 class="card-heading">Medical Equipment </h3>
+                        </div>
+                        <div class="custom-card-body">
+                            <ul class="service-list">
+                                <li>Diagnostic check</li>
+                                <li>Spare part replacement</li>
+                                <li>Electrical repairs</li>
+                                <li>Calibration</li>
+                                <li>Preventive maintenance</li>
+                                <li>Emergency repair support</li>
+                                <li>On-site servicing</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-md-6 col-lg-3 d-flex justify-content-center">
+                    <div class="custom-card">
+                        <div class="custom-card-header">
+                            <h3 class="card-heading">Disposition Services</h3>
+                        </div>
+                        <div class="custom-card-body">
+                            <ul class="service-list">
+                                <li>Diagnostic check</li>
+                                <li>Spare part replacement</li>
+                                <li>Electrical repairs</li>
+                                <li>Calibration</li>
+                                <li>Preventive maintenance</li>
+                                <li>Emergency repair support</li>
+                                <li>On-site servicing</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /4 cards -->
 
             </div>
+            <!-- /row -->
+
         </div>
     </section>
-
     {{-- ================faqs section ================ --}}
 
     <section class="faqs-section py-5">
@@ -733,89 +802,191 @@
     {{-- ============= reveiw sectiion ================== --}}
 
     <section>
-        <h2 class="review-heading">Our Users Are <span>Happy And Healthy</span> </h2>
-        <section class="review-slider-section">
-            <div class="review-slider-wrapper">
-                <div class="review-slider" id="reviewSlider">
+        <h2 class="review-heading">Our Users Are <span>Happy And Healthy</span></h2>
 
-                    <div class="tooltip-slide">
-                        <img src="{{ asset('frontend/images/hero-img-1.jpg') }}" alt="Hero 1">
-                        <div class="tooltip-box">
-                            <div class="stars">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="far fa-star text-warning"></i>
+        <div class="container">
+
+            <div class="mx-auto main-wrapper" style="width:1100px;">
+
+                <div class="swiper reviewSwiper">
+                    <div class="swiper-wrapper">
+
+                        <!-- Slide 1 -->
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-1.jpg') }}" alt="">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas diff fa-star "></i>
+                                </div>
+                                <p>
+
+                                    <span class="quote">“</span> "Pharmacy Store is my go-to for over-the-counter
+                                    medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
                             </div>
-                            <p>Pharmacy Store is my go-to.</p>
+                        </div>
+
+                        <!-- Slide 2 -->
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-4.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff"></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Slide 3 -->
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-3.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff"></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Slide 4 -->
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-2.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff "></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Slide 5 -->
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-1.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas diff fa-star "></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-1.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff"></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-1.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff"></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-1.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff"></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-1.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff"></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="tooltip-slide">
-                        <img src="{{ asset('frontend/images/hero-img-4.jpg') }}" alt="Hero 1">
-                        <div class="tooltip-box">
-                            <div class="stars">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="far fa-star text-warning"></i>
-                            </div>
-                            <p>Great service.</p>
-                        </div>
-                    </div>
-
-                    <div class="tooltip-slide">
-                        <img src="{{ asset('frontend/images/hero-img-3.jpg') }}" alt="Hero 1">
-                        <div class="tooltip-box">
-                            <div class="stars">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="far fa-star text-warning"></i>
-                            </div>
-                            <p>Good products.</p>
-                        </div>
-                    </div>
-
-                    <div class="tooltip-slide">
-                        <img src="{{ asset('frontend/images/hero-img-2.jpg') }}" alt="Hero 1">
-                        <div class="tooltip-box">
-                            <div class="stars">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="far fa-star text-warning"></i>
-                            </div>
-                            <p>Reliable quality.</p>
-                        </div>
-                    </div>
-
-                    <div class="tooltip-slide">
-                        <img src="{{ asset('frontend/images/hero-img-1.jpg') }}" alt="Hero 1">
-                        <div class="tooltip-box">
-                            <div class="stars">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="far fa-star text-warning"></i>
-                            </div>
-                            <p>Affordable prices.</p>
-                        </div>
-                    </div>
-
                 </div>
             </div>
-
-        </section>
-
-        <div>
-
-
+        </div>
     </section>
 
     {{-- ============recent news section ============ --}}

@@ -14,7 +14,7 @@
 
         }
 
-        .review-heading {
+        .review-headingg {
             font-size: 50px;
             font-family: Arial;
             font-weight: 700;
@@ -35,8 +35,59 @@
 
 
         /* Primary Button */
-        .btn-primary-custom,
+
+        .btn-primary-custom {
+            position: relative;
+            max-width: 288px;
+            width: 100%;
+            height: 43px;
+            background: #0168A4;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: 400;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.5s ease;
+
+            box-shadow: 0px 0px 4px #00000040;
+            clip-path: polygon(0% 0%,
+                    100% 0%,
+                    100% 100%,
+                    0% 100%);
+            border-radius: 10px;
+
+        }
+
+        /* ✨ hover par straight ho jaye */
+        .btn-primary-custom:hover {
+
+
+            clip-path: polygon(12% 0%,
+                    100% 0%,
+                    88% 100%,
+                    0% 100%);
+
+        }
+
+
+
+
+
+
+
+
+
+        /* Outline Button */
         .btn-outline-custom {
+            max-width: 160px;
+            width: 100%;
+            background: #0168A4;
+            color: #fff;
+            box-shadow: 0px 0px 4px #00000040;
+            transition: all 0.4s ease-in-out;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -47,28 +98,6 @@
             font-size: 20px;
             height: 43px;
             line-height: 100%;
-        }
-
-        /* Primary Button */
-        .btn-primary-custom {
-            max-width: 288px;
-            width: 100%;
-            background: #0168A4;
-            color: #fff;
-            box-shadow: 0px 0px 4px #00000040;
-            transition: all 0.4s ease-in-out;
-
-        }
-
-        /* Outline Button */
-        .btn-outline-custom {
-            max-width: 160px;
-            width: 100%;
-            background: #0168A4;
-            color: #fff;
-            box-shadow: 0px 0px 4px #00000040;
-            transition: all 0.4s ease-in-out;
-
 
         }
 
@@ -92,7 +121,7 @@
         /* ================= RESPONSIVE ================= */
 
         @media(max-width: 992px) {
-            .review-heading {
+            .review-headingg {
                 font-size: 28px;
             }
 
@@ -106,6 +135,14 @@
             .review-btn {
                 width: 100%;
                 text-align: center;
+            }
+
+            .btn-primary-custom,
+            .btn-outline-custom {
+
+                font-size: 13px !important;
+                height: 38px !important;
+
             }
         }
 
@@ -162,32 +199,53 @@
         }
 
         /* ============================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   📱 Responsive Breakpoints
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ============================ */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           📱 Responsive Breakpoints
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ============================ */
 
-        /* Tablet (md) */
-        @media (max-width: 992px) {
-            .bio-box {
-                max-width: 100%;
-                height: auto;
-                padding: 20px;
+        @media (max-width: 768px) {
+            .bio-wrapper {
+                /* text-align: center; */
             }
 
             .bio-img {
-                height: 170px;
+                /* width: 100%; */
+                height: auto;
+                border-radius: 20px 20px 0 0;
+            }
+
+            .bio-box {
+                /* border-radius: 0 0 20px 20px; */
+                height: auto;
+                text-align: left;
+            }
+
+            .bio-btn {
+                position: static;
+                margin-top: 15px;
+                display: inline-block;
+            }
+
+            .bio-heading {
+                font-size: 16px;
+
+            }
+
+            .bio-desc {
+                font-size: 10px;
+
             }
         }
 
-        /* Mobile (sm) */
-        @media (max-width: 768px) {
+        /* Extra Small (xs) */
+        @media (max-width: 480px) {
             .bio-wrapper {
-                text-align: center;
+                /* text-align: center; */
             }
 
             .bio-img {
                 width: 100%;
                 height: auto;
-                border-radius: 20px 20px 0 0;
+                border-radius: 0px !important;
             }
 
             .bio-box {
@@ -201,21 +259,22 @@
                 margin-top: 15px;
                 display: inline-block;
             }
-        }
 
-        /* Extra Small (xs) */
-        @media (max-width: 480px) {
             .bio-heading {
-                font-size: 20px;
+                font-size: 16px;
+
             }
 
             .bio-desc {
-                font-size: 14px;
+                font-size: 10px;
+
             }
 
-            .bio-btn {
-                padding: 8px 18px;
+            .flex-wrrapper {
+                display: flex;
+                flex-wrap: wrap;
             }
+
         }
 
 
@@ -296,11 +355,15 @@
 
         .review-scroll {
             max-height: 256px;
-            /* 👈 scrollbar ki height center me fix */
             overflow-y: auto;
             margin: 20px 0;
-            /* padding: 5px; */
+            scroll-behavior: smooth;
+
         }
+
+        /* .review-scroll::-webkit-scrollbar {
+                                                                                                                                            width: 8px;
+                                                                                                                                        } */
 
         /* -------- Scrollbar Styling -------- */
         .review-scroll::-webkit-scrollbar {
@@ -403,7 +466,6 @@
                 width: 100%;
                 max-width: 330px;
                 height: auto;
-                /* padding: 18px; */
             }
         }
 
@@ -433,65 +495,7 @@
 
 
         /* =========================== */
-        .reviewSwiper {
-            width: 1100px;
-            padding: 200px 0 80px;
-        }
-
-        .tooltip-slide {
-            width: 106px !important;
-            height: 96px;
-            border-radius: 34px;
-            position: relative;
-        }
-
-        .tooltip-slide img {
-            width: 100%;
-            height: 100%;
-            border-radius: 34px;
-            object-fit: cover;
-            filter: brightness(40%);
-            transition: .3s;
-        }
-
-        .swiper-slide-active img {
-            transform: scale(1.1);
-            filter: brightness(100%);
-        }
-
-        /* Tooltip */
-        .tooltip-box {
-            position: absolute;
-            bottom: 150%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 420px;
-            padding: 14px;
-            background: #000;
-            color: #fff;
-            opacity: 0;
-            visibility: hidden;
-            transition: .3s;
-            border-radius: 12px;
-        }
-
-        .tooltip-box::after {
-            content: "";
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-left: 12px solid transparent;
-            border-right: 12px solid transparent;
-            border-top: 12px solid #000;
-        }
-
-        /* Tooltip only show on center slide */
-        .swiper-slide-active .tooltip-box {
-            opacity: 1;
-            visibility: visible;
-            bottom: 120%;
-        }
+        /* Force Right → Left sliding */
     </style>
 @endpush
 
@@ -503,9 +507,9 @@
     <section class="hero-detail-section">
         <div class="container py-5 text-center text-white">
 
-            <h1 class="hero-title mb-3"><span>Title For </span> Reviews Page </h1>
+            <h1 class="hero-title mb-3 fade-left"><span class="fade-right">Title For </span> Reviews Page </h1>
 
-            <p class="hero-description mx-auto mb-4">
+            <p class="hero-description mx-auto mb-4 fade-right">
                 Discover the comprehensive range of specialized biomedical services we offer, designed to support your
                 operational needs and technological advancement.
             </p>
@@ -535,12 +539,12 @@
                 <!-- LEFT COLUMN -->
                 <div class="col-lg-6">
 
-                    <h2 class="review-heading mb-3">
+                    <h2 class="review-headingg mb-3 fade-right">
                         Mr Biomed Tech Reviews.
                         What It’s Like To Work With Us
                     </h2>
 
-                    <p class="review-desc mb-4">
+                    <p class="review-desc mb-4 fade-left">
                         We take pride in delivering high-quality medical equipment and technical
                         services to hospitals, clinics, and healthcare professionals. Our mission is to
                         provide reliable, innovative, and long-lasting solutions that help improve
@@ -548,14 +552,14 @@
                     </p>
 
                     <div class="d-flex gap-4 mt-5 ">
-                        <a href="#" class=" btn-primary-custom">Request a Quote Today!</a>
-                        <a href="#" class=" btn-outline-custom">Reviews</a>
+                        <a href="#" class=" btn-primary-custom fade-left">Request a Quote Today!</a>
+                        <a href="#" class=" btn-outline-custom fade-right">Reviews</a>
                     </div>
 
                 </div>
 
                 <!-- RIGHT COLUMN -->
-                <div class="col-lg-6 text-center">
+                <div class="col-lg-6 text-center fade-right">
                     <img src="{{ asset('frontend/images/feedback/feedback-img.png') }}" class="review-img"
                         alt="Biomed Review Image">
 
@@ -566,7 +570,7 @@
     </section>
     <section class="bio-section container my-5">
         <div class="container">
-            <div class="d-flex  justify-content-center align-items-center">
+            <div class="d-flex  justify-content-center align-items-center flex-wrrapper">
 
                 <!-- Left Image -->
                 <img src="{{ asset('frontend/images/feedback/feedback-logo.png') }}" alt="Bio Image" class="bio-img">
@@ -593,12 +597,12 @@
 
 
         <!-- Heading -->
-        <h2 class="customer-heading text-center">
+        <h2 class="customer-heading text-center fade-left">
             Hear From 1,100 <span>Happy Customers</span>
         </h2>
 
         <!-- Description -->
-        <p class="customer-desc text-center">
+        <p class="customer-desc text-center fade-right">
             Our customers share their experience of working with our professional Biomedical services. Our customers share
             their experience of working with our
 
@@ -636,7 +640,7 @@
                         </div>
 
                         <!-- Scrollable Middle Area -->
-                        <div class="review-scroll">
+                        <div class="review-scroll auto-scroll">
                             <p class="review-text">
                                 Amazing customer experience! Their quick support and technical knowledge
                                 made our workflow smoother.
@@ -646,9 +650,11 @@
                                 made our workflow smoother.
                                 Amazing customer experience! Their quick support and technical knowledge
                                 made our workflow smoother.
-                                .
+                                Amazing customer experience! Their quick support and technical knowledge
+                                made our workflow smoother.
                             </p>
                         </div>
+
 
                         <h5 class="client-name"> John Anderson</h5>
 
@@ -1030,7 +1036,7 @@
             <div class="row g-4">
 
                 <!-- ================= LEFT COLUMN ================= -->
-                <div class="col-lg-6 col-md-6">
+                <div class="col-lg-6 col-md-6 fade-lef animate-card">
 
                     <h3 class="comment-heading mb-4">Leave a Feedback</h3>
 
@@ -1064,7 +1070,7 @@
                 </div>
 
                 <!-- ================= RIGHT COLUMN ================= -->
-                <div class="col-lg-6 col-md-6">
+                <div class="col-lg-6 col-md-6 fade-righ animate-card">
 
                     <h3 class="comment-heading mb-3">Feedbacks [1]</h3>
 
@@ -1134,74 +1140,187 @@
     <section>
         <h2 class="review-heading">Our Users Are <span>Happy And Healthy</span></h2>
 
-        <div class="swiper reviewSwiper">
-            <div class="swiper-wrapper">
+        <div class="container">
 
-                <!-- Slide 1 -->
-                <div class="swiper-slide tooltip-slide">
-                    <img src="{{ asset('frontend/images/hero-img-1.jpg') }}" alt="">
-                    <div class="tooltip-box">
-                        <div class="stars">
-                            <i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i>
-                            <i class="far fa-star text-warning"></i>
+            <div class="mx-auto main-wrapper" style="width:1100px;">
+
+                <div class="swiper reviewSwiper">
+                    <div class="swiper-wrapper">
+
+                        <!-- Slide 1 -->
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-1.jpg') }}" alt="">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas diff fa-star "></i>
+                                </div>
+                                <p>
+
+                                    <span class="quote">“</span> "Pharmacy Store is my go-to for over-the-counter
+                                    medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
                         </div>
-                        <p>Pharmacy Store is my go-to.</p>
+
+                        <!-- Slide 2 -->
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-4.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff"></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Slide 3 -->
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-3.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff"></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Slide 4 -->
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-2.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff "></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Slide 5 -->
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-1.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas diff fa-star "></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-1.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff"></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-1.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff"></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-1.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff"></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide tooltip-slide">
+                            <img src="{{ asset('frontend/images/hero-img-1.jpg') }}">
+                            <div class="tooltip-box">
+                                <div class="starss">
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star "></i>
+                                    <i class="fas fa-star diff"></i>
+                                </div>
+                                <p>
+                                    <span class="quote">“</span>
+                                    "Pharmacy Store is my go-to for over-the-counter medications and health products. They
+                                    have a wide selection, and their website makes it easy to order online. The only
+                                    improvement I'd suggest is expanding their beauty and skincare section."
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Slide 2 -->
-                <div class="swiper-slide tooltip-slide">
-                    <img src="{{ asset('frontend/images/hero-img-4.jpg') }}">
-                    <div class="tooltip-box">
-                        <div class="stars">
-                            <i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i>
-                            <i class="far fa-star text-warning"></i>
-                        </div>
-                        <p>Great service.</p>
-                    </div>
-                </div>
-
-                <!-- Slide 3 -->
-                <div class="swiper-slide tooltip-slide">
-                    <img src="{{ asset('frontend/images/hero-img-3.jpg') }}">
-                    <div class="tooltip-box">
-                        <div class="stars">
-                            <i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i>
-                            <i class="far fa-star text-warning"></i>
-                        </div>
-                        <p>Good products.</p>
-                    </div>
-                </div>
-
-                <!-- Slide 4 -->
-                <div class="swiper-slide tooltip-slide">
-                    <img src="{{ asset('frontend/images/hero-img-2.jpg') }}">
-                    <div class="tooltip-box">
-                        <div class="stars">
-                            <i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i>
-                            <i class="far fa-star text-warning"></i>
-                        </div>
-                        <p>Reliable quality.</p>
-                    </div>
-                </div>
-
-                <!-- Slide 5 -->
-                <div class="swiper-slide tooltip-slide">
-                    <img src="{{ asset('frontend/images/hero-img-1.jpg') }}">
-                    <div class="tooltip-box">
-                        <div class="stars">
-                            <i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i>
-                            <i class="far fa-star text-warning"></i>
-                        </div>
-                        <p>Affordable prices.</p>
-                    </div>
-                </div>
-
             </div>
         </div>
     </section>
@@ -1209,30 +1328,54 @@
 @endsection
 
 @push('frontend-scripts')
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-
     <script>
-        var swiper = new Swiper(".reviewSwiper", {
-            slidesPerView: 6,
-            spaceBetween: 40,
-            centeredSlides: true,
-            loop: true,
-            speed: 1500,
+        document.addEventListener("DOMContentLoaded", function() {
 
-            autoplay: {
-                delay: 2000,
-                disableOnInteraction: false,
-                reverseDirection: true, // Always right → left
-            },
+            const scrollBox = document.querySelector(".auto-scroll");
+            if (!scrollBox) return;
 
-            on: {
-                click(swiper, event) {
-                    swiper.slideTo(swiper.clickedIndex);
+            const speed = 0.6;
+            let paused = false;
+            let restarting = false;
+
+            function autoScroll() {
+
+                if (!paused && !restarting) {
+                    scrollBox.scrollTop += speed;
                 }
+
+                // bottom reached
+                if (
+                    !restarting &&
+                    scrollBox.scrollTop >= scrollBox.scrollHeight - scrollBox.clientHeight - 1
+                ) {
+                    restarting = true;
+
+                    setTimeout(() => {
+                        scrollBox.scrollTop = 0;
+
+                        // 🔥 FORCE REPAINT / FORCE CONTINUE
+                        scrollBox.scrollTop = 1;
+
+                        restarting = false;
+                    }, 800);
+                }
+
+                requestAnimationFrame(autoScroll);
             }
+
+            // pause on hover only
+            scrollBox.addEventListener("mouseenter", () => paused = true);
+            scrollBox.addEventListener("mouseleave", () => paused = false);
+
+            autoScroll();
         });
     </script>
+
+
+
+
+
     <script>
         var swiper = new Swiper(".mySwiper", {
             slidesPerView: 6,

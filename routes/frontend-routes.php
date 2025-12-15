@@ -13,7 +13,7 @@ Route::middleware('guest')->group(function () {
     Route::get('/', [LandingPageController::class, 'landingPage'])->name('home');
     Route::get('/services', [BiomedServicesController::class, 'mainPage'])->name('biomed-services');
 
-    // Route::view('/services', 'frontend.pages.services')->name('services');
+    Route::view('/services', 'frontend.pages.services')->name('services');
     Route::get('/rental', [RentalServiceController::class, 'landingPage'])->name('rental-services');
     Route::get('/about-us', [AboutUsController::class, 'landingPage'])->name('about-us');
 
@@ -33,4 +33,6 @@ Route::middleware('guest')->group(function () {
 
     // web.php
     Route::get('/rentals/filter', [AjaxController::class, 'filterRentalProducts'])->name('rentals.filter');
+    Route::view('/faqs', 'frontend.pages.faqs')->name('faqs');
+
 });

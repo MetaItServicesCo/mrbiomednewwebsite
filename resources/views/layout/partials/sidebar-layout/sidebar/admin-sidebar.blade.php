@@ -2,7 +2,7 @@
     data-kt-menu="true" data-kt-menu-expand="false">
     <!--begin:Menu item-->
     <div data-kt-menu-trigger="click"
-        class="menu-item menu-accordion {{ request()->routeIs('dashboard', 'admin-category.*', 'admin-products.*', 'admin-offers.*', 'admin-oems.*') ? 'here show' : '' }}">
+        class="menu-item menu-accordion {{ request()->routeIs('dashboard', 'admin-category.*', 'admin-products.*', 'admin-offers.*', 'admin-oems.*', 'admin-privacy-policy.*', 'admin-terms-conditions.*', 'admin-disclaimer.*', 'admin.importent-links.*') ? 'here show' : '' }}">
         <!--begin:Menu link-->
         <span class="menu-link">
             <span class="menu-icon">{!! getIcon('element-11', 'fs-2') !!}</span>
@@ -124,6 +124,53 @@
                 <!--end:View All-->
             </div>
         @endcan
+
+        <div class="menu-sub menu-sub-accordion">
+            <div class="menu-item">
+                <a class="menu-link {{ request()->routeIs('admin-privacy-policy.*') ? 'active' : '' }}"
+                    href="{{ route('admin-privacy-policy.page') }}">
+                    <span class="menu-bullet">
+                        <span class="bullet bullet-dot"></span>
+                    </span>
+                    <span class="menu-title">{{ __('Privacy Policy') }}</span>
+                </a>
+            </div>
+        </div>
+        <div class="menu-sub menu-sub-accordion">
+            <div class="menu-item">
+                <a class="menu-link {{ request()->routeIs('admin-terms-conditions.*') ? 'active' : '' }}"
+                    href="{{ route('admin-terms-conditions.page') }}">
+                    <span class="menu-bullet">
+                        <span class="bullet bullet-dot"></span>
+                    </span>
+                    <span class="menu-title">{{ __('Terms & Conditions') }}</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="menu-sub menu-sub-accordion">
+            <div class="menu-item">
+                <a class="menu-link {{ request()->routeIs('admin-disclaimer.*') ? 'active' : '' }}"
+                    href="{{ route('admin-disclaimer.page') }}">
+                    <span class="menu-bullet">
+                        <span class="bullet bullet-dot"></span>
+                    </span>
+                    <span class="menu-title">{{ __('Disclaimer') }}</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="menu-sub menu-sub-accordion">
+            <div class="menu-item">
+                <a class="menu-link {{ request()->routeIs('admin.importent-links.*') ? 'active' : '' }}"
+                    href="{{ route('admin.importent-links.list') }}">
+                    <span class="menu-bullet">
+                        <span class="bullet bullet-dot"></span>
+                    </span>
+                    <span class="menu-title">{{ __('Importent Links') }}</span>
+                </a>
+            </div>
+        </div>
     </div>
 
     <div data-kt-menu-trigger="click"

@@ -425,7 +425,7 @@ $('#footer_state').on('change', function () {
     if (stateId) {
 
         $.ajax({
-            url: "/get-cities/" + stateId, // Route to fetch cities
+            url: "/ajax/get-cities/" + stateId, // Route to fetch cities
             type: "GET",
 
             // -------------------------------------------

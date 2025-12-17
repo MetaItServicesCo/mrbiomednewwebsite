@@ -1,13 +1,37 @@
 @extends('frontend.layouts.frontend')
 
-@section('title', 'Blog’s Details Page ')
+{{-- @section('title', 'Blog’s Details Page ') --}}
+@section('meta_title', $data->meta_title ?? 'Blog Details')
+@section('meta_keywords', $data->meta_keywords ?? '')
+@section('meta_description', $data->meta_description ?? '')
 
 @push('frontend-styles')
     <style>
         /* ============================================================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   BLOG DETAILS PAGE – CSS Styling
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   Includes: Images, Lists, Sidebar, Related Articles, Responsive Fixes
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                =============================================================== */
+        BLOG DETAILS PAGE – CSS Styling
+        Includes: Images, Lists, Sidebar, Related Articles, Responsive Fixes
+        =============================================================== */
+
+        .blog-content {
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .blog-content img {
+            max-width: 100% !important;
+            height: auto !important;
+            display: block;
+        }
+
+        .blog-content iframe,
+        .blog-content video,
+        .blog-content table {
+            max-width: 100%;
+        }
+
+        .blog-content * {
+            box-sizing: border-box;
+        }
 
         .blog-main-img {
             width: 896px;
@@ -82,7 +106,16 @@
             transition: all 0.2s ease-in;
         }
 
-        .categories-list li:hover {
+        /* Remove blue color and underline from links inside li */
+        .categories-list li a {
+            color: #000000;
+            /* default text color */
+            text-decoration: none;
+            /* remove underline */
+            transition: all 0.2s ease-in;
+        }
+
+        .categories-list li a:hover {
             /* color: #036CA0; */
             color: #FE0000;
 
@@ -296,26 +329,20 @@
     <section class="hero-detail-section">
         <div class="container py-5 text-center text-white">
 
-            <h1 class="hero-title mb-3">Title for This Post <span> /Blog Title for This </span></h1>
+            <h1 class="hero-title mb-3">{!! highlightBracketText($blog->title ?? '', ['#000000']) !!}</h1>
 
             <p class="hero-description mx-auto mb-4">
-                Discover the comprehensive range of specialized biomedical services we offer, designed to support your
-                operational needs and technological advancement.
+                {{ $blog->short_description ?? '' }}
             </p>
 
             <div class="container py-5 text-center text-white">
                 <div class="simple-breadcrumb-container text-start mx-auto">
                     <div class="simple-breadcrumb">
-
-                        <a href="/" class="breadcrumb-link">Home</a>
-
+                        <a href="{{ route('home') }}" class="breadcrumb-link">Home</a>
                         <span class="breadcrumb-separator">|</span>
-
-                        <span class="breadcrumb-active">Blog</span>
+                        <a href="{{ route('blogs') }}" class="breadcrumb-link">Blog</a>
                         <span class="breadcrumb-separator">|</span>
-                        <span class="breadcrumb-active">Blog Title</span>
-
-
+                        <span class="breadcrumb-active">{{ $blog->title ?? '' }}</span>
                     </div>
                 </div>
 
@@ -326,11 +353,11 @@
 
 
     <!-- ============================================================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               BLOG DETAILS SECTION (Responsive)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               Created for: Detailed Blog Page Layout
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               Columns: Left Content (8), Right Sidebar (4)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               Includes: Images, Headings, Description, Lists, Categories, Related Articles
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            =============================================================== -->
+                                                                        BLOG DETAILS SECTION (Responsive)
+                                                                        Created for: Detailed Blog Page Layout
+                                                                        Columns: Left Content (8), Right Sidebar (4)
+                                                                        Includes: Images, Headings, Description, Lists, Categories, Related Articles
+                                                                        =============================================================== -->
 
     <section class="blog-details-section py-5">
         <div class="container">
@@ -340,16 +367,17 @@
                 <div class="col-lg-9">
 
                     <!-- Main Image -->
-                    <img src="{{ asset('frontend/images/recent-news-img.png') }}" class="img-fluid blog-main-img mb-4"
-                        alt="News Image">
+                    <img src="{{ $blog->image ? asset('storage/blog/images/' . $blog->image) : '' }}"
+                        class="img-fluid blog-main-img mb-4" alt="{{ $blog->image_alt_text ?? $blog->title }}">
 
-                    <!-- Heading -->
-                    <h2 class="blog-title mb-3">
-                        The Future of Technology Solutions: Innovations Driving Business Success
-                    </h2>
+                    {{-- <h2 class="blog-title mb-3">
+                        {!! highlightBracketText($blog->title ?? '') !!}
+                    </h2> --}}
+                    <div class="blog-content">
+                        {!! $blog->description !!}
+                    </div>
 
-                    <!-- Description -->
-                    <p class="blog-desc mb-4">
+                    {{-- <p class="blog-desc mb-4">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis magnam,
                         temporibus asperiores, deleniti tempora possimus dolores incidunt ratione
                         consectetur culpa veniam impedit illum voluptatum fuga laboriosam nam minus,
@@ -363,13 +391,10 @@
                         voluptatibus porro corporis.
                     </p>
 
-                    <!-- Second Image -->
                     <img src="{{ asset('frontend/images/recent-news-img.png') }}" class="img-fluid blog-sub-img mb-4"
                         alt="News Image">
-                    <!-- Sub Heading -->
                     <h3 class="blog-subtitle mb-3">Top Key Highlights of Future Technologies</h3>
 
-                    <!-- Desc -->
                     <p class="blog-desc mb-4">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates officiis
                         saepe molestias asperiores dolor fuga, repellendus commodi praesentium eveniet
@@ -385,7 +410,6 @@
                         voluptatibus porro corporis.
                     </p>
 
-                    <!-- List Section -->
                     <ul class="blog-list mb-4">
                         <li>Artificial Intelligence and Machine Learning Improvements</li>
                         <li>Cloud Transformation for Enterprise Infrastructure</li>
@@ -404,7 +428,6 @@
                         <li>Automation Tools to Reduce Manual Load</li>
                     </ul>
 
-                    <!-- Last Heading -->
                     <h3 class="blog-subtitle mb-4">Conclusion</h3>
                     <p class="blog-desc mb-4">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates officiis
@@ -429,10 +452,8 @@
 
                     <img src="{{ asset('frontend/images/recent-news-img.png') }}" class="img-fluid blog-sub-img mb-4"
                         alt="News Image">
-                    <!-- Sub Heading -->
                     <h3 class="blog-subtitle mb-3">Top Key Highlights of Future Technologies</h3>
 
-                    <!-- Desc -->
                     <p class="blog-desc mb-4">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates officiis
                         saepe molestias asperiores dolor fuga, repellendus commodi praesentium eveniet
@@ -452,10 +473,8 @@
                     </p>
                     <img src="{{ asset('frontend/images/recent-news-img.png') }}" class="img-fluid blog-sub-img mb-4"
                         alt="News Image">
-                    <!-- Sub Heading -->
                     <h3 class="blog-subtitle mb-3">Top Key Highlights of Future Technologies</h3>
 
-                    <!-- Desc -->
                     <p class="blog-desc mb-4">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates officiis
                         saepe molestias asperiores dolor fuga, repellendus commodi praesentium eveniet
@@ -472,7 +491,7 @@
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates officiis
                         saepe molestias asperiores dolor fuga, repellendus commodi praesentium eveniet
                         voluptatibus porro corporis.
-                    </p>
+                    </p> --}}
 
                 </div>
 
@@ -485,78 +504,47 @@
                         <h4 class="sidebar-heading mb-3">Categories</h4>
 
                         <ul class="categories-list mb-4">
-                            <li><i class="bi bi-chevron-right"></i> Hospital Bed</li>
-                            <li><i class="bi bi-chevron-right"></i> Surgical</li>
-                            <li><i class="bi bi-chevron-right"></i> ICU Equipment</li>
-                            <li><i class="bi bi-chevron-right"></i> Ventilator</li>
-                            <li><i class="bi bi-chevron-right"></i> OT Lights</li>
-                            <li><i class="bi bi-chevron-right"></i> Diagnostics</li>
-                            <li><i class="bi bi-chevron-right"></i> Operation Table</li>
-                            <li><i class="bi bi-chevron-right"></i> Medical Tools</li>
-                            <li><i class="bi bi-chevron-right"></i> Emergency</li>
-                            <li><i class="bi bi-chevron-right"></i> Healthcare</li>
-                            <li><i class="bi bi-chevron-right"></i> Dental Chair</li>
-                            <li><i class="bi bi-chevron-right"></i> Stretcher</li>
+                            @foreach ($categories as $category)
+                                <li>
+                                    <i class="bi bi-chevron-right"></i>
+                                    <a href="">
+                                        {{ $category->name }}
+                                    </a>
+                                </li>
+                            @endforeach
                         </ul>
 
-                        <!-- Related Articles -->
-                        <h4 class="sidebar-heading mb-3">Related Articles</h4>
-
                         <div class="row d-flex mb-3 g-3">
-                            <div class="col-lg-4">
-                                <img src="{{ asset('frontend/images/recent-news-img.png') }}" class="related-img me-3"
-                                    alt="">
-
-                            </div>
-                            <div class="col-lg-8">
-                                <h6 class="related-title">Smart ICU Equipment Innovations</h6>
-                                {{-- <p class="related-date">06 Nov 2025</p> --}}
-                            </div>
-
-                            <div class="col-lg-4">
-                                <img src="{{ asset('frontend/images/recent-news-img.png') }}" class="related-img me-3"
-                                    alt="">
-
-                            </div>
-                            <div class="col-lg-8">
-                                <h6 class="related-title">Smart ICU Equipment Innovations</h6>
-                                {{-- <p class="related-date">06 Nov 2025</p> --}}
-                            </div>
-                            <div class="col-lg-4">
-                                <img src="{{ asset('frontend/images/recent-news-img.png') }}" class="related-img me-3"
-                                    alt="">
-
-                            </div>
-                            <div class="col-lg-8">
-                                <h6 class="related-title">Smart ICU Equipment Innovations</h6>
-                                {{-- <p class="related-date">06 Nov 2025</p> --}}
-                            </div>
-                            <div class="col-lg-4">
-                                <img src="{{ asset('frontend/images/recent-news-img.png') }}" class="related-img me-3"
-                                    alt="">
-
-                            </div>
-                            <div class="col-lg-8">
-                                <h6 class="related-title">Smart ICU Equipment Innovations</h6>
-                                {{-- <p class="related-date">06 Nov 2025</p> --}}
-                            </div>
-
-
+                            <h4 class="sidebar-heading mb-3">Related Articles</h4>
+                            @foreach ($relatedBlogs as $related)
+                                <div class="col-lg-12">
+                                    <div class="row g-2 align-items-center">
+                                        <div class="col-lg-4">
+                                            <img src="{{ $related->image ? asset('storage/blog/images/' . $related->image) : '' }}"
+                                                class="related-img me-3"
+                                                alt="{{ $related->image_alt_text ?? plainBracketText($related->title) }}">
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <h6 class="related-title">{{ plainBracketText($related->title) }}</h6>
+                                            <p class="related-date">
+                                                {{ $related->updated_at ? $related->updated_at->format('d.M.Y') : '' }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ============================================================
-                                                                                                                                                                                                                                                                                                                       LEAVE A COMMENT + COMMENTS SECTION
-                                                                                                                                                                                                                                                                                                                       Background: #006A9E1A
-                                                                                                                                                                                                                                                                                                                       Left: Comment Form
-                                                                                                                                                                                                                                                                                                                       Right: Comments Box
-                                                                                                                                                                                                                                                                                                                    =============================================================== -->
+                                        LEAVE A COMMENT + COMMENTS SECTION
+                                        Background: #006A9E1A
+                                        Left: Comment Form
+                                        Right: Comments Box
+                                        =============================================================== -->
 
     <section class="comment-section py-5">
         <div class="container">
@@ -609,8 +597,9 @@
     </section>
 
     {{-- =============== feature section ===================== --}}
+    <x-featured-blogs-section :limit="4" />
 
-    <section class="featured-section container my-5">
+    {{-- <section class="featured-section container my-5">
 
         <h2 class="latest-blog-heading mb-4 text-center">Featured <span>Updates</span> </h2>
 
@@ -862,7 +851,7 @@
             </div>
 
         </div>
-    </section>
+    </section> --}}
 
 @endsection
 

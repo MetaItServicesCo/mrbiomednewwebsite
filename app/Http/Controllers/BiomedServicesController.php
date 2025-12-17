@@ -224,11 +224,6 @@ class BiomedServicesController extends Controller
         $data = BiomedServices::first();
         $faqs = getFaqs('service');
 
-        $initialProducts = Product::where('is_active', true)
-        ->whereIn('type', ['for_rent', 'both'])
-        ->latest()
-        ->get();
-
-        return view('frontend.pages.services', compact('data', 'faqs','initialProducts'));
+        return view('frontend.pages.services', compact('data', 'faqs'));
     }
 }

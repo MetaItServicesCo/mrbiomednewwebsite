@@ -377,10 +377,10 @@
         /* =============== four-column-section ======================= */
 
         /*
-        * Background Color Calculation:
-        * #D9D9D938 is an RGBA value. The '38' is the alpha (opacity) channel in hex.
-        * This translates to a light grey color with low opacity.
-        */
+                * Background Color Calculation:
+                * #D9D9D938 is an RGBA value. The '38' is the alpha (opacity) channel in hex.
+                * This translates to a light grey color with low opacity.
+                */
         .four-column-section {
             background-color: #D9D9D938;
             padding: 40px 20px;
@@ -475,10 +475,9 @@
     <section class="hero-detail-section">
         <div class="container py-5 text-center text-white">
 
-            <h1 class="hero-title mb-3 fade-right">Rental <span>Services Detail page</span> </h1>
+            <h1 class="hero-title mb-3 fade-right">{!! highlightBracketText($data->hero_title ?? '', ['#000000']) !!}</h1>
             <p class="hero-description mx-auto mb-4 fade-left">
-                Discover the comprehensive range of specialized biomedical services we offer, designed to support your
-                operational needs and technological advancement.
+                {{ $data->hero_subtitle ?? '' }}
             </p>
 
             <div class="container py-5 text-center text-white">
@@ -511,26 +510,26 @@
                     <div class="col-lg-6 left-col">
 
                         <h2 class="rental-main-heading">
-                            MEDICAL EQUIPMENT AND FURNITURE, <span>SINCE 2002</span>
+                            {!! highlightBracketText($data->main_heading ?? '') !!}
                         </h2>
 
                         <p class="rental-main-desc">
-                            We have been providing high-quality medical equipment and furniture for hospitals,
-                            clinics, and home healthcare for over two decades. Our products are trusted, durable,
-                            and certified for safe usage in medical environments.
+                            {{ $data->main_description ?? '' }}
                         </p>
 
-                        <h3 class="rental-sub-heading">Available Equipment For Rent</h3>
+                        <h3 class="rental-sub-heading">{!! highlightBracketText($data->equipment_heading ?? '') !!}</h3>
 
                         <ul class="equip-list">
-                            <li>Hospital Beds</li>
+                            {{-- <li>Hospital Beds</li>
                             <li>Ventilators</li>
                             <li>Wheelchairs</li>
                             <li>Suction Machines</li>
                             <li>Oxygen Concentrators</li>
                             <li>Cardiac Monitors</li>
                             <li>Infusion Pumps</li>
-                            <li>Patient Stretchers</li>
+                            <li>Patient Stretchers</li> --}}
+
+                            {!! $data->equipment_list ?? '' !!}
                         </ul>
 
                     </div>
@@ -540,18 +539,20 @@
 
                         <!-- Image Outer Box -->
                         <div class="img-box">
-                            <img src="{{ asset('frontend/images/rental/rental-img.jpg') }}" alt="Medical Equipment 1"
-                                class="img-fluid  ">
+                            <img src="{{ asset('storage/rental_services/' . $data->main_image) }}"
+                                alt="{{ $data->main_image_alt ?? '' }}" class="img-fluid  ">
                         </div>
 
                         <div class="d-flex flex-column justify-content-center mmx-left">
-                            <h3 class="why-heading">Why Rent From Shine Care ?</h3>
+                            <h3 class="why-heading">{!! highlightBracketText($data->why_rent_heading ?? '') !!}</h3>
 
                             <ul class="why-list">
-                                <li>Mr. Biomed rents various types of medical equipment to both medical facilities and home
+                                {{-- <li>Mr. Biomed rents various types of medical equipment to both medical facilities and home
                                     healthcare.</li>
                                 <li>We provide certified and well-maintained devices meeting all safety standards.</li>
-                                <li>24/7 customer support for all rental equipment and emergency needs.</li>
+                                <li>24/7 customer support for all rental equipment and emergency needs.</li> --}}
+
+                                {!! $data->why_rent_list ?? '' !!}
                             </ul>
                         </div>
 
@@ -567,519 +568,30 @@
             <div class="container">
                 <h2 class="main-title text-center mb-5 fade-left">RENTAL <span>PRODUCTS</span></h2>
 
-                <div class="row justify-content-center g-5">
-                    <div class="col-lg-6 mb-4">
+                <div id="product-list">
+                    <div class="row justify-content-center g-5">
 
-                        <h3 class="product-name">Product <span>Name Here</span> </h3>
+                        @foreach ($products as $product)
+                            @include('components.product-item', ['product' => $product])
+                        @endforeach
 
-                        <p class="product-desc">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Maecenas bibendum, eros in scelerisque suscipit, justo neque
-                            rhoncus turpis, eget vestibulum quam velit a orci. Suspendisse
-                            potenti. Integer euismod libero at magna finibus, a pretium
-                            ligula iaculis. Aenean faucibus varius velit in commodo. Sed
-                            elementum vehicula erat, in feugiat mauris. Duis nec lorem sed
-                            sapien aliquam molestie non nec ipsum. Phasellus eu faucibus
-                            justo, vitae tincidunt sem.
-                        </p>
-                        <p class="product-desc">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Maecenas bibendum, eros in scelerisque suscipit, justo neque
-                            rhoncus turpis, eget vestibulum quam velit a orci. Suspendisse vestibulum quam velit a orci.a
-                            orci.
-
-
-
-                        </p>
-                        <!-- BUTTONS -->
-                        <div class="d-flex gap-3  btn-wrraper">
-                            <button class="btn-service">
-                                <i class="bi bi-gear"></i>
-                                <span class="btn-label">Get Service</span>
-                            </button>
-
-
-                            <button class="btn-call">
-                                <i class="bi bi-telephone"></i>
-                                <span class="btn-label">Call Us</span>
-
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- RIGHT COLUMN -->
-                    <div class="col-lg-6">
-                        <div class="product-section">
-
-                            <div class="img-wrapper position-relative">
-                                <img src="{{ asset('frontend/images/rental/product-img.jpg') }}"
-                                    class="img-fluid rental-img mainProductImg">
-
-                                <button class="btn-overlay">Get For Rent</button>
-                            </div>
-
-                            <div class="img-dots mt-3 text-center">
-                                <span class="dot active"
-                                    data-img="{{ asset('frontend/images/rental/rental-img.jpg') }}"></span>
-                                <span class="dot"
-                                    data-img="{{ asset('frontend/images/rental/product-img.jpg') }}"></span>
-                                <span class="dot"
-                                    data-img="{{ asset('frontend/images/rental/product-img.jpg') }}"></span>
-                            </div>
-
+                        <div class="mt-4">
+                            {{-- {{ $products->links() }} --}}
+                            {{ $products->links('vendor.pagination.simple-default') }}
                         </div>
 
-                    </div>
 
-                    <div class="col-lg-6 mb-4">
+                        {{-- <div class="pagination">
+                            <a href="#" class="page-link">&laquo;</a>
+                            <a href="#" class="page-link">1</a>
+                            <a href="#" class="page-link active">2</a>
+                            <a href="#" class="page-link">3</a>
 
-                        <h3 class="product-name">Product <span>Name Here</span> </h3>
+                            <span class="ellipsis">---</span>
 
-                        <p class="product-desc">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Maecenas bibendum, eros in scelerisque suscipit, justo neque
-                            rhoncus turpis, eget vestibulum quam velit a orci. Suspendisse
-                            potenti. Integer euismod libero at magna finibus, a pretium
-                            ligula iaculis. Aenean faucibus varius velit in commodo. Sed
-                            elementum vehicula erat, in feugiat mauris. Duis nec lorem sed
-                            sapien aliquam molestie non nec ipsum. Phasellus eu faucibus
-                            justo, vitae tincidunt sem.
-                        </p>
-                        <p class="product-desc">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Maecenas bibendum, eros in scelerisque suscipit, justo neque
-                            rhoncus turpis, eget vestibulum quam velit a orci. Suspendisse vestibulum quam velit a orci.a
-                            orci.
-
-
-
-                        </p>
-                        <!-- BUTTONS -->
-                        <div class="d-flex gap-3  btn-wrraper">
-                            <button class="btn-service">
-                                <i class="bi bi-gear"></i>
-                                <span class="btn-label">Get Service</span>
-                            </button>
-
-
-                            <button class="btn-call">
-                                <i class="bi bi-telephone"></i>
-                                <span class="btn-label">Call Us</span>
-
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- RIGHT COLUMN -->
-                    <div class="col-lg-6">
-                        <div class="product-section">
-
-                            <div class="img-wrapper position-relative">
-                                <img src="{{ asset('frontend/images/rental/product-img.jpg') }}"
-                                    class="img-fluid rental-img mainProductImg">
-
-                                <button class="btn-overlay">Get For Rent</button>
-                            </div>
-
-                            <div class="img-dots mt-3 text-center">
-                                <span class="dot active"
-                                    data-img="{{ asset('frontend/images/rental/rental-img.jpg') }}"></span>
-                                <span class="dot"
-                                    data-img="{{ asset('frontend/images/rental/product-img.jpg') }}"></span>
-                                <span class="dot"
-                                    data-img="{{ asset('frontend/images/rental/product-img.jpg') }}"></span>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <div class="col-lg-6 mb-4">
-
-                        <h3 class="product-name">Product <span>Name Here</span> </h3>
-
-                        <p class="product-desc">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Maecenas bibendum, eros in scelerisque suscipit, justo neque
-                            rhoncus turpis, eget vestibulum quam velit a orci. Suspendisse
-                            potenti. Integer euismod libero at magna finibus, a pretium
-                            ligula iaculis. Aenean faucibus varius velit in commodo. Sed
-                            elementum vehicula erat, in feugiat mauris. Duis nec lorem sed
-                            sapien aliquam molestie non nec ipsum. Phasellus eu faucibus
-                            justo, vitae tincidunt sem.
-                        </p>
-                        <p class="product-desc">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Maecenas bibendum, eros in scelerisque suscipit, justo neque
-                            rhoncus turpis, eget vestibulum quam velit a orci. Suspendisse vestibulum quam velit a orci.a
-                            orci.
-
-
-
-                        </p>
-                        <!-- BUTTONS -->
-                        <div class="d-flex gap-3  btn-wrraper">
-                            <button class="btn-service">
-                                <i class="bi bi-gear"></i>
-                                <span class="btn-label">Get Service</span>
-                            </button>
-
-
-                            <button class="btn-call">
-                                <i class="bi bi-telephone"></i>
-                                <span class="btn-label">Call Us</span>
-
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- RIGHT COLUMN -->
-                    <div class="col-lg-6">
-                        <div class="product-section">
-
-                            <div class="img-wrapper position-relative">
-                                <img src="{{ asset('frontend/images/rental/product-img.jpg') }}"
-                                    class="img-fluid rental-img mainProductImg">
-
-                                <button class="btn-overlay">Get For Rent</button>
-                            </div>
-
-                            <div class="img-dots mt-3 text-center">
-                                <span class="dot active"
-                                    data-img="{{ asset('frontend/images/rental/rental-img.jpg') }}"></span>
-                                <span class="dot"
-                                    data-img="{{ asset('frontend/images/rental/product-img.jpg') }}"></span>
-                                <span class="dot"
-                                    data-img="{{ asset('frontend/images/rental/product-img.jpg') }}"></span>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="col-lg-6 mb-4">
-
-                        <h3 class="product-name">Product <span>Name Here</span> </h3>
-
-                        <p class="product-desc">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Maecenas bibendum, eros in scelerisque suscipit, justo neque
-                            rhoncus turpis, eget vestibulum quam velit a orci. Suspendisse
-                            potenti. Integer euismod libero at magna finibus, a pretium
-                            ligula iaculis. Aenean faucibus varius velit in commodo. Sed
-                            elementum vehicula erat, in feugiat mauris. Duis nec lorem sed
-                            sapien aliquam molestie non nec ipsum. Phasellus eu faucibus
-                            justo, vitae tincidunt sem.
-                        </p>
-                        <p class="product-desc">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Maecenas bibendum, eros in scelerisque suscipit, justo neque
-                            rhoncus turpis, eget vestibulum quam velit a orci. Suspendisse vestibulum quam velit a orci.a
-                            orci.
-
-
-
-                        </p>
-                        <!-- BUTTONS -->
-                        <div class="d-flex gap-3  btn-wrraper">
-                            <button class="btn-service">
-                                <i class="bi bi-gear"></i>
-                                <span class="btn-label">Get Service</span>
-                            </button>
-
-
-                            <button class="btn-call">
-                                <i class="bi bi-telephone"></i>
-                                <span class="btn-label">Call Us</span>
-
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- RIGHT COLUMN -->
-                    <div class="col-lg-6">
-                        <div class="product-section">
-
-                            <div class="img-wrapper position-relative">
-                                <img src="{{ asset('frontend/images/rental/product-img.jpg') }}"
-                                    class="img-fluid rental-img mainProductImg">
-
-                                <button class="btn-overlay">Get For Rent</button>
-                            </div>
-
-                            <div class="img-dots mt-3 text-center">
-                                <span class="dot active"
-                                    data-img="{{ asset('frontend/images/rental/rental-img.jpg') }}"></span>
-                                <span class="dot"
-                                    data-img="{{ asset('frontend/images/rental/product-img.jpg') }}"></span>
-                                <span class="dot"
-                                    data-img="{{ asset('frontend/images/rental/product-img.jpg') }}"></span>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <div class="col-lg-6 mb-4">
-
-                        <h3 class="product-name">Product <span>Name Here</span> </h3>
-
-                        <p class="product-desc">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Maecenas bibendum, eros in scelerisque suscipit, justo neque
-                            rhoncus turpis, eget vestibulum quam velit a orci. Suspendisse
-                            potenti. Integer euismod libero at magna finibus, a pretium
-                            ligula iaculis. Aenean faucibus varius velit in commodo. Sed
-                            elementum vehicula erat, in feugiat mauris. Duis nec lorem sed
-                            sapien aliquam molestie non nec ipsum. Phasellus eu faucibus
-                            justo, vitae tincidunt sem.
-                        </p>
-                        <p class="product-desc">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Maecenas bibendum, eros in scelerisque suscipit, justo neque
-                            rhoncus turpis, eget vestibulum quam velit a orci. Suspendisse vestibulum quam velit a orci.a
-                            orci.
-
-
-
-                        </p>
-                        <!-- BUTTONS -->
-                        <div class="d-flex gap-3  btn-wrraper">
-                            <button class="btn-service">
-                                <i class="bi bi-gear"></i>
-                                <span class="btn-label">Get Service</span>
-                            </button>
-
-
-                            <button class="btn-call">
-                                <i class="bi bi-telephone"></i>
-                                <span class="btn-label">Call Us</span>
-
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- RIGHT COLUMN -->
-                    <div class="col-lg-6">
-                        <div class="product-section">
-
-                            <div class="img-wrapper position-relative">
-                                <img src="{{ asset('frontend/images/rental/product-img.jpg') }}"
-                                    class="img-fluid rental-img mainProductImg">
-
-                                <button class="btn-overlay">Get For Rent</button>
-                            </div>
-
-                            <div class="img-dots mt-3 text-center">
-                                <span class="dot active"
-                                    data-img="{{ asset('frontend/images/rental/rental-img.jpg') }}"></span>
-                                <span class="dot"
-                                    data-img="{{ asset('frontend/images/rental/product-img.jpg') }}"></span>
-                                <span class="dot"
-                                    data-img="{{ asset('frontend/images/rental/product-img.jpg') }}"></span>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <div class="col-lg-6 mb-4">
-
-                        <h3 class="product-name">Product <span>Name Here</span> </h3>
-
-                        <p class="product-desc">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Maecenas bibendum, eros in scelerisque suscipit, justo neque
-                            rhoncus turpis, eget vestibulum quam velit a orci. Suspendisse
-                            potenti. Integer euismod libero at magna finibus, a pretium
-                            ligula iaculis. Aenean faucibus varius velit in commodo. Sed
-                            elementum vehicula erat, in feugiat mauris. Duis nec lorem sed
-                            sapien aliquam molestie non nec ipsum. Phasellus eu faucibus
-                            justo, vitae tincidunt sem.
-                        </p>
-                        <p class="product-desc">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Maecenas bibendum, eros in scelerisque suscipit, justo neque
-                            rhoncus turpis, eget vestibulum quam velit a orci. Suspendisse vestibulum quam velit a orci.a
-                            orci.
-
-
-
-                        </p>
-                        <!-- BUTTONS -->
-                        <div class="d-flex gap-3  btn-wrraper">
-                            <button class="btn-service">
-                                <i class="bi bi-gear"></i>
-                                <span class="btn-label">Get Service</span>
-                            </button>
-
-
-                            <button class="btn-call">
-                                <i class="bi bi-telephone"></i>
-                                <span class="btn-label">Call Us</span>
-
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- RIGHT COLUMN -->
-                    <div class="col-lg-6">
-                        <div class="product-section">
-
-                            <div class="img-wrapper position-relative">
-                                <img src="{{ asset('frontend/images/rental/product-img.jpg') }}"
-                                    class="img-fluid rental-img mainProductImg">
-
-                                <button class="btn-overlay">Get For Rent</button>
-                            </div>
-
-                            <div class="img-dots mt-3 text-center">
-                                <span class="dot active"
-                                    data-img="{{ asset('frontend/images/rental/rental-img.jpg') }}"></span>
-                                <span class="dot"
-                                    data-img="{{ asset('frontend/images/rental/product-img.jpg') }}"></span>
-                                <span class="dot"
-                                    data-img="{{ asset('frontend/images/rental/product-img.jpg') }}"></span>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <div class="col-lg-6 mb-4">
-
-                        <h3 class="product-name">Product <span>Name Here</span> </h3>
-
-                        <p class="product-desc">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Maecenas bibendum, eros in scelerisque suscipit, justo neque
-                            rhoncus turpis, eget vestibulum quam velit a orci. Suspendisse
-                            potenti. Integer euismod libero at magna finibus, a pretium
-                            ligula iaculis. Aenean faucibus varius velit in commodo. Sed
-                            elementum vehicula erat, in feugiat mauris. Duis nec lorem sed
-                            sapien aliquam molestie non nec ipsum. Phasellus eu faucibus
-                            justo, vitae tincidunt sem.
-                        </p>
-                        <p class="product-desc">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Maecenas bibendum, eros in scelerisque suscipit, justo neque
-                            rhoncus turpis, eget vestibulum quam velit a orci. Suspendisse vestibulum quam velit a orci.a
-                            orci.
-
-
-
-                        </p>
-                        <!-- BUTTONS -->
-                        <div class="d-flex gap-3  btn-wrraper">
-                            <button class="btn-service">
-                                <i class="bi bi-gear"></i>
-                                <span class="btn-label">Get Service</span>
-                            </button>
-
-
-                            <button class="btn-call">
-                                <i class="bi bi-telephone"></i>
-                                <span class="btn-label">Call Us</span>
-
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- RIGHT COLUMN -->
-                    <div class="col-lg-6">
-                        <div class="product-section">
-
-                            <div class="img-wrapper position-relative">
-                                <img src="{{ asset('frontend/images/rental/product-img.jpg') }}"
-                                    class="img-fluid rental-img mainProductImg">
-
-                                <button class="btn-overlay">Get For Rent</button>
-                            </div>
-
-                            <div class="img-dots mt-3 text-center">
-                                <span class="dot active"
-                                    data-img="{{ asset('frontend/images/rental/rental-img.jpg') }}"></span>
-                                <span class="dot"
-                                    data-img="{{ asset('frontend/images/rental/product-img.jpg') }}"></span>
-                                <span class="dot"
-                                    data-img="{{ asset('frontend/images/rental/product-img.jpg') }}"></span>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <div class="col-lg-6 mb-4">
-
-                        <h3 class="product-name">Product <span>Name Here</span> </h3>
-
-                        <p class="product-desc">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Maecenas bibendum, eros in scelerisque suscipit, justo neque
-                            rhoncus turpis, eget vestibulum quam velit a orci. Suspendisse
-                            potenti. Integer euismod libero at magna finibus, a pretium
-                            ligula iaculis. Aenean faucibus varius velit in commodo. Sed
-                            elementum vehicula erat, in feugiat mauris. Duis nec lorem sed
-                            sapien aliquam molestie non nec ipsum. Phasellus eu faucibus
-                            justo, vitae tincidunt sem.
-                        </p>
-                        <p class="product-desc">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Maecenas bibendum, eros in scelerisque suscipit, justo neque
-                            rhoncus turpis, eget vestibulum quam velit a orci. Suspendisse vestibulum quam velit a orci.a
-                            orci.
-
-
-
-                        </p>
-                        <!-- BUTTONS -->
-                        <div class="d-flex gap-3  btn-wrraper">
-                            <button class="btn-service">
-                                <i class="bi bi-gear"></i>
-                                <span class="btn-label">Get Service</span>
-                            </button>
-
-
-                            <button class="btn-call">
-                                <i class="bi bi-telephone"></i>
-                                <span class="btn-label">Call Us</span>
-
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- RIGHT COLUMN -->
-                    <div class="col-lg-6">
-                        <div class="product-section">
-
-                            <div class="img-wrapper position-relative">
-                                <img src="{{ asset('frontend/images/rental/product-img.jpg') }}"
-                                    class="img-fluid rental-img mainProductImg">
-
-                                <button class="btn-overlay">Get For Rent</button>
-                            </div>
-
-                            <div class="img-dots mt-3 text-center">
-                                <span class="dot active"
-                                    data-img="{{ asset('frontend/images/rental/rental-img.jpg') }}"></span>
-                                <span class="dot"
-                                    data-img="{{ asset('frontend/images/rental/product-img.jpg') }}"></span>
-                                <span class="dot"
-                                    data-img="{{ asset('frontend/images/rental/product-img.jpg') }}"></span>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-
-
-                    <div class="pagination">
-                        <a href="#" class="page-link">&laquo;</a>
-                        <a href="#" class="page-link">1</a>
-                        <a href="#" class="page-link active">2</a>
-                        <a href="#" class="page-link">3</a>
-
-                        <span class="ellipsis">---</span>
-
-                        <a href="#" class="page-link">15</a>
-                        <a href="#" class="page-link">&raquo;</a>
+                            <a href="#" class="page-link">15</a>
+                            <a href="#" class="page-link">&raquo;</a>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -1184,117 +696,8 @@
         </div>
     </section>
 
-    <section class="py-5">
-        <div class="container">
-
-            <!-- Section Title -->
-            <h2 class="choose-title">Why Chose <span>Mr Biomed Tech</span> </h2>
-
-            <div class="row g-4 justify-content-center mt-4">
-
-                <!-- CARD 1 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="choose-card">
-                        <div class="choose-top">
-                            <i class="bi bi-check choose-icon"></i>
-
-                            <!-- <div class="choose-icon">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
-                            <h4 class="choose-heading">20 Years Experience</h4>
-                        </div>
-                        <p class="choose-desc">
-                            With two decades of industry expertise, we provide reliable medical equipment solutions.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- CARD 2 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="choose-card">
-                        <div class="choose-top">
-                            <i class="bi bi-check choose-icon"></i>
-
-                            <h4 class="choose-heading">100% Availability</h4>
-                        </div>
-                        <p class="choose-desc">
-                            Our equipment and support services are always available when you need them the most.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- CARD 3 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="choose-card">
-                        <div class="choose-top">
-                            <i class="bi bi-check choose-icon"></i>
-
-                            <h4 class="choose-heading">Up-to-date Catalogue</h4>
-                        </div>
-                        <p class="choose-desc">
-                            We keep our product catalog updated with the latest medical equipment and technologies.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- CARD 4 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="choose-card">
-                        <div class="choose-top">
-                            <i class="bi bi-check choose-icon"></i>
-
-                            <h4 class="choose-heading">Regular Checks</h4>
-                        </div>
-                        <p class="choose-desc">
-                            All rental and purchased devices are regularly inspected for performance & safety.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- CARD 5 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="choose-card">
-                        <div class="choose-top">
-                            <i class="bi bi-check choose-icon"></i>
-
-                            <h4 class="choose-heading">ISO Certification</h4>
-                        </div>
-                        <p class="choose-desc">
-                            We follow ISO standards to ensure top-quality products and safe biomedical practices.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- CARD 6 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="choose-card">
-                        <div class="choose-top">
-                            <i class="bi bi-check choose-icon"></i>
-
-                            <h4 class="choose-heading">24/7 Support</h4>
-                        </div>
-                        <p class="choose-desc">
-                            Our dedicated support team is available around the clock for assistance & troubleshooting.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- CARD 7 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="choose-card">
-                        <div class="choose-top">
-                            <i class="bi bi-check choose-icon"></i>
-
-                            <h4 class="choose-heading">Annual Inspection</h4>
-                        </div>
-                        <p class="choose-desc">
-                            We provide yearly inspections to maintain equipment performance and extend lifespan.
-                        </p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
+    {{-- ================= Why Choose Biomed Section ================= --}}
+    <x-why-choice-biomed />
 
 
     {{-- ================= Rental Products Name ================= --}}
@@ -1303,96 +706,9 @@
 
     {{-- ================faqs section ================ --}}
 
-    <section class="faqs-section py-5">
-        <div class="container">
-            <div class="row align-items-center">
-                <!-- Left Column: FAQs -->
-                <div class="col-lg-6">
-                    <h2 class="faqs-heading">Frequently Asked Questions</h2>
-                    <div class="mt-4">
-                        <h5 class="faqs-subheading">About Our Profile?</h5>
-                        <p class="faq-para">
-                            We provide sales, rental, and repair services for medical equipment with ISO certified
-                        </p>
-                    </div>
-
-                    <div class="faqs-list">
-                        <!-- Sample FAQs -->
-                        <div class="faq-item">
-                            <div class="faq-title">
-                                What services does Mr Biomed Tech offer?
-                                <i class="bi bi-chevron-down faq-icon"></i>
-                            </div>
-                            <div class="faq-content">
-                                We provide sales, rental, and repair services for medical equipment with ISO certified
-                                products and 24/7 support.
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-title">
-                                How can I request a service?
-                                <i class="bi bi-chevron-down faq-icon"></i>
-                            </div>
-                            <div class="faq-content">
-                                You can contact us via our website form, email, or call our support team to request any
-                                service.
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-title">
-                                Are your products guaranteed?
-                                <i class="bi bi-chevron-down faq-icon"></i>
-                            </div>
-                            <div class="faq-content">
-                                Yes, all our equipment comes with manufacturer warranty and quality assurance for
-                                reliability.
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-title">
-                                What is the delivery time?
-                                <i class="bi bi-chevron-down faq-icon"></i>
-                            </div>
-                            <div class="faq-content">
-                                Delivery depends on product availability, usually 3-7 business days.
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-title">
-                                Can I return a product?
-                                <i class="bi bi-chevron-down faq-icon"></i>
-                            </div>
-                            <div class="faq-content">
-                                Yes, returns are possible within 14 days under our return policy.
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-title">
-                                Do you offer installation services?
-                                <i class="bi bi-chevron-down faq-icon"></i>
-                            </div>
-                            <div class="faq-content">
-                                Yes, our team provides installation and training for all equipment.
-                            </div>
-                        </div>
-                    </div>
-
-                    <button class="btn-see-more">See More</button>
-                </div>
-
-                <!-- Right Column: Image -->
-                <div class="col-lg-6 text-center">
-                    <img src="{{ asset('frontend/images/hero-main-img.png') }}" alt="FAQ Image"
-                        class="faq-img img-fluid">
-                </div>
-            </div>
-        </div>
-    </section>
+    <x-faq-section :faqs="$faqs" heading="Frequently Asked Questions" subheading="About Our Profile?"
+        subtext="We provide sales, rental, and repair services for medical equipment with ISO certified"
+        image="frontend/images/hero-main-img.png" :visible="4" />
 
 
     {{-- ================= pruduct sectiion ============= --}}

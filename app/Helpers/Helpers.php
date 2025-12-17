@@ -528,6 +528,30 @@ if (!function_exists('highlightBracketText')) {
     }
 }
 
+if (!function_exists('plainBracketText')) {
+
+    /**
+     * Convert [text] into plain text by removing brackets and keeping the content inside.
+     * Also trims extra spaces.
+     *
+     * @param string $text
+     * @return string
+     */
+    function plainBracketText($text)
+    {
+        if (!$text) return '';
+
+        // Remove brackets but keep the content inside
+        $plain = preg_replace('/\[(.*?)\]/', '$1', $text);
+
+        // Replace multiple spaces with single space and trim
+        $plain = preg_replace('/\s+/', ' ', $plain);
+
+        return trim($plain);
+    }
+}
+
+
 
 if (!function_exists('merge_images')) {
 

@@ -1,6 +1,9 @@
 @extends('frontend.layouts.frontend')
 
-@section('title', 'Disclaimer Page')
+{{-- @section('title', 'Disclaimer') --}}
+@section('meta_title', $data->meta_title ?? 'Disclaimer')
+@section('meta_keywords', $data->meta_keywords ?? '')
+@section('meta_description', $data->meta_description ?? '')
 
 @push('frontend-styles')
     <style>
@@ -83,18 +86,15 @@
     <section class="hero-detail-section">
         <div class="container py-5 text-center text-white">
 
-            <h1 class="hero-title mb-3"><span>Disclaimer </span>Page </h1>
+            <h1 class="hero-title mb-3">{!! highlightBracketText($data->hero_title ?? '', ['#000000']) !!}</h1>
 
-            <p class="hero-description mx-auto mb-4">
-                Discover the comprehensive range of specialized biomedical services we offer, designed to support your
-                operational needs and technological advancement.
-            </p>
+            <p class="hero-description mx-auto mb-4">{{ $data->hero_subtitle ?? '' }}</p>
 
             <div class="container py-5 text-center text-white">
                 <div class="simple-breadcrumb-container text-start mx-auto">
                     <div class="simple-breadcrumb">
 
-                        <a href="/" class="breadcrumb-link">Home</a>
+                        <a href="{{ route('home') }}" class="breadcrumb-link">Home</a>
 
                         <span class="breadcrumb-separator">|</span>
 
@@ -116,7 +116,8 @@
 
             <!-- Policy Content -->
             <div class="card  border-0 p-4">
-                <p>
+                {!! $data->content ?? '' !!}
+                {{-- <p>
                     Welcome to our Privacy Policy section. This page explains how we collect, use,
                     protect, and share your personal information when you use our website or services.
                     Welcome to our Privacy Policy section. This page explains how we collect, use,
@@ -183,67 +184,14 @@
                 <p>
                     If you have any questions regarding this Privacy Policy, feel free to contact us:
                     <br>Email: support@example.com
-                </p>
+                </p> --}}
             </div>
 
         </div>
     </section>
 
-
-    <section class="important-links-section py-5">
-        <div class="container">
-            <h2 class="links-heading">Important Links</h2>
-
-            <div class="row g-4 justify-content-center">
-
-                <!-- 1st Column -->
-                <div class="col-lg-4 col-md-6 ">
-                    <div class="custom-card">
-                        <h4 class="card-title">Quality And Manufacturing</h4>
-                        <p class="card-desc">
-                            High-quality standards and advanced manufacturing processes to ensure product reliability.
-                        </p>
-                        <a href="#" class="custom-btn">
-                            Manufacturing <i class="bi bi-key"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- 2nd Column -->
-                <div class="col-lg-4 col-md-6  d-flex justify-content-center">
-                    <div class="custom-card">
-                        <h4 class="card-title">Infinium Medical Careers</h4>
-                        <p class="card-desc">
-                            Explore exciting career opportunities with our professional medical technology team.
-                        </p>
-                        <a href="#" class="custom-btn">
-                            Current Opening <i class="bi bi-people"></i>
-                        </a>
-
-                    </div>
-                </div>
-
-                <!-- 3rd Column -->
-                <div class="col-lg-4 col-md-6  d-flex justify-content-center">
-                    <div class="custom-card">
-                        <h4 class="card-title">Service And Support Center</h4>
-                        <p class="card-desc">
-                            Get technical help and after-sales support from our expert support center.
-                        </p>
-                        <a href="#" class="custom-btn">
-                            Technical Support
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-
-
-
-
+    <!-- Disclaimer Page -->
+    <x-important-links :for_page="'disclaimer'" />
 
 @endsection
 

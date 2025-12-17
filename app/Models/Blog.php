@@ -20,6 +20,8 @@ class Blog extends Model
         'image_alt_text',
         'short_description',
         'description',
+        'type',
+        'read_time',
 
         // SEO fields
         'meta_title',

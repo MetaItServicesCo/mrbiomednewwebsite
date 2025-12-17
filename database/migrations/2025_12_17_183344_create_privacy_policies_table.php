@@ -11,27 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rental_services', function (Blueprint $table) {
+        Schema::create('privacy_policies', function (Blueprint $table) {
             $table->id();
             $table->string('hero_title')->nullable();
             $table->text('hero_subtitle')->nullable();
-            $table->string('main_heading')->nullable();
-            $table->longText('main_description')->nullable();
-            $table->string('main_image')->nullable();
-            $table->string('main_image_alt')->nullable();
-            $table->string('equipment_heading')->nullable();
-            $table->longText('equipment_list')->nullable();
-            $table->string('why_rent_heading')->nullable();
-            $table->longText('why_rent_list')->nullable();
+            $table->longText('content')->nullable();
 
-            // SEO
             $table->string('meta_title')->nullable();
             $table->string('meta_keywords')->nullable();
             $table->text('meta_description')->nullable();
 
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
-
             $table->timestamps();
         });
     }
@@ -41,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rental_services');
+        Schema::dropIfExists('privacy_policies');
     }
 };

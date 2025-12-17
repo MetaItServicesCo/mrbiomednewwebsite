@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class BlogController extends Controller
 {
@@ -160,12 +161,15 @@ class BlogController extends Controller
                 'image_alt_text'   => 'nullable|string|max:255',
                 'short_description' => 'nullable|string',
                 'description'      => 'nullable|string',
+                'type'             => 'nullable|string',
+                'read_time'        => 'nullable|string',
 
                 'meta_title'       => 'nullable|string|max:255',
                 'meta_keywords'    => 'nullable|string|max:255',
                 'meta_description' => 'nullable|string',
             ]);
 
+            $validated['slug']       = Str::slug($request->slug);
             $validated['created_by'] = auth()->id();
 
             // ⬇ IMAGE UPLOAD USING TRAIT
@@ -259,12 +263,15 @@ class BlogController extends Controller
                 'image_alt_text'   => 'nullable|string|max:255',
                 'short_description' => 'nullable|string',
                 'description'      => 'nullable|string',
+                'type'             => 'nullable|string',
+                'read_time'        => 'nullable|string',
 
                 'meta_title'       => 'nullable|string|max:255',
                 'meta_keywords'    => 'nullable|string|max:255',
                 'meta_description' => 'nullable|string',
             ]);
 
+            $validated['slug']       = Str::slug($request->slug);
             $validated['updated_by'] = auth()->id();
 
             // ⬇ UPDATE IMAGE USING TRAIT
@@ -330,6 +337,114 @@ class BlogController extends Controller
             return redirect()
                 ->route('admin-blogs.list')
                 ->with('error', 'Something went wrong while deleting the blog.');
+        }
+    }
+
+    public function landingPage()
+    {
+        try {
+            // Fetch main page data
+            $data = BlogMainPage::first();
+
+            $bioMedicalBlogs = Blog::where('type', 'bio-medical')->where('is_active', 1)->latest()->take(9)->select('id', 'title', 'slug', 'short_description')->get();
+
+            $faqs = getFaqs('blog');
+
+            return view('frontend.pages.blog', compact('data', 'bioMedicalBlogs', 'faqs'));
+        } catch (\Throwable $e) {
+            Log::error('Blog Landing Page Error: ' . $e->getMessage(), [
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return redirect()
+                ->back()
+                ->with('error', 'Something went wrong while loading the blog page.');
+        }
+    }
+
+    public function filterBlogs(Request $request)
+    {
+        $slug = $request->slug;
+        $page = $request->page ?? 1;
+
+        $query = Blog::where('is_active', 1);
+
+        if ($slug !== 'all') {
+            $category = Category::where('slug', $slug)->first();
+            if ($category) {
+                $query->where('category_id', $category->id);
+            } else {
+                $query->whereRaw('0=1'); // empty collection
+            }
+        }
+
+        $blogs = $query->latest()->paginate(12, ['*'], 'page', $page);
+
+        return response()->json([
+            'html' => view('partials.blog-cards', compact('blogs'))->render(),
+            'pagination' => view('vendor.pagination.blogs-pagination', ['paginator' => $blogs])->render()
+        ]);
+    }
+
+    public function blogDetail($slug)
+    {
+        try {
+            // Main blog with category
+            $blog = Blog::with('category')
+                ->where('slug', $slug)
+                ->where('is_active', 1)
+                ->firstOrFail();
+
+            // Related Blogs - Only required fields
+            $relatedBlogs = collect();
+
+            if ($blog->category_id && $blog->category) {
+                $relatedBlogs = Blog::select('id', 'title', 'slug', 'image', 'image_alt_text', 'updated_at') // sirf yehi fields
+                    ->where('category_id', $blog->category_id)
+                    ->where('id', '!=', $blog->id)
+                    ->where('is_active', 1)
+                    ->latest('updated_at') // ya 'created_at' jo bhi prefer karo
+                    ->take(6)
+                    ->get();
+            }
+
+            // Fallback: agar related < 4 hain to latest blogs se fill karo (same fields only)
+            if ($relatedBlogs->count() < 4) {
+                $excludeIds = [$blog->id];
+                if ($relatedBlogs->isNotEmpty()) {
+                    $excludeIds = array_merge($excludeIds, $relatedBlogs->pluck('id')->toArray());
+                }
+
+                $fallbackBlogs = Blog::select('id', 'title', 'slug', 'image', 'image_alt_text', 'updated_at')
+                    ->where('is_active', 1)
+                    ->whereNotIn('id', $excludeIds)
+                    ->latest('updated_at')
+                    ->take(6 - $relatedBlogs->count())
+                    ->get();
+
+                $relatedBlogs = $relatedBlogs->merge($fallbackBlogs);
+            }
+
+            // Fetch all active categories for the sidebar
+            $categories = Category::select('id', 'name', 'slug')
+                ->where('status', true)  // only active categories
+                ->orderBy('name')
+                ->get();
+
+
+            return view('frontend.pages.blogdetail', compact('blog', 'relatedBlogs', 'categories'));
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            abort(404);
+        } catch (\Throwable $e) {
+            Log::error('Blog Detail Error', [
+                'slug' => $slug,
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()
+                ->route('home')
+                ->with('error', 'Something went wrong while loading the blog.');
         }
     }
 }

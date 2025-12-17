@@ -87,6 +87,41 @@
                                 @enderror
                             </div>
 
+                            <!-- Type -->
+                            <div class="col-lg-6 mb-4">
+                                <label for="type" class="form-label fw-semibold">{{ __('Type') }}</label>
+                                <select name="type" id="type"
+                                    class="form-select form-select-lg @error('type') is-invalid @enderror">
+
+                                    <option value="">{{ __('Select Type') }}</option>
+
+                                    <option value="featured"
+                                        {{ old('type', $data->type ?? '') == 'featured' ? 'selected' : '' }}>
+                                        {{ __('Featured') }}
+                                    </option>
+
+                                    <option value="bio-medical"
+                                        {{ old('type', $data->type ?? '') == 'bio-medical' ? 'selected' : '' }}>
+                                        {{ __('Bio Medical') }}
+                                    </option>
+
+                                </select>
+
+                                @error('type')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-lg-6 mb-4">
+                                <label for="read_time"
+                                    class="form-label fw-semibold">{{ __('Read Time') }}</label>
+                                <input type="text" id="read_time" name="read_time"
+                                    class="form-control form-control-lg @error('read_time') is-invalid @enderror"
+                                    value="{{ old('read_time', $data->read_time ?? '') }}">
+                                @error('read_time')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
 
                             <!-- Image -->
                             <div class="col-lg-6 mb-4">
@@ -115,7 +150,8 @@
 
                             <!-- Short Description -->
                             <div class="col-lg-12 mb-4">
-                                <label for="description" class="form-label fw-semibold">{{ __('Short Description') }}</label>
+                                <label for="description"
+                                    class="form-label fw-semibold">{{ __('Short Description') }}</label>
                                 <textarea id="short_description" name="short_description"
                                     class="ckeditor form-control form-control-lg @error('short_description') is-invalid @enderror" rows="5">{{ old('short_description', $data->short_description ?? '') }}</textarea>
                                 @error('short_description')

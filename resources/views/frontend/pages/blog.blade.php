@@ -1,6 +1,9 @@
 @extends('frontend.layouts.frontend')
 
-@section('title', 'Blog’s Main Page ')
+{{-- @section('title', 'Blog’s Main Page ') --}}
+@section('meta_title', $data->meta_title ?? 'Blogs')
+@section('meta_keywords', $data->meta_keywords ?? '')
+@section('meta_description', $data->meta_description ?? '')
 
 @push('frontend-styles')
     <style>
@@ -118,11 +121,10 @@
     <section class="hero-detail-section">
         <div class="container py-5 text-center text-white">
 
-            <h1 class="hero-title mb-3"><span>Blog Main </span>Page </h1>
+            <h1 class="hero-title mb-3">{!! highlightBracketText($data->heading ?? '', ['#000000']) !!}</h1>
 
             <p class="hero-description mx-auto mb-4">
-                Discover the comprehensive range of specialized biomedical services we offer, designed to support your
-                operational needs and technological advancement.
+                {{ $data->short_description ?? '' }}
             </p>
 
             <div class="container py-5 text-center text-white">
@@ -142,7 +144,9 @@
         </div>
     </section>
 
-    <section class="latest-updates py-5">
+    <x-latest-blogs-section />
+
+    {{-- <section class="latest-updates py-5">
         <div class="container">
 
             <h2 class="text-center latest-blog-heading mb-4">
@@ -424,531 +428,106 @@
             <a href="#" class="page-link">15</a>
             <a href="#" class="page-link">&raquo;</a>
         </div>
-    </section>
+    </section> --}}
 
 
 
     {{-- =============== feature section ===================== --}}
+    <x-featured-blogs-section :limit="4" />
 
-    <section class="featured-section container my-2">
+    {{-- @if ($featuredBlogs->count())
+        <section class="featured-section container my-2">
 
-        <h2 class="latest-blog-heading mb-4 text-center">Featured <span>Updates</span> </h2>
+            <h2 class="latest-blog-heading mb-4 text-center">Featured <span>Updates</span> </h2>
 
-        <div class="row g-4 mt-4">
+            <div class="row g-4 mt-4">
 
-            <!-- Card 1 -->
-            <div class="col-lg-6">
-                <div class="featured-card d-flex">
+                <!-- Card -->
+                @foreach ($featuredBlogs as $featuredBlog)
+                    <div class="col-lg-6">
+                        <div class="featured-card d-flex">
 
-                    <!-- Image -->
-                    <img src="/frontend/images/recent-news-img.png" class="featured-img" alt="image">
+                            <!-- Image -->
+                            <img src="{{ $featuredBlog->image ? asset('storage/blog/images/' . $featuredBlog->image) : '' }}"
+                                class="featured-img" alt="{{ $featuredBlog->image_alt_text ?? $featuredBlog->title }}">
 
-                    <!-- Content -->
-                    <div class="featured-content">
+                            <!-- Content -->
+                            <div class="featured-content">
 
-                        <!-- Categories -->
-                        <div class="mb-2">
-                            <button class="cate-btn">Category 1</button>
-                            <button class="cate-btn">Category 2</button>
-                        </div>
+                                <!-- Categories -->
+                                <div class="mb-2">
+                                    <button class="cate-btn">{{ $featuredBlog->category?->name ?? '' }}</button>
+                                </div>
 
-                        <!-- Title -->
-                        <h4 class="featured-title">Suscipit dolor eveni</h4>
+                                <!-- Title -->
+                                <h4 class="featured-title">{{ $featuredBlog->title ?? '' }}</h4>
 
-                        <!-- Description -->
-                        <p class="featured-desc">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Dolor esse amet ratione dignissimos.
-                        </p>
+                                <!-- Description -->
+                                <p class="featured-desc">
+                                    {{ $featuredBlog->short_description ?? '' }}
+                                </p>
 
-                        <!-- Read time -->
-                        <span class="read-time">1 Min Read</span>
+                                <!-- Read time -->
+                                <span class="read-time">{{ $featuredBlog->read_time ?? '' }}</span>
 
-                        <hr>
+                                <hr>
 
-                        <!-- Footer Row -->
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="post-date">06.Nov.2025</span>
+                                <!-- Footer Row -->
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span
+                                        class="post-date">{{ $featuredBlog->updated_at ? $featuredBlog->updated_at->format('d.M.Y') : '' }}</span>
 
-                            <div class="social-icons">
-                                <i class="fab fa-facebook-f"></i>
-                                <i class="fab fa-twitter"></i>
-                                <i class="fab fa-linkedin-in"></i>
+                                    <div class="social-icons">
+                                        <i class="fab fa-facebook-f"></i>
+                                        <i class="fab fa-twitter"></i>
+                                        <i class="fab fa-linkedin-in"></i>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
-
                     </div>
-                </div>
+                @endforeach
+
             </div>
+        </section>
+    @endif --}}
 
-            <!-- Card 2 (Duplicate Structure) -->
-            <div class="col-lg-6">
-                <div class="featured-card d-flex">
+    @if ($bioMedicalBlogs->count())
+        <section class="featured-section container my-5">
 
-                    <img src="/frontend/images/recent-news-img.png" class="featured-img" alt="image">
+            <h2 class="latest-blog-heading mb-4 text-center">Mr biomed Tech <span>Medical Blogs</span> </h2>
+            <div class="container">
+                <div class="row g-4">
+                    @foreach ($bioMedicalBlogs as $bioMedicalBlog)
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="news-card bg-white">
 
-                    <div class="featured-content">
+                                <h5 class="news-title fw-bold mt-2 mb-2">{{ $bioMedicalBlog->title ?? '' }}</h5>
+                                <div class="p-3 boddy">
 
-                        <div class="mb-2">
-                            <button class="cate-btn">Category 1</button>
-                            <button class="cate-btn">Category 2</button>
-                        </div>
+                                    <p class="news-desc small text-muted mb-3">
+                                        {{ $bioMedicalBlog->short_description ?? '' }}</p>
 
-                        <h4 class="featured-title">Suscipit dolor eveni</h4>
-
-                        <p class="featured-desc">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Dolor esse amet ratione dignissimos.
-                        </p>
-
-                        <span class="read-time">1 Min Read</span>
-
-                        <hr>
-
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="post-date">06.Nov.2025</span>
-
-                            <div class="social-icons">
-                                <i class="fab fa-facebook-f"></i>
-                                <i class="fab fa-twitter"></i>
-                                <i class="fab fa-linkedin-in"></i>
+                                    <a href="{{ route('blog.detail', $bioMedicalBlog->slug) }}"
+                                        class="read-more-link d-flex align-items-center justify-content-start text-decoration-none">
+                                        Read More <i class="fas fa-arrow-right ms-2"></i>
+                                    </a>
+                                    
+                                </div>
                             </div>
                         </div>
-
-                    </div>
+                    @endforeach
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="featured-card d-flex">
-
-                    <!-- Image -->
-                    <img src="/frontend/images/recent-news-img.png" class="featured-img" alt="image">
-
-                    <!-- Content -->
-                    <div class="featured-content">
-
-                        <!-- Categories -->
-                        <div class="mb-2">
-                            <button class="cate-btn">Category 1</button>
-                            <button class="cate-btn">Category 2</button>
-                        </div>
-
-                        <!-- Title -->
-                        <h4 class="featured-title">Suscipit dolor eveni</h4>
-
-                        <!-- Description -->
-                        <p class="featured-desc">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Dolor esse amet ratione dignissimos.
-                        </p>
-
-                        <!-- Read time -->
-                        <span class="read-time">1 Min Read</span>
-
-                        <hr>
-
-                        <!-- Footer Row -->
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="post-date">06.Nov.2025</span>
-
-                            <div class="social-icons">
-                                <i class="fab fa-facebook-f"></i>
-                                <i class="fab fa-twitter"></i>
-                                <i class="fab fa-linkedin-in"></i>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2 (Duplicate Structure) -->
-            <div class="col-lg-6">
-                <div class="featured-card d-flex">
-
-                    <img src="/frontend/images/recent-news-img.png" class="featured-img" alt="image">
-
-                    <div class="featured-content">
-
-                        <div class="mb-2">
-                            <button class="cate-btn">Category 1</button>
-                            <button class="cate-btn">Category 2</button>
-                        </div>
-
-                        <h4 class="featured-title">Suscipit dolor eveni</h4>
-
-                        <p class="featured-desc">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Dolor esse amet ratione dignissimos.
-                        </p>
-
-                        <span class="read-time">1 Min Read</span>
-
-                        <hr>
-
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="post-date">06.Nov.2025</span>
-
-                            <div class="social-icons">
-                                <i class="fab fa-facebook-f"></i>
-                                <i class="fab fa-twitter"></i>
-                                <i class="fab fa-linkedin-in"></i>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="featured-card d-flex">
-
-                    <!-- Image -->
-                    <img src="/frontend/images/recent-news-img.png" class="featured-img" alt="image">
-
-                    <!-- Content -->
-                    <div class="featured-content">
-
-                        <!-- Categories -->
-                        <div class="mb-2">
-                            <button class="cate-btn">Category 1</button>
-                            <button class="cate-btn">Category 2</button>
-                        </div>
-
-                        <!-- Title -->
-                        <h4 class="featured-title">Suscipit dolor eveni</h4>
-
-                        <!-- Description -->
-                        <p class="featured-desc">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Dolor esse amet ratione dignissimos.
-                        </p>
-
-                        <!-- Read time -->
-                        <span class="read-time">1 Min Read</span>
-
-                        <hr>
-
-                        <!-- Footer Row -->
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="post-date">06.Nov.2025</span>
-
-                            <div class="social-icons">
-                                <i class="fab fa-facebook-f"></i>
-                                <i class="fab fa-twitter"></i>
-                                <i class="fab fa-linkedin-in"></i>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2 (Duplicate Structure) -->
-            <div class="col-lg-6">
-                <div class="featured-card d-flex">
-
-                    <img src="/frontend/images/recent-news-img.png" class="featured-img" alt="image">
-
-                    <div class="featured-content">
-
-                        <div class="mb-2">
-                            <button class="cate-btn">Category 1</button>
-                            <button class="cate-btn">Category 2</button>
-                        </div>
-
-                        <h4 class="featured-title">Suscipit dolor eveni</h4>
-
-                        <p class="featured-desc">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Dolor esse amet ratione dignissimos.
-                        </p>
-
-                        <span class="read-time">1 Min Read</span>
-
-                        <hr>
-
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="post-date">06.Nov.2025</span>
-
-                            <div class="social-icons">
-                                <i class="fab fa-facebook-f"></i>
-                                <i class="fab fa-twitter"></i>
-                                <i class="fab fa-linkedin-in"></i>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-
-    <section class="featured-section container my-5">
-
-        <h2 class="latest-blog-heading mb-4 text-center">Mr biomed Tech <span>Medical Blogs</span> </h2>
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="news-card bg-white">
-
-                        <h5 class="news-title fw-bold mt-2 mb-2">The Future of Technology Solutions: Breakthrough
-                            Innovations Driving Digital Transformation and Business Success Worldwide</h5>
-                        <div class="p-3 boddy">
-
-                            <p class="news-desc small text-muted mb-3">
-                                Understand the critical importance of robust cybersecurity measures in modern healthcare.
-                                Understand the critical importance of robust cybersecurity measures in modern healthcare.
-                            </p>
-                            <a href="#"
-                                class="read-more-link d-flex align-items-center justify-content-start text-decoration-none">
-                                Read More <i class="fas fa-arrow-right ms-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="news-card bg-white   ">
-
-                        <h5 class="news-title fw-bold mt-2 mb-2">The Future of Technology Solutions: Breakthrough
-                            Innovations Driving Digital Transformation and Business Success Worldwide</h5>
-                        <div class="p-3 boddy">
-
-                            <p class="news-desc small text-muted mb-3">
-                                Understand the critical importance of robust cybersecurity measures in modern healthcare.
-                                Understand the critical importance of robust cybersecurity measures in modern healthcare.
-                            </p>
-                            <a href="#"
-                                class="read-more-link d-flex align-items-center justify-content-start text-decoration-none">
-                                Read More <i class="fas fa-arrow-right ms-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="news-card bg-white   ">
-
-                        <h5 class="news-title fw-bold mt-2 mb-2">The Future of Technology Solutions: Breakthrough
-                            Innovations Driving Digital Transformation and Business Success Worldwide</h5>
-                        <div class="p-3 boddy">
-
-                            <p class="news-desc small text-muted mb-3">
-                                Understand the critical importance of robust cybersecurity measures in modern healthcare.
-                                Understand the critical importance of robust cybersecurity measures in modern healthcare.
-                            </p>
-                            <a href="#"
-                                class="read-more-link d-flex align-items-center justify-content-start text-decoration-none">
-                                Read More <i class="fas fa-arrow-right ms-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="news-card bg-white   ">
-
-                        <h5 class="news-title fw-bold mt-2 mb-2">The Future of Technology Solutions: Breakthrough
-                            Innovations Driving Digital Transformation and Business Success Worldwide</h5>
-                        <div class="p-3 boddy">
-
-                            <p class="news-desc small text-muted mb-3">
-                                Understand the critical importance of robust cybersecurity measures in modern healthcare.
-                                Understand the critical importance of robust cybersecurity measures in modern healthcare.
-                            </p>
-                            <a href="#"
-                                class="read-more-link d-flex align-items-center justify-content-start text-decoration-none">
-                                Read More <i class="fas fa-arrow-right ms-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="news-card bg-white   ">
-
-                        <h5 class="news-title fw-bold mt-2 mb-2">The Future of Technology Solutions: Breakthrough
-                            Innovations Driving Digital Transformation and Business Success Worldwide</h5>
-                        <div class="p-3 boddy">
-
-                            <p class="news-desc small text-muted mb-3">
-                                Understand the critical importance of robust cybersecurity measures in modern healthcare.
-                                Understand the critical importance of robust cybersecurity measures in modern healthcare.
-                            </p>
-                            <a href="#"
-                                class="read-more-link d-flex align-items-center justify-content-start text-decoration-none">
-                                Read More <i class="fas fa-arrow-right ms-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="news-card bg-white   ">
-
-                        <h5 class="news-title fw-bold mt-2 mb-2">The Future of Technology Solutions: Breakthrough
-                            Innovations Driving Digital Transformation and Business Success Worldwide</h5>
-                        <div class="p-3 boddy">
-
-                            <p class="news-desc small text-muted mb-3">
-                                Understand the critical importance of robust cybersecurity measures in modern healthcare.
-                                Understand the critical importance of robust cybersecurity measures in modern healthcare.
-                            </p>
-                            <a href="#"
-                                class="read-more-link d-flex align-items-center justify-content-start text-decoration-none">
-                                Read More <i class="fas fa-arrow-right ms-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="news-card bg-white   ">
-
-                        <h5 class="news-title fw-bold mt-2 mb-2">The Future of Technology Solutions: Breakthrough
-                            Innovations Driving Digital Transformation and Business Success Worldwide</h5>
-                        <div class="p-3 boddy">
-
-                            <p class="news-desc small text-muted mb-3">
-                                Understand the critical importance of robust cybersecurity measures in modern healthcare.
-                                Understand the critical importance of robust cybersecurity measures in modern healthcare.
-                            </p>
-                            <a href="#"
-                                class="read-more-link d-flex align-items-center justify-content-start text-decoration-none">
-                                Read More <i class="fas fa-arrow-right ms-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="news-card bg-white   ">
-
-                        <h5 class="news-title fw-bold mt-2 mb-2">The Future of Technology Solutions: Breakthrough
-                            Innovations Driving Digital Transformation and Business Success Worldwide</h5>
-                        <div class="p-3 boddy">
-
-                            <p class="news-desc small text-muted mb-3">
-                                Understand the critical importance of robust cybersecurity measures in modern healthcare.
-                                Understand the critical importance of robust cybersecurity measures in modern healthcare.
-                            </p>
-                            <a href="#"
-                                class="read-more-link d-flex align-items-center justify-content-start text-decoration-none">
-                                Read More <i class="fas fa-arrow-right ms-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="news-card bg-white   ">
-
-                        <h5 class="news-title fw-bold mt-2 mb-2">The Future of Technology Solutions: Breakthrough
-                            Innovations Driving Digital Transformation and Business Success Worldwide</h5>
-                        <div class="p-3 boddy">
-
-                            <p class="news-desc small text-muted mb-3">
-                                Understand the critical importance of robust cybersecurity measures in modern healthcare.
-                                Understand the critical importance of robust cybersecurity measures in modern healthcare.
-                            </p>
-                            <a href="#"
-                                class="read-more-link d-flex align-items-center justify-content-start text-decoration-none">
-                                Read More <i class="fas fa-arrow-right ms-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
     {{-- ================faqs section ================ --}}
 
-    <section class="faqs-section py-5">
-        <div class="container">
-            <div class="row align-items-center">
-                <!-- Left Column: FAQs -->
-                <div class="col-lg-6">
-                    <h2 class="faqs-heading">Frequently Asked Questions</h2>
-                    <div class="mt-4">
-                        <h5 class="faqs-subheading">About Our Profile?</h5>
-                        <p class="faq-para">
-                            We provide sales, rental, and repair services for medical equipment with ISO certified
-                        </p>
-                    </div>
-
-                    <div class="faqs-list">
-                        <!-- Sample FAQs -->
-                        <div class="faq-item">
-                            <div class="faq-title">
-                                What services does Mr Biomed Tech offer?
-                                <i class="bi bi-chevron-down faq-icon"></i>
-                            </div>
-                            <div class="faq-content">
-                                We provide sales, rental, and repair services for medical equipment with ISO certified
-                                products and 24/7 support.
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-title">
-                                How can I request a service?
-                                <i class="bi bi-chevron-down faq-icon"></i>
-                            </div>
-                            <div class="faq-content">
-                                You can contact us via our website form, email, or call our support team to request any
-                                service.
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-title">
-                                Are your products guaranteed?
-                                <i class="bi bi-chevron-down faq-icon"></i>
-                            </div>
-                            <div class="faq-content">
-                                Yes, all our equipment comes with manufacturer warranty and quality assurance for
-                                reliability.
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-title">
-                                What is the delivery time?
-                                <i class="bi bi-chevron-down faq-icon"></i>
-                            </div>
-                            <div class="faq-content">
-                                Delivery depends on product availability, usually 3-7 business days.
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-title">
-                                Can I return a product?
-                                <i class="bi bi-chevron-down faq-icon"></i>
-                            </div>
-                            <div class="faq-content">
-                                Yes, returns are possible within 14 days under our return policy.
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-title">
-                                Do you offer installation services?
-                                <i class="bi bi-chevron-down faq-icon"></i>
-                            </div>
-                            <div class="faq-content">
-                                Yes, our team provides installation and training for all equipment.
-                            </div>
-                        </div>
-                    </div>
-
-                    <button class="btn-see-more">See More</button>
-                </div>
-
-                <!-- Right Column: Image -->
-                <div class="col-lg-6 text-center">
-                    <img src="{{ asset('frontend/images/hero-main-img.png') }}" alt="FAQ Image"
-                        class="faq-img img-fluid">
-                </div>
-            </div>
-        </div>
-    </section>
+    <x-faq-section :faqs="$faqs" heading="Frequently Asked Questions" subheading="About Our Profile?"
+        subtext="We provide sales, rental, and repair services for medical equipment with ISO certified"
+        image="frontend/images/hero-main-img.png" :visible="4" />
 
 @endsection
 

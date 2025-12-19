@@ -84,7 +84,7 @@
         }
 
         .query-btn {
-            width: 145px;
+            max-width: 145px;
             height: 45px;
             border-radius: 10px;
             background: #0071A8;
@@ -126,6 +126,23 @@
             font-family: Arial;
             font-size: 16px;
             line-height: 160%;
+        }
+
+        @media(max-width: 767px) {
+            .query-btn {
+                max-width: 121px !important;
+                width: 100%;
+                height: 31px !important;
+
+                font-size: 18px !important;
+
+            }
+
+            .query-heading {
+
+                font-size: 30px !important;
+
+            }
         }
     </style>
 @endpush
@@ -474,7 +491,7 @@
 
 
     {{-- ================= pruduct sectiion ============= --}}
-    <section class="products-series-section py-5">
+    {{-- <section class="products-series-section py-5">
 
 
         <div class="container-fluid py-5 product-series-bg">
@@ -619,7 +636,8 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
+    <x-our-latest-products />
 
     {{-- ============= reveiw sectiion ================== --}}
 
@@ -818,10 +836,10 @@
 
 
 
-    <section class="recent-news-section py- mb-5">
+    <section class="recent-news-section mt-5 py- mb-5">
         <div class="container text-center">
-            <h2 class="section-title text-white mb-3">Recent News</h2>
-            <p class="section-desc  mb-5">
+            <h2 class="section-title text-white mb-3 fade-left">Recent News</h2>
+            <p class="section-desc fade-right  mb-5">
                 Stay updated with the latest trends and insights in biomedical technology and services.
             </p>
         </div>
@@ -829,7 +847,7 @@
         <div class="container">
             <div class="row g-4">
 
-                <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="col-lg-3 col-md-6 col-sm-12 animate-card">
                     <div class="news-card bg-white   ">
                         <img src="{{ asset('frontend/images/recent-news-img.png') }}" class="img-fluid w-100"
                             alt="News Image">
@@ -848,7 +866,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="col-lg-3 col-md-6 col-sm-12 animate-card">
                     <div class="news-card bg-white   ">
                         <img src="{{ asset('frontend/images/recent-news-img.png') }}" class="img-fluid w-100"
                             alt="News Image">
@@ -867,7 +885,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="col-lg-3 col-md-6 col-sm-12 animate-card">
                     <div class="news-card bg-white   ">
                         <img src="{{ asset('frontend/images/recent-news-img.png') }}" class="img-fluid w-100"
                             alt="News Image">
@@ -886,7 +904,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="col-lg-3 col-md-6 col-sm-12 animate-card">
                     <div class="news-card bg-white   ">
                         <img src="{{ asset('frontend/images/recent-news-img.png') }}" class="img-fluid w-100"
                             alt="News Image">

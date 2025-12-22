@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\BlogCommentDataTable;
 use App\DataTables\BlogsDataTable;
 use App\Models\Blog;
+use App\Models\BlogComment;
 use App\Models\BlogMainPage;
 use App\Models\Category;
 use App\Traits\UploadImageTrait;
@@ -395,6 +397,12 @@ class BlogController extends Controller
                 ->where('is_active', 1)
                 ->firstOrFail();
 
+            $comments = $blog->comments()
+                ->where('status', 'approved')
+                ->orderBy('created_at', 'desc') // latest first
+                ->take(5)                        // only 5 comments
+                ->get();
+
             // Related Blogs - Only required fields
             $relatedBlogs = collect();
 
@@ -432,7 +440,7 @@ class BlogController extends Controller
                 ->get();
 
 
-            return view('frontend.pages.blogdetail', compact('blog', 'relatedBlogs', 'categories'));
+            return view('frontend.pages.blogdetail', compact('blog', 'relatedBlogs', 'categories', 'comments'));
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             abort(404);
         } catch (\Throwable $e) {
@@ -445,6 +453,68 @@ class BlogController extends Controller
             return redirect()
                 ->route('home')
                 ->with('error', 'Something went wrong while loading the blog.');
+        }
+    }
+
+    public function blogComment(Request $request, $slug)
+    {
+        try {
+            // Get the blog by slug
+            $blog = Blog::where('slug', $slug)->firstOrFail();
+
+            // Validate input
+            $validated = $request->validate([
+                'name'    => 'required|string|max:255',
+                'email'   => 'required|email|max:255',
+                'comment' => 'required|string',
+            ]);
+
+            DB::beginTransaction();
+
+            // Create new comment
+            $comment = BlogComment::create([
+                'blog_id'    => $blog->id,
+                'name'       => $validated['name'],
+                'email'      => $validated['email'],
+                'comment'    => $validated['comment'],
+                'status'     => 'pending', // default status
+                'ip_address' => $request->ip(),
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Comment submitted successfully and is pending approval.',
+                'data'    => $comment
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Validation errors
+            return response()->json([
+                'success' => false,
+                'errors'  => $e->errors()
+            ], 422);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            // Blog not found
+            return response()->json([
+                'success' => false,
+                'message' => 'Blog not found.'
+            ], 404);
+        } catch (\Exception $e) {
+            // Log unexpected errors
+            Log::error('Error submitting blog comment:', [
+                'message' => $e->getMessage(),
+                'line'    => $e->getLine(),
+                'file'    => $e->getFile(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+
+            DB::rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Something went wrong. Please try again later.'
+            ], 500);
         }
     }
 }

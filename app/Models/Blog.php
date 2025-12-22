@@ -41,6 +41,12 @@ class Blog extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function comments()
+    {
+        return $this->hasMany(BlogComment::class, 'blog_id');
+    }
+
+
     // Creator of the blog
     public function createdBy()
     {

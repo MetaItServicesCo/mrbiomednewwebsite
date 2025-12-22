@@ -5,12 +5,12 @@
             <div class="card shadow-sm">
                 <div class="card-header p-5 rounded-top">
                     <div class="d-flex w-100 justify-content-between align-items-center">
-                        <h3 class="fw-bolder mb-0">{{ __('Location Page') }}</h3>
+                        <h3 class="fw-bolder mb-0">{{ __('Review Landing Page') }}</h3>
                     </div>
                 </div>
 
                 <div class="card-body p-5">
-                    <form action="{{ route('admin-location-page.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('admin.reviews.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="id" value="{{ $data->id ?? '' }}">
 
@@ -40,68 +40,126 @@
                                 @enderror
                             </div>
 
-
-                            {{-- ================= Areas We Serve ================= --}}
+                            {{-- ================= Main Content Section ================= --}}
                             <div class="col-12 mt-5">
-                                <h4 class="fw-bold">Areas We Serve</h4>
+                                <h4 class="fw-bold">Main Content Section</h4>
                             </div>
 
                             <div class="col-lg-12">
-                                <label class="form-label fw-semibold">Areas Title</label>
-                                <input type="text" name="areas_title"
-                                    class="form-control form-control-lg @error('areas_title') is-invalid @enderror"
-                                    value="{{ old('areas_title', $data->areas_title ?? '') }}">
-                                @error('areas_title')
+                                <label class="form-label fw-semibold">Main Heading</label>
+                                <input type="text" name="main_heading"
+                                    class="form-control form-control-lg @error('main_heading') is-invalid @enderror"
+                                    value="{{ old('main_heading', $data->main_heading ?? '') }}">
+                                @error('main_heading')
                                     <div class="text-danger mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <div class="col-lg-12">
-                                <label class="form-label fw-semibold">Areas Description</label>
-                                <textarea name="areas_description" rows="4"
-                                    class="form-control form-control-lg @error('areas_description') is-invalid @enderror">{{ old('areas_description', $data->areas_description ?? '') }}</textarea>
-                                @error('areas_description')
+                                <label class="form-label fw-semibold">Main Description</label>
+                                <textarea name="main_description" id="main_description" rows="5"
+                                    class="form-control form-control-lg @error('main_description') is-invalid @enderror">{{ old('main_description', $data->main_description ?? '') }}</textarea>
+                                @error('main_description')
                                     <div class="text-danger mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
+                            <div class="col-lg-6">
+                                <label class="form-label fw-semibold">Main Image</label>
+                                <input type="file" name="main_image"
+                                    class="form-control form-control-lg @error('main_image') is-invalid @enderror">
+                                @error('main_image')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
 
-                            {{-- ================= Major Cities ================= --}}
+                                @if (!empty($data->main_image))
+                                    <div class="mt-2">
+                                        <img src="{{ asset('storage/reviews/main/' . $data->main_image) }}"
+                                            height="80">
+                                    </div>
+                                @endif
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label class="form-label fw-semibold">Main Image Alt</label>
+                                <input type="text" name="main_image_alt"
+                                    class="form-control form-control-lg @error('main_image_alt') is-invalid @enderror"
+                                    value="{{ old('main_image_alt', $data->main_image_alt ?? '') }}">
+                                @error('main_image_alt')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- ================= CTA / Banner Section ================= --}}
                             <div class="col-12 mt-5">
-                                <h4 class="fw-bold">Major Cities Section</h4>
+                                <h4 class="fw-bold">CTA / Banner Section</h4>
                             </div>
 
                             <div class="col-lg-12">
-                                <label class="form-label fw-semibold">Cities Section Title</label>
-                                <input type="text" name="cities_section_title"
-                                    class="form-control form-control-lg @error('cities_section_title') is-invalid @enderror"
-                                    value="{{ old('cities_section_title', $data->cities_section_title ?? '') }}">
-                                @error('cities_section_title')
+                                <label class="form-label fw-semibold">CTA Title</label>
+                                <input type="text" name="cta_title"
+                                    class="form-control form-control-lg @error('cta_title') is-invalid @enderror"
+                                    value="{{ old('cta_title', $data->cta_title ?? '') }}">
+                                @error('cta_title')
                                     <div class="text-danger mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
+                            <div class="col-lg-12">
+                                <label class="form-label fw-semibold">CTA Description</label>
+                                <textarea name="cta_description" rows="4"
+                                    class="form-control form-control-lg @error('cta_description') is-invalid @enderror">{{ old('cta_description', $data->cta_description ?? '') }}</textarea>
+                                @error('cta_description')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-                            {{-- ================= How We Serve ================= --}}
+                            <div class="col-lg-6">
+                                <label class="form-label fw-semibold">CTA Logo</label>
+                                <input type="file" name="cta_logo"
+                                    class="form-control form-control-lg @error('cta_logo') is-invalid @enderror">
+                                @error('cta_logo')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+
+                                @if (!empty($data->cta_logo))
+                                    <div class="mt-2">
+                                        <img src="{{ asset('storage/reviews/cta/' . $data->cta_logo) }}"
+                                            height="80">
+                                    </div>
+                                @endif
+                            </div>
+
+                            <div class="col-lg-6">
+                                <label class="form-label fw-semibold">CTA Logo Alt</label>
+                                <input type="text" name="cta_logo_alt"
+                                    class="form-control form-control-lg @error('cta_logo_alt') is-invalid @enderror"
+                                    value="{{ old('cta_logo_alt', $data->cta_logo_alt ?? '') }}">
+                                @error('cta_logo_alt')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- ================= Testimonials Section ================= --}}
                             <div class="col-12 mt-5">
-                                <h4 class="fw-bold">How We Serve</h4>
+                                <h4 class="fw-bold">Testimonials Section</h4>
                             </div>
 
                             <div class="col-lg-12">
-                                <label class="form-label fw-semibold">Serve Heading</label>
-                                <input type="text" name="serve_heading"
-                                    class="form-control form-control-lg @error('serve_heading') is-invalid @enderror"
-                                    value="{{ old('serve_heading', $data->serve_heading ?? '') }}">
-                                @error('serve_heading')
+                                <label class="form-label fw-semibold">Testimonial Heading</label>
+                                <input type="text" name="testimonial_heading"
+                                    class="form-control form-control-lg @error('testimonial_heading') is-invalid @enderror"
+                                    value="{{ old('testimonial_heading', $data->testimonial_heading ?? '') }}">
+                                @error('testimonial_heading')
                                     <div class="text-danger mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <div class="col-lg-12">
-                                <label class="form-label fw-semibold">Serve Description</label>
-                                <textarea name="serve_description" id="serve_description" rows="4"
-                                    class="form-control form-control-lg @error('serve_description') is-invalid @enderror">{{ old('serve_description', $data->serve_description ?? '') }}</textarea>
-                                @error('serve_description')
+                                <label class="form-label fw-semibold">Testimonial Subheading</label>
+                                <textarea name="testimonial_subheading" rows="3"
+                                    class="form-control form-control-lg @error('testimonial_subheading') is-invalid @enderror">{{ old('testimonial_subheading', $data->testimonial_subheading ?? '') }}</textarea>
+                                @error('testimonial_subheading')
                                     <div class="text-danger mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -170,8 +228,8 @@
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const editors = [{
-                    id: 'serve_description',
-                    uploadDir: 'how_we_serve/ckeditor'
+                    id: 'main_description',
+                    uploadDir: 'reviews/ckeditor'
                 }];
 
                 editors.forEach(editorConfig => {
@@ -193,5 +251,6 @@
             });
         </script>
     @endpush
+
 
 </x-default-layout>

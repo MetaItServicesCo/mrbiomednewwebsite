@@ -1,10 +1,16 @@
 @extends('frontend.layouts.frontend')
 
-@section('title', 'Feedback')
+{{-- @section('title', 'Feedback') --}}
+@section('meta_title', $data->meta_title ?? 'Feedback')
+@section('meta_keywords', $data->meta_keywords ?? '')
+@section('meta_description', $data->meta_description ?? '')
 
 @push('frontend-styles')
     <style>
         /* ================= BIOMED REVIEW SECTION ================= */
+        html {
+            scroll-behavior: smooth;
+        }
 
         .biomed-review-section {
             background: #006A9E1A;
@@ -23,7 +29,7 @@
             text-align: start;
         }
 
-        .review-desc {
+        .review-desc p {
             font-family: Arial;
             font-weight: 400;
             color: #000000;
@@ -199,8 +205,8 @@
         }
 
         /* ============================
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               📱 Responsive Breakpoints
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ============================ */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       📱 Responsive Breakpoints
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ============================ */
 
         @media (max-width: 768px) {
             .bio-wrapper {
@@ -362,8 +368,8 @@
         }
 
         /* .review-scroll::-webkit-scrollbar {
-                                                                                                                                                width: 8px;
-                                                                                                                                            } */
+                                                                                                                                                                                                                        width: 8px;
+                                                                                                                                                                                                                    } */
 
         /* -------- Scrollbar Styling -------- */
         .review-scroll::-webkit-scrollbar {
@@ -493,6 +499,16 @@
             margin-top: 10px;
         }
 
+        .rate-stars .star {
+            color: #ccc;
+            cursor: pointer;
+            font-size: 22px;
+        }
+
+        .rate-stars .star.active {
+            color: #f5b301;
+        }
+
 
         /* =========================== */
         /* Force Right → Left sliding */
@@ -507,26 +523,25 @@
     <section class="hero-detail-section">
         <div class="container py-5 text-center text-white">
 
-            <h1 class="hero-title mb-3 fade-left"><span class="fade-right">Title For </span> Reviews Page </h1>
+            <h1 class="hero-title mb-3 fade-left">{!! highlightBracketText($data->hero_title ?? '', ['#000000']) !!}</h1>
 
             <p class="hero-description mx-auto mb-4 fade-right">
-                Discover the comprehensive range of specialized biomedical services we offer, designed to support your
-                operational needs and technological advancement.
+                {{ $data->hero_subtitle ?? '' }}
             </p>
-            {{-- 
+
             <div class="container py-5 text-center text-white">
                 <div class="simple-breadcrumb-container text-start mx-auto">
                     <div class="simple-breadcrumb">
 
-                        <a href="/" class="breadcrumb-link">Home</a>
+                        <a href="{{ route('home') }}" class="breadcrumb-link">Home</a>
 
                         <span class="breadcrumb-separator">|</span>
 
-                        <span class="breadcrumb-active">Blog’s Main Page</span>
+                        <span class="breadcrumb-active">Feedback</span>
                     </div>
                 </div>
 
-            </div> --}}
+            </div>
 
         </div>
     </section>
@@ -540,28 +555,24 @@
                 <div class="col-lg-6">
 
                     <h2 class="review-headingg mb-3 fade-right">
-                        Mr Biomed Tech Reviews.
-                        What It’s Like To Work With Us
+                        {{ $data->main_heading ?? '' }}
                     </h2>
 
-                    <p class="review-desc mb-4 fade-left">
-                        We take pride in delivering high-quality medical equipment and technical
-                        services to hospitals, clinics, and healthcare professionals. Our mission is to
-                        provide reliable, innovative, and long-lasting solutions that help improve
-                        patient care and hospital performance.
-                    </p>
+                    <div class="review-desc mb-4 fade-left">
+                        {!! $data->main_description ?? '' !!}
+                    </div>
 
                     <div class="d-flex gap-4 mt-5 ">
                         <a href="#" class=" btn-primary-custom fade-left">Request a Quote Today!</a>
-                        <a href="#" class=" btn-outline-custom fade-right">Reviews</a>
+                        <a href="#review-cards-section" class="btn-outline-custom fade-right">Reviews</a>
                     </div>
 
                 </div>
 
                 <!-- RIGHT COLUMN -->
                 <div class="col-lg-6 text-center fade-right">
-                    <img src="{{ asset('frontend/images/feedback/feedback-img.png') }}" class="review-img"
-                        alt="Biomed Review Image">
+                    <img src="{{ $data->main_image ? asset('storage/reviews/main/' . $data->main_image) : '' }}"
+                        class="review-img" alt="{{ $data->main_image_alt ?? '' }}">
 
                 </div>
 
@@ -573,15 +584,15 @@
             <div class="d-flex  justify-content-center align-items-center flex-wrrapper">
 
                 <!-- Left Image -->
-                <img src="{{ asset('frontend/images/feedback/feedback-logo.png') }}" alt="Bio Image" class="bio-img">
+                <img src="{{ $data->cta_logo ? asset('storage/reviews/cta/' . $data->cta_logo) : '' }}"
+                    alt="{{ $data->cta_logo_alt ?? '' }}" class="bio-img">
 
                 <!-- Blue Box -->
                 <div class="bio-box position-relative">
-                    <h3 class="bio-heading">Expert Biomedical Care for Your Equipment</h3>
+                    <h3 class="bio-heading">{{ $data->cta_title ?? '' }}</h3>
 
                     <p class="bio-desc">
-                        We provide high-quality biomedical services to ensure your medical equipment
-                        remains reliable and fully operational at all times.
+                        {{ $data->cta_description ?? '' }}
                     </p>
 
                     <!-- Button bottom-right -->
@@ -598,424 +609,41 @@
 
         <!-- Heading -->
         <h2 class="customer-heading text-center fade-left">
-            Hear From 1,100 <span>Happy Customers</span>
+            {!! highlightBracketText($data->testimonial_heading ?? '', ['#000000']) !!}
         </h2>
 
         <!-- Description -->
         <p class="customer-desc text-center fade-right">
-            Our customers share their experience of working with our professional Biomedical services. Our customers share
-            their experience of working with our
-
+            {{ $data->testimonial_subheading ?? '' }}
         </p>
 
         <!-- Category Buttons -->
 
 
         <!-- Review Cards -->
-        <div class="container">
+        <div class="container" id="review-cards-section">
 
             <div class="d-flex justify-content-between flex-wrap mt-4 w-100 category-btn-wrapper">
-                <button class="cust-btn active-btn">Customer Service</button>
-                <button class="cust-btn">Customer Service</button>
-                <button class="cust-btn">Customer Service</button>
-                <button class="cust-btn">Customer Service</button>
-                <button class="cust-btn">Customer Service</button>
-                <button class="cust-btn">Customer Service</button>
-                <button class="cust-btn">Customer Service</button>
+                @foreach ($categories as $category)
+                    <button class="cust-btn {{ $category->id == $firstCategory->id ? 'active-btn' : '' }}"
+                        data-slug="{{ $category->slug }}">
+                        {{ $category->name }}
+                    </button>
+                @endforeach
 
 
             </div>
-            <div class="row justify-content-center mt-5 g-4">
-
-                <!-- Card 1 -->
-                <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
-                    <div class="review-card">
-
-                        <div class="stars">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star end"></i>
-                        </div>
-
-                        <!-- Scrollable Middle Area -->
-                        <div class="review-scroll auto-scroll">
-                            <p class="review-text">
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                            </p>
-                        </div>
-
-
-                        <h5 class="client-name"> John Anderson</h5>
-
-                    </div>
-
-                </div>
-
-                <!-- Card 2 -->
-                <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
-                    <div class="review-card">
-
-                        <div class="stars">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star end"></i>
-                        </div>
-
-                        <!-- Scrollable Middle Area -->
-                        <div class="review-scroll">
-                            <p class="review-text">
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                .
-                            </p>
-                        </div>
-
-                        <h5 class="client-name"> John Anderson</h5>
-
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
-                    <div class="review-card">
-
-                        <div class="stars">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star end"></i>
-                        </div>
-
-                        <!-- Scrollable Middle Area -->
-                        <div class="review-scroll">
-                            <p class="review-text">
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                .
-                            </p>
-                        </div>
-
-                        <h5 class="client-name"> John Anderson</h5>
-
-                    </div>
-                </div>
-                <!-- Card 1 -->
-                <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
-                    <div class="review-card">
-
-                        <div class="stars">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star end"></i>
-                        </div>
-
-                        <!-- Scrollable Middle Area -->
-                        <div class="review-scroll">
-                            <p class="review-text">
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                .
-                            </p>
-                        </div>
-
-                        <h5 class="client-name"> John Anderson</h5>
-
-                    </div>
-
-                </div>
-
-                <!-- Card 2 -->
-                <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
-                    <div class="review-card">
-
-                        <div class="stars">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star end"></i>
-                        </div>
-
-                        <!-- Scrollable Middle Area -->
-                        <div class="review-scroll">
-                            <p class="review-text">
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                .
-                            </p>
-                        </div>
-
-                        <h5 class="client-name"> John Anderson</h5>
-
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
-                    <div class="review-card">
-
-                        <div class="stars">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star end"></i>
-                        </div>
-
-                        <!-- Scrollable Middle Area -->
-                        <div class="review-scroll">
-                            <p class="review-text">
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                .
-                            </p>
-                        </div>
-
-                        <h5 class="client-name"> John Anderson</h5>
-
-                    </div>
-                </div>
-                <!-- Card 1 -->
-                <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
-                    <div class="review-card">
-
-                        <div class="stars">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star end"></i>
-                        </div>
-
-                        <!-- Scrollable Middle Area -->
-                        <div class="review-scroll">
-                            <p class="review-text">
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                .
-                            </p>
-                        </div>
-
-                        <h5 class="client-name"> John Anderson</h5>
-
-                    </div>
-
-                </div>
-
-                <!-- Card 2 -->
-                <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
-                    <div class="review-card">
-
-                        <div class="stars">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star end"></i>
-                        </div>
-
-                        <!-- Scrollable Middle Area -->
-                        <div class="review-scroll">
-                            <p class="review-text">
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                .
-                            </p>
-                        </div>
-
-                        <h5 class="client-name"> John Anderson</h5>
-
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
-                    <div class="review-card">
-
-                        <div class="stars">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star end"></i>
-                        </div>
-
-                        <!-- Scrollable Middle Area -->
-                        <div class="review-scroll">
-                            <p class="review-text">
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                .
-                            </p>
-                        </div>
-
-                        <h5 class="client-name"> John Anderson</h5>
-
-                    </div>
-                </div>
-                <!-- Card 1 -->
-                <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
-                    <div class="review-card">
-
-                        <div class="stars">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star end"></i>
-                        </div>
-
-                        <!-- Scrollable Middle Area -->
-                        <div class="review-scroll">
-                            <p class="review-text">
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                .
-                            </p>
-                        </div>
-
-                        <h5 class="client-name"> John Anderson</h5>
-
-                    </div>
-
-                </div>
-
-                <!-- Card 2 -->
-                <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
-                    <div class="review-card">
-
-                        <div class="stars">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star end"></i>
-                        </div>
-
-                        <!-- Scrollable Middle Area -->
-                        <div class="review-scroll">
-                            <p class="review-text">
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                .
-                            </p>
-                        </div>
-
-                        <h5 class="client-name"> John Anderson</h5>
-
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
-                    <div class="review-card">
-
-                        <div class="stars">
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star end"></i>
-                        </div>
-
-                        <!-- Scrollable Middle Area -->
-                        <div class="review-scroll">
-                            <p class="review-text">
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                Amazing customer experience! Their quick support and technical knowledge
-                                made our workflow smoother.
-                                .
-                            </p>
-                        </div>
-
-                        <h5 class="client-name"> John Anderson</h5>
-
-                    </div>
-                </div>
-
+            <!-- Reviews Container -->
+            <div class="row justify-content-center mt-5 g-4" id="reviews-container">
+                @include('partials.review-cards', ['reviews' => $reviewsByCategory])
             </div>
-            <div class="pagination">
+
+            <!-- Pagination -->
+            <div class="mt-4" id="reviews-pagination-container">
+                @include('partials.review-pagination', ['reviews' => $reviewsByCategory])
+            </div>
+
+            {{-- <div class="pagination">
                 <a href="#" class="page-link">&laquo;</a>
                 <a href="#" class="page-link">1</a>
                 <a href="#" class="page-link active">2</a>
@@ -1025,7 +653,7 @@
 
                 <a href="#" class="page-link">15</a>
                 <a href="#" class="page-link">&raquo;</a>
-            </div>
+            </div> --}}
         </div>
     </section>
 
@@ -1040,31 +668,53 @@
 
                     <h3 class="comment-heading mb-4">Leave a Feedback</h3>
 
-                    <form>
+                    <form id="feed_back_form" action="{{ route('post.feedback') }}" method="POST">
+                        @csrf
+
                         <div class="mb-3">
-                            <input type="text" class="form-control comment-input" placeholder="Enter Name">
+                            <input type="text" name="name" class="form-control comment-input"
+                                placeholder="Enter Name">
+                            <span class="text-danger error-text name_error"></span>
                         </div>
 
                         <div class="mb-3">
-                            <input type="email" class="form-control comment-input" placeholder="Enter Email">
+                            <input type="email" name="email" class="form-control comment-input"
+                                placeholder="Enter Email">
+                            <span class="text-danger error-text email_error"></span>
                         </div>
 
                         <div class="mb-3">
-                            <textarea class="form-control comment-textarea" rows="5" placeholder="Write your comment"></textarea>
+                            <select name="category" class="form-select comment-input">
+                                <option value="">Select Category</option>
+                                @foreach ($allCategories as $slug => $name)
+                                    <option value="{{ $slug }}" {{ old('category') == $slug ? 'selected' : '' }}>
+                                        {{ $name }}</option>
+                                @endforeach
+                            </select>
+                            <span class="text-danger error-text category_error"></span>
                         </div>
-                        <div class="rate-box">
+
+
+                        <div class="mb-3">
+                            <textarea name="message" class="form-control comment-textarea" rows="5" placeholder="Write your comment"></textarea>
+                            <span class="text-danger error-text message_error"></span>
+                        </div>
+
+                        {{-- ⭐ Rating --}}
+                        <div class="rate-box mb-3">
                             <h4 class="rate-title">Give The Rate!</h4>
 
                             <div class="rate-stars">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
+                                @for ($i = 1; $i <= 5; $i++)
+                                    <i class="fa-solid fa-star star" data-value="{{ $i }}"></i>
+                                @endfor
                             </div>
+
+                            <input type="hidden" name="rating" id="rating">
+                            <span class="text-danger error-text rating_error"></span>
                         </div>
 
-                        <button class="btn submitt-btn mt-4">Submit</button>
+                        <button type="submit" class="btn submitt-btn mt-4">Submit</button>
                     </form>
 
                 </div>
@@ -1072,37 +722,24 @@
                 <!-- ================= RIGHT COLUMN ================= -->
                 <div class="col-lg-6 col-md-6 fade-righ animate-card">
 
-                    <h3 class="comment-heading mb-3">Feedbacks [1]</h3>
+                    <h3 class="comment-heading mb-3">Feedbacks [{{ $latestReviews->count() }}]</h3>
 
                     <!-- Outer Box -->
                     <div class="comments-box">
 
                         <!-- Inner Comment -->
-                        <div class="single-comment">
-                            <h5 class="comment-name">Danial</h5>
-                            <p class="comment-by">By test</p>
-                        </div>
-                        <div class="single-comment">
-                            <h5 class="comment-name">Danial</h5>
-                            <p class="comment-by">By test</p>
-                        </div>
-                        <div class="single-comment">
-                            <h5 class="comment-name">Danial</h5>
-                            <p class="comment-by">By test</p>
-                        </div>
-                        <div class="single-comment">
-                            <h5 class="comment-name">Danial</h5>
-                            <p class="comment-by">By test</p>
-                        </div>
-                        <div class="single-comment">
-                            <h5 class="comment-name">Danial</h5>
-                            <p class="comment-by">By test</p>
-                        </div>
-                        <div class="single-comment">
-                            <h5 class="comment-name">Danial</h5>
-                            <p class="comment-by">By test</p>
-                        </div>
-
+                        @if ($latestReviews->isNotEmpty())
+                            @foreach ($latestReviews as $review)
+                                <div class="single-comment">
+                                    <h5 class="comment-name">{{ $review->name }}</h5>
+                                    <p class="comment-by">
+                                        {{ \Illuminate\Support\Str::words($review->message, 6, '...') }}
+                                    </p>
+                                </div>
+                            @endforeach
+                        @else
+                            <p>No feedbacks available.</p>
+                        @endif
                     </div>
 
                 </div>
@@ -1113,28 +750,12 @@
 
 
 
-    {{-- ===== about banner ======== --}}
+    {{-- ===== banner slidder ======== --}}
+    <x-brand-slider />
 
-    <section class="brand-s">
-        <div class="brand-slider containe">
-            <div class="swiper mySwiper">
-                <div class="swiper-wrapper">
 
-                    <div class="swiper-slide"><img src="{{ asset('frontend/images/rental/brand-logo1.png') }}"></div>
-                    <div class="swiper-slide"><img src="{{ asset('frontend/images/rental/brand-logo2.png') }}"></div>
-                    <div class="swiper-slide"><img src="{{ asset('frontend/images/rental/brand-logo3.png') }}"></div>
-                    <div class="swiper-slide"><img src="{{ asset('frontend/images/rental/brand-logo4.png') }}"></div>
-                    <div class="swiper-slide"><img src="{{ asset('frontend/images/rental/brand-logo5.jpg') }}"></div>
-                    <div class="swiper-slide"><img src="{{ asset('frontend/images/rental/brand-logo6.jpg') }}"></div>
-                    <div class="swiper-slide"><img src="{{ asset('frontend/images/rental/brand-logo7.png') }}"></div>
-                    <div class="swiper-slide"><img src="{{ asset('frontend/images/rental/brand-logo8.png') }}"></div>
-                    <div class="swiper-slide"><img src="{{ asset('frontend/images/rental/brand-logo9.png') }}"></div>
-                    <div class="swiper-slide"><img src="{{ asset('frontend/images/rental/brand-logo10.png') }}"></div>
-
-                </div>
-            </div>
-        </div>
-    </section>
+    {{-- ================= pruduct sectiion ============= --}}
+    <x-our-latest-products />
 
 
     <section>
@@ -1325,10 +946,25 @@
         </div>
     </section>
 
+    {{-- ============ Recent News Section ============ --}}
+    <!-- Default: 4 blogs -->
+    <x-recent-blogs-section />
+
 @endsection
 
 @push('frontend-scripts')
     <script>
+        document.querySelector('.btn-outline-custom').addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector('#review-cards-section');
+            const offset = 100; // adjust if you have fixed header
+            window.scrollTo({
+                top: target.offsetTop - offset,
+                behavior: 'smooth'
+            });
+        });
+
+
         var swiper = new Swiper(".mySwiper", {
             slidesPerView: 6,
             spaceBetween: 50,
@@ -1360,5 +996,142 @@
         const swiperEl = document.querySelector(".mySwiper");
         swiperEl.addEventListener("mouseenter", () => swiper.autoplay.stop());
         swiperEl.addEventListener("mouseleave", () => swiper.autoplay.start());
+    </script>
+
+    <script>
+        $(document).ready(function() {
+
+            // ⭐ STAR CLICK LOGIC
+            $('.rate-stars .star').on('click', function() {
+                let rating = $(this).data('value');
+                $('#rating').val(rating);
+
+                $('.rate-stars .star').removeClass('active');
+                $('.rate-stars .star').each(function() {
+                    if ($(this).data('value') <= rating) {
+                        $(this).addClass('active');
+                    }
+                });
+            });
+
+            // 🚀 AJAX SUBMIT
+            $('#feed_back_form').on('submit', function(e) {
+                e.preventDefault();
+
+                let form = $(this);
+                let actionUrl = form.attr('action');
+
+                $('.error-text').text('');
+
+                $.ajax({
+                    url: actionUrl,
+                    method: 'POST',
+                    data: form.serialize(),
+                    dataType: 'json',
+
+                    success: function(response) {
+                        if (response.success) {
+
+                            // Reset form
+                            form[0].reset();
+                            $('#rating').val('');
+                            $('.rate-stars .star').removeClass('active');
+
+                            if (typeof toastr !== 'undefined') {
+                                toastr.success(response.message);
+                            } else {
+                                alert(response.message);
+                            }
+                        }
+                    },
+
+                    error: function(xhr) {
+
+                        if (xhr.status === 422) {
+                            let errors = xhr.responseJSON.errors;
+
+                            $.each(errors, function(key, value) {
+                                $('.' + key + '_error').text(value[0]);
+                            });
+
+                            if (typeof toastr !== 'undefined') {
+                                toastr.error('Please fix the errors.');
+                            }
+
+                        } else {
+                            if (typeof toastr !== 'undefined') {
+                                toastr.error('Something went wrong. Try again.');
+                            } else {
+                                alert('Something went wrong.');
+                            }
+                        }
+                    }
+                });
+            });
+
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const container = document.getElementById('reviews-container');
+            const paginationContainer = document.getElementById('reviews-pagination-container');
+            const filterUrl = "{{ route('reviews.filter') }}";
+            let activeSlug = "{{ $firstCategory->slug ?? '' }}";
+
+            // Fetch reviews via AJAX
+            function fetchReviews(slug, page = 1) {
+                activeSlug = slug;
+
+                container.innerHTML = `
+                    <div class="col-12 text-center py-5">
+                        <div class="spinner-border text-primary"></div>
+                        <p class="mt-2">Loading reviews...</p>
+                    </div>
+                `;
+
+                fetch(`${filterUrl}?slug=${slug}&page=${page}`, {
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        // Replace review cards and pagination
+                        container.innerHTML = data.html;
+                        paginationContainer.innerHTML = data.pagination;
+                    })
+                    .catch(() => {
+                        container.innerHTML =
+                            `<div class="col-12 text-center text-danger py-5">Failed to load reviews.</div>`;
+                    });
+            }
+
+            // CATEGORY CLICK
+            document.querySelectorAll('.cust-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.cust-btn').forEach(i => i.classList.remove(
+                        'active-btn'));
+                    this.classList.add('active-btn');
+
+                    fetchReviews(this.dataset.slug, 1); // Reset to page 1 on category change
+                });
+            });
+
+            // PAGINATION CLICK (Event Delegation)
+            paginationContainer.addEventListener('click', function(e) {
+                const link = e.target.closest('.page-link');
+                if (!link || link.classList.contains('disabled') || !link.dataset.page) return;
+
+                e.preventDefault();
+                fetchReviews(activeSlug, link.dataset.page);
+            });
+
+            // Optional: Load default first category reviews on page load
+            if (activeSlug) {
+                fetchReviews(activeSlug, 1);
+            }
+
+        });
     </script>
 @endpush

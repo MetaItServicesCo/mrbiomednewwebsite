@@ -12,8 +12,8 @@
                 @foreach ($blogs as $item)
                     <div class="col-lg-3 col-md-6 col-sm-12">
                         <div class="news-card bg-white   ">
-                            <img src="{{ asset('storage/blog/images/' . $item->image) }}" class="img-fluid w-100"
-                                alt="{{ $item->image_alt_text ?? '' }}">
+                            <img src="{{ $item->image ? asset('storage/blog/images/' . $item->image) : '' }}"
+                                class="img-fluid w-100" alt="{{ $item->image_alt_text ?? '' }}">
                             <div class="p-3">
                                 <h5 class="news-title fw-bold mt-2 mb-2">{{ $item->title ?? '' }}</h5>
                                 <p class="news-desc small text-muted mb-3">

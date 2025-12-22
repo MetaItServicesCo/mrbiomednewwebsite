@@ -1,6 +1,10 @@
 @extends('frontend.layouts.frontend')
 
-@section('title', 'Faqs page')
+{{-- @section('title', 'Faqs page') --}}
+
+@section('meta_title', $data->meta_title ?? 'Faqs')
+@section('meta_keywords', $data->meta_keywords ?? '')
+@section('meta_description', $data->meta_description ?? '')
 
 @push('frontend-styles')
     <style>
@@ -352,26 +356,25 @@
     <section class="hero-detail-section">
         <div class="container py-5 text-center text-white">
 
-            <h1 class="hero-title mb-3 fade-left">Ask Any<span class="fade-right"> Question </span></h1>
+            <h1 class="hero-title mb-3 fade-left">{!! highlightBracketText($data->hero_title ?? '', ['#000000']) !!}</span></h1>
 
             <p class="hero-description mx-auto mb-4 fade-right">
-                Discover the comprehensive range of specialized biomedical services we offer, designed to support your
-                operational needs and technological advancement.
+                {{ $data->hero_subtitle ?? '' }}
             </p>
-            {{-- 
+
             <div class="container py-5 text-center text-white">
                 <div class="simple-breadcrumb-container text-start mx-auto">
                     <div class="simple-breadcrumb">
 
-                        <a href="/" class="breadcrumb-link">Home</a>
+                        <a href="{{ route('home') }}" class="breadcrumb-link">Home</a>
 
                         <span class="breadcrumb-separator">|</span>
 
-                        <span class="breadcrumb-active">Blog’s Main Page</span>
+                        <span class="breadcrumb-active">FAQs</span>
                     </div>
                 </div>
 
-            </div> --}}
+            </div>
 
         </div>
     </section>
@@ -390,69 +393,22 @@
                     </div> --}}
 
                     <div class="faqs-list">
-                        <!-- Sample FAQs -->
-                        <div class="faq-item">
-                            <div class="faq-title">
-                                What services does Mr Biomed Tech offer?
-                                <i class="bi bi-chevron-down faq-icon"></i>
-                            </div>
-                            <div class="faq-content">
-                                We provide sales, rental, and repair services for medical equipment with ISO certified
-                                products and 24/7 support.
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-title">
-                                How can I request a service?
-                                <i class="bi bi-chevron-down faq-icon"></i>
-                            </div>
-                            <div class="faq-content">
-                                You can contact us via our website form, email, or call our support team to request any
-                                service.
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-title">
-                                Are your products guaranteed?
-                                <i class="bi bi-chevron-down faq-icon"></i>
-                            </div>
-                            <div class="faq-content">
-                                Yes, all our equipment comes with manufacturer warranty and quality assurance for
-                                reliability.
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-title">
-                                What is the delivery time?
-                                <i class="bi bi-chevron-down faq-icon"></i>
-                            </div>
-                            <div class="faq-content">
-                                Delivery depends on product availability, usually 3-7 business days.
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-title">
-                                Can I return a product?
-                                <i class="bi bi-chevron-down faq-icon"></i>
-                            </div>
-                            <div class="faq-content">
-                                Yes, returns are possible within 14 days under our return policy.
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-title">
-                                Do you offer installation services?
-                                <i class="bi bi-chevron-down faq-icon"></i>
-                            </div>
-                            <div class="faq-content">
-                                Yes, our team provides installation and training for all equipment.
-                            </div>
-                        </div>
+                        @if (isset($faqs) && $faqs->isNotEmpty())
+                            @foreach ($faqs as $faq)
+                                <!-- Sample FAQs -->
+                                <div class="faq-item">
+                                    <div class="faq-title">
+                                        {{ $faq->question ?? '' }}
+                                        <i class="bi bi-chevron-down faq-icon"></i>
+                                    </div>
+                                    <div class="faq-content">
+                                        {!! $faq->answer !!}
+                                    </div>
+                                </div>
+                            @endforeach
+                        @else
+                            <p>No FAQs available at the moment.</p>
+                        @endif
                     </div>
 
                     <button class="btn-see-more">See More</button>
@@ -477,12 +433,11 @@
                         </p>
 
                         <div class="d-flex justify-content-center">
-                            <a href="mailto:support@example.com" class="btn-email">
+                            <a href="mailto:{{ setting('email') }}" class="btn-email">
                                 <i class="fa-solid fa-envelope"></i>
                                 Email Us
                             </a>
                         </div>
-
 
                         <div class="divider"></div>
 
@@ -491,8 +446,8 @@
                         <p class="cardd-desc">Our Sales team is here to help</p>
                         <p class="card-time">Monday – Friday 9am to 5pm GMT</p>
                         <div class="d-flex justify-content-center">
-                            <a href="tel:12345678" class="btn-call">
-                                <i class="fa-solid fa-phone icon"></i> 12345678
+                            <a href="tel:{{ cleanPhone(setting('phone')) }}" class="btn-call">
+                                <i class="fa-solid fa-phone icon"></i> {{ setting('phone') }}
                             </a>
                         </div>
                     </div>
@@ -602,144 +557,9 @@
         </div>
     </section>
 
-    <section class="products-series-section py-5">
 
-
-        <div class="container-fluid py-5 product-series-bg">
-            <div class="container text-center">
-                <h2 class="text-center mb-5  product-section-heading">Our <span>Latest Products</span> </h2>
-
-
-            </div>
-
-            <div class="container mt-4">
-                <div class="row g-4">
-
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="custom-card shadow-sm position-relative">
-                            <span class="discount-badge">10% OFF</span>
-
-                            <div class="card-image-box">
-                                <img src="{{ asset('frontend/images/ourproduct-img.jpg') }}" alt="PRODUCT img"
-                                    class=" img-fluid">
-                            </div>
-
-
-                            <div class="card-content-box p-3 pt-2">
-                                <div class="rating-stars p- pt-2 pb-0">
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                </div>
-                                <h5 class="product-title fw-bold">Defibrillator X1</h5>
-                                <p class="card-text small mb-3">High-performance device for cardiac care and monitoring.
-                                </p>
-
-                                <div class="price-action-row d-flex justify-content-between align-items-center">
-
-                                    <span class="old-price text-decoration-line-through text-muted small">$12,000</span>
-                                    <span class="new-price fw-bolder fs-5 text-primary">$10,800</span>
-
-                                    <a href="#" class="btn buy-now-btn btn-sm">Buy Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="custom-card shadow-sm position-relative">
-                            <span class="discount-badge">10% OFF</span>
-                            <div class="card-image-box">
-                                <img src="{{ asset('frontend/images/ourproduct-img.jpg') }}" alt="PRODUCT img"
-                                    class=" img-fluid">
-                            </div>
-
-                            <div class="card-content-box p-3 pt-2">
-                                <div class="rating-stars p- pt-2 pb-0">
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                </div>
-                                <h5 class="product-title fw-bold">Patient Monitor P5</h5>
-                                <p class="card-text small mb-3">Multi-parameter monitoring solution with touch interface.
-                                </p>
-                                <div class="price-action-row d-flex justify-content-between align-items-center">
-
-                                    <span class="old-price text-decoration-line-through text-muted small">$5,500</span>
-                                    <span class="new-price fw-bolder fs-5 text-primary">$4,950</span>
-
-                                    <a href="#" class="btn buy-now-btn btn-sm">Buy Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="custom-card shadow-sm position-relative">
-                            <span class="discount-badge">10% OFF</span>
-                            <div class="card-image-box">
-                                <img src="{{ asset('frontend/images/ourproduct-img.jpg') }}" alt="PRODUCT img"
-                                    class=" img-fluid">
-                            </div>
-
-                            <div class="card-content-box p-3 pt-2">
-                                <div class="rating-stars p- pt-2 pb-0">
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                </div>
-                                <h5 class="product-title fw-bold">Infusion Pump D3</h5>
-                                <p class="card-text small mb-3">Precision fluid delivery system with safety alarms.</p>
-                                <div class="price-action-row d-flex justify-content-between align-items-center">
-
-                                    <span class="old-price text-decoration-line-through text-muted small">$1,500</span>
-                                    <span class="new-price fw-bolder fs-5 text-primary">$1,350</span>
-
-                                    <a href="#" class="btn buy-now-btn btn-sm">Buy Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="custom-card shadow-sm position-relative">
-                            <span class="discount-badge">10% OFF</span>
-                            <div class="card-image-box">
-                                <img src="{{ asset('frontend/images/ourproduct-img.jpg') }}" alt="PRODUCT img"
-                                    class=" img-fluid">
-                            </div>
-
-                            <div class="card-content-box p-3 pt-2">
-                                <div class="rating-stars p- pt-2 pb-0">
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                </div>
-                                <h5 class="product-title fw-bold">ECG Machine M12</h5>
-                                <p class="card-text small mb-3">Compact and reliable 12-lead Electrocardiogram device.</p>
-                                <div class="price-action-row d-flex justify-content-between align-items-center">
-
-                                    <span class="old-price text-decoration-line-through text-muted small">$3,200</span>
-                                    <span class="new-price fw-bolder fs-5 text-primary">$2,880</span>
-
-                                    <a href="#" class="btn buy-now-btn btn-sm">Buy Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
+    {{-- ================= pruduct sectiion ============= --}}
+    <x-our-latest-products />
 
 
 @endsection

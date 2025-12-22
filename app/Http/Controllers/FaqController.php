@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTables\FaqsDataTable;
 use App\Helpers\PageHelper;
 use App\Models\Faq as ModelsFaq;
+use App\Models\FaqLandingPage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -13,6 +14,103 @@ use Illuminate\Support\Facades\Validator;
 
 class FaqController extends Controller
 {
+
+    public function landingPage()
+{
+    try {
+        $data = FaqLandingPage::first();
+        $faqs = ModelsFaq::select('question', 'answer')->orderBy('question', 'asc')->get();
+        return view('frontend.pages.faqs', compact('data', 'faqs'));
+    } catch (\Exception $e) {
+        Log::error('Error fetching FAQ landing page for frontend:', [
+            'message' => $e->getMessage(),
+            'line' => $e->getLine(),
+            'file' => $e->getFile(),
+            'trace' => $e->getTraceAsString(),
+        ]);
+
+        return redirect()->back()->with('error', 'Unable to load the FAQs page. Please try again later.');
+    }
+}
+
+
+    public function mainPage()
+    {
+        try {
+            $data = FaqLandingPage::first();
+            return view('pages.faqs.landing-page', compact('data'));
+        } catch (\Exception $e) {
+            Log::error('Error fetching FAQ landing page for admin:', [
+                'message' => $e->getMessage(),
+                'line' => $e->getLine(),
+                'file' => $e->getFile(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            // Optionally, show a friendly error page or message
+            return redirect()->back()->with('error', 'Unable to load the FAQ landing page. Please try again later.');
+        }
+    }
+
+
+    /**
+     * Create or Update FAQ Landing Page
+     */
+    public function storeOrUpdate(Request $request)
+    {
+        // Validation rules
+        $rules = [
+            'hero_title' => 'required|string|max:255',
+            'hero_subtitle' => 'nullable|string',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_keywords' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+        ];
+
+        $validated = $request->validate($rules);
+
+        try {
+            DB::beginTransaction();
+
+            if ($request->filled('id')) {
+                // Update existing record
+                $faq = FaqLandingPage::findOrFail($request->id);
+                $faq->update(array_merge($validated, [
+                    'updated_by' => Auth::id(),
+                ]));
+                $message = 'FAQ Landing Page updated successfully.';
+            } else {
+                // Create new record
+                $faq = FaqLandingPage::create(array_merge($validated, [
+                    'created_by' => Auth::id(),
+                ]));
+                $message = 'FAQ Landing Page created successfully.';
+            }
+
+            DB::commit();
+
+            return redirect()
+                ->back()
+                ->with('success', $message);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            // Log detailed error
+            Log::error('Error in storing/updating FAQ Landing Page', [
+                'message' => $e->getMessage(),
+                'line' => $e->getLine(),
+                'file' => $e->getFile(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()
+                ->back()
+                ->with('error', 'Something went wrong while saving the FAQ Landing Page. Please try again.')
+                ->withInput();
+        }
+    }
+
+
     public function index(FaqsDataTable $dataTable)
     {
         $this->authorize('read faq');

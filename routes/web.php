@@ -7,6 +7,7 @@ use App\Http\Controllers\Apps\RoleManagementController;
 use App\Http\Controllers\Apps\UserManagementController;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\BiomedServicesController;
+use App\Http\Controllers\BlogCommentController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BrandWeCarryController;
 use App\Http\Controllers\CategoryController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\OfferController;
 use App\Http\Controllers\PrivacyPolicyController;
 use App\Http\Controllers\RentalServiceController;
 use App\Http\Controllers\RepairServiceController;
+use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\ServingCityController;
 use App\Http\Controllers\TermsAndConditionsController;
 use App\Http\Controllers\WhatWeDoController;
@@ -154,6 +156,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     // ===========================
+    // FAQs Landing Page
+    // ===========================
+    Route::controller(FaqController::class)->prefix('admin/faqs-landing-page')->as('admin.faqs-landing-page.')->group(function () {
+        Route::get('/', 'mainPage')->name('page');
+        Route::post('/store', 'storeOrUpdate')->name('storeOrUpdate');
+    });
+
+    // ===========================
     // FAQs
     // ===========================
     Route::controller(FaqController::class)->prefix('admin/faqs')->as('admin-faqs.')->group(function () {
@@ -184,6 +194,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/{id}/edit', 'edit')->name('edit');
         Route::put('/{id}/update', 'update')->name('update');
         Route::delete('/{id}/destroy', 'destroy')->name('destroy');
+    });
+
+    // ===========================
+    // Blog Comment
+    // ===========================
+    Route::controller(BlogCommentController::class)->prefix('admin/blog-comments')->as('admin-blogs-comment.')->group(function () {
+        Route::get('/list', 'commentList')->name('list');
+        Route::get('/create', 'commentCreate')->name('create');
+        Route::post('/store', 'commentStore')->name('store');
+        Route::get('/{id}/edit', 'commentEdit')->name('edit');
+        Route::put('/{id}/update', 'commentUpdate')->name('update');
+        Route::delete('/{id}/destroy', 'commentDestroy')->name('destroy');
     });
 
     // ===========================
@@ -306,7 +328,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/{id}/update', 'update')->name('update');
         Route::delete('/{id}/delete', 'destroy')->name('destroy');
         Route::post('/remove-gallery-image', 'removeGalleryImage')->name('remove-gallery-image');
-
     });
 
     // ===========================
@@ -315,6 +336,26 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::controller(ContactUsController::class)->prefix('admin/contact-us')->as('admin-contact-us.')->group(function () {
         Route::get('/', 'index')->name('page');
         Route::post('/store', 'storeOrUpdate')->name('store');
+    });
+
+    // ===========================
+    // Reviews Landing Page
+    // ===========================
+    Route::controller(ReviewsController::class)->prefix('admin/review-landing-page')->as('admin.reviews.')->group(function () {
+        Route::get('/', 'index')->name('page');
+        Route::post('/store', 'storeOrUpdate')->name('store');
+    });
+
+    // ===========================
+    // Reviews Customer Feedback
+    // ===========================
+    Route::controller(ReviewsController::class)->prefix('admin/reviews')->as('admin.feedback.')->group(function () {
+        Route::get('/list', 'list')->name('list');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::put('/{id}/update', 'update')->name('update');
+        Route::delete('/{id}/destroy', 'destroy')->name('destroy');
     });
 });
 

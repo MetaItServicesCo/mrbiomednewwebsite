@@ -51,14 +51,7 @@ class LocationPageController extends Controller
 
             // How We Serve
             'serve_heading'             => 'nullable|string|max:255',
-            'serve_description'         => 'nullable|string',
-
-            // Contact Us
-            'contact_us_description'    => 'nullable|string',
-
-            // Form Section
-            'form_title'                => 'nullable|string|max:255',
-            'form_description'          => 'nullable|string',
+            'serve_description'         => 'nullable|string',           
 
             // SEO
             'meta_title'                => 'nullable|string|max:255',
@@ -86,14 +79,7 @@ class LocationPageController extends Controller
                 // How We Serve
                 'serve_heading'          => $validatedData['serve_heading'] ?? null,
                 'serve_description'      => $validatedData['serve_description'] ?? null,
-
-                // Contact
-                'contact_us_description' => $validatedData['contact_us_description'] ?? null,
-
-                // Form
-                'form_title'             => $validatedData['form_title'] ?? null,
-                'form_description'       => $validatedData['form_description'] ?? null,
-
+                
                 // SEO
                 'meta_title'             => $validatedData['meta_title'] ?? null,
                 'meta_keywords'          => $validatedData['meta_keywords'] ?? null,
@@ -177,8 +163,27 @@ class LocationPageController extends Controller
 
     public function locationDetail($slug)
     {
-        $data = ServingCity::where('slug', $slug)->where('is_active', true)->firstOrFail();
-        $faqs = getFaqs('location');
-        return view('frontend.pages.locationdetail', compact('data', 'faqs'));
+        try {
+            $data = ServingCity::where('slug', $slug)
+                ->where('is_active', true)
+                ->firstOrFail();
+
+            $faqs = getFaqs('location');
+
+            return view('frontend.pages.locationdetail', compact('data', 'faqs'));
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            // Show 404 page instead of redirect
+            abort(404, 'The requested location was not found.');
+        } catch (\Exception $e) {
+            // Log unexpected errors
+            Log::error('Error fetching location details:', [
+                'message' => $e->getMessage(),
+                'line' => $e->getLine(),
+                'file' => $e->getFile(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()->route('frontend.home')->with('error', 'Unable to load location details. Please try again later.');
+        }
     }
 }

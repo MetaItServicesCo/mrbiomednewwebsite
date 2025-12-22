@@ -89,34 +89,35 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+    if (seeMoreBtn) {
+        // ⭐ FINAL UPDATED LOGIC — Show All at Once ⭐
+        seeMoreBtn.addEventListener("click", () => {
+            const hiddenItems = faqItems.filter(item => item.style.display === "none");
 
-    // ⭐ FINAL UPDATED LOGIC — Show All at Once ⭐
-    seeMoreBtn.addEventListener("click", () => {
-        const hiddenItems = faqItems.filter(item => item.style.display === "none");
+            if (hiddenItems.length > 0) {
+                // 👉 Show ALL hidden FAQs at once
+                hiddenItems.forEach(item => item.style.display = "block");
 
-        if (hiddenItems.length > 0) {
-            // 👉 Show ALL hidden FAQs at once
-            hiddenItems.forEach(item => item.style.display = "block");
+                currentVisible = totalFAQs;
+                seeMoreBtn.textContent = "Show Less";
+                seeMoreBtn.style.backgroundColor = lessBg;
 
-            currentVisible = totalFAQs;
-            seeMoreBtn.textContent = "Show Less";
-            seeMoreBtn.style.backgroundColor = lessBg;
+            } else {
+                // 👉 Hide all except first 4
+                faqItems.forEach((item, index) => {
+                    if (index >= visibleCount) {
+                        item.style.display = "none";
+                        item.classList.remove("active");
+                        item.querySelector(".faq-content").style.maxHeight = "0px";
+                    }
+                });
 
-        } else {
-            // 👉 Hide all except first 4
-            faqItems.forEach((item, index) => {
-                if (index >= visibleCount) {
-                    item.style.display = "none";
-                    item.classList.remove("active");
-                    item.querySelector(".faq-content").style.maxHeight = "0px";
-                }
-            });
-
-            currentVisible = visibleCount;
-            seeMoreBtn.textContent = "See More";
-            seeMoreBtn.style.backgroundColor = originalBg;
-        }
-    });
+                currentVisible = visibleCount;
+                seeMoreBtn.textContent = "See More";
+                seeMoreBtn.style.backgroundColor = originalBg;
+            }
+        });
+    }
 });
 
 

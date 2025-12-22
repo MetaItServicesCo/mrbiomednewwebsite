@@ -6,11 +6,13 @@ use App\Http\Controllers\BiomedServicesController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\DisclaimerController;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\LocationPageController;
 use App\Http\Controllers\PrivacyPolicyController;
 use App\Http\Controllers\RentalServiceController;
 use App\Http\Controllers\RepairServiceController;
+use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\TermsAndConditionsController;
 use App\Models\LandingPage;
 use Illuminate\Support\Facades\Route;
@@ -31,11 +33,14 @@ Route::middleware('guest')->group(function () {
     Route::get('/disclaimer', [DisclaimerController::class, 'landingPage'])->name('disclaimer');
     Route::get('/blogs', [BlogController::class, 'landingPage'])->name('blogs');
     Route::get('/blog/{slug}', [BlogController::class, 'blogDetail'])->name('blog.detail');
-    Route::view('/feedback', 'frontend.pages.feedback')->name('feedback');
+    Route::post('/blog-comment/{slug}', [BlogController::class, 'blogComment'])->name('post.blog.comment');
+    Route::get('/feedback', [ReviewsController::class, 'landingPage'])->name('feedback');
+    Route::post('/feedback', [ReviewsController::class, 'store'])->name('post.feedback');
+
 
     // web.php
     Route::get('/rentals/filter', [AjaxController::class, 'filterRentalProducts'])->name('rentals.filter');
-    Route::view('/faqs', 'frontend.pages.faqs')->name('faqs');
+    Route::get('/faqs', [FaqController::class, 'landingPage'])->name('faqs');
 
     Route::get('/repair', [RepairServiceController::class, 'landingPage'])->name('repair');
     Route::get('/{category}/{slug}', [RepairServiceController::class, 'repairServiceDetail'])->name('repair.service.detail');
@@ -43,17 +48,16 @@ Route::middleware('guest')->group(function () {
     Route::prefix('ajax')->group(function () {
 
         // Get cities route
-        Route::get('/get-cities/{state_id}', [LandingPageController::class, 'getCities'])
-            ->name('get.cities');
+        Route::get('/get-cities/{state_id}', [LandingPageController::class, 'getCities'])->name('get.cities');
 
         // Blog filter route
-        Route::get('/blogs/filter', [BlogController::class, 'filterBlogs'])
-            ->name('blogs.filter');
+        Route::get('/blogs/filter', [BlogController::class, 'filterBlogs'])->name('blogs.filter');
 
-        Route::get('/best-products/filter', [LandingPageController::class, 'filter'])
-            ->name('best.products.filter');
+        Route::get('/best-products/filter', [LandingPageController::class, 'filter'])->name('best.products.filter');
 
-        Route::get('/latest-products/filter', [LandingPageController::class, 'latestProductsfilter'])
-            ->name('latest.products.filter');
+        Route::get('/latest-products/filter', [LandingPageController::class, 'latestProductsfilter'])->name('latest.products.filter');
+
+        // Reviews filter route
+        Route::get('/feedbacks/filter', [ReviewsController::class, 'filterReviews'])->name('reviews.filter');
     });
 });

@@ -671,3 +671,29 @@ if (! function_exists('city_label')) {
         return city_labels()[$key] ?? ucfirst(str_replace('-', ' ', (string) $key));
     }
 }
+
+if (!function_exists('getServicesList')) {
+    /**
+     * Get the list of services in ascending order
+     *
+     * @return array
+     */
+    function getServicesList(): array
+    {
+        $services = [
+            'Biomedical Equipment Inspection',
+            'Calibration Services',
+            'Disposition & Asset Management',
+            'Medical Equipment Repair & Maintenance',
+            'Medical Equipment Rental',
+            'New & Pre-Owned Medical Equipment Sales',
+            'Preventive Maintenance (PM Services)',
+            'Refurbishing Services',
+            'Service Contracts (AMC / CMC)',
+        ];
+
+        sort($services); // Sort alphabetically ascending
+
+        return $services;
+    }
+}

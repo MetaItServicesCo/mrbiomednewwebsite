@@ -8,9 +8,9 @@
 @push('frontend-styles')
     <style>
         /* ============================================================
-        BLOG DETAILS PAGE – CSS Styling
-        Includes: Images, Lists, Sidebar, Related Articles, Responsive Fixes
-        =============================================================== */
+                        BLOG DETAILS PAGE – CSS Styling
+                        Includes: Images, Lists, Sidebar, Related Articles, Responsive Fixes
+                        =============================================================== */
 
         .blog-content {
             max-width: 100%;
@@ -353,11 +353,11 @@
 
 
     <!-- ============================================================
-                                                                        BLOG DETAILS SECTION (Responsive)
-                                                                        Created for: Detailed Blog Page Layout
-                                                                        Columns: Left Content (8), Right Sidebar (4)
-                                                                        Includes: Images, Headings, Description, Lists, Categories, Related Articles
-                                                                        =============================================================== -->
+                                                                                        BLOG DETAILS SECTION (Responsive)
+                                                                                        Created for: Detailed Blog Page Layout
+                                                                                        Columns: Left Content (8), Right Sidebar (4)
+                                                                                        Includes: Images, Headings, Description, Lists, Categories, Related Articles
+                                                                                        =============================================================== -->
 
     <section class="blog-details-section py-5">
         <div class="container">
@@ -540,11 +540,11 @@
     </section>
 
     <!-- ============================================================
-                                        LEAVE A COMMENT + COMMENTS SECTION
-                                        Background: #006A9E1A
-                                        Left: Comment Form
-                                        Right: Comments Box
-                                        =============================================================== -->
+                LEAVE A COMMENT + COMMENTS SECTION
+                Background: #006A9E1A
+                Left: Comment Form
+                Right: Comments Box
+                =============================================================== -->
 
     <section class="comment-section py-5">
         <div class="container">
@@ -555,17 +555,24 @@
 
                     <h3 class="comment-heading mb-4">Leave a Comment</h3>
 
-                    <form>
+                    <form id="blogCommentForm" action="{{ route('post.blog.comment', $blog->slug) }}" method="POST">
+                        @csrf
+
                         <div class="mb-3">
-                            <input type="text" class="form-control comment-input" placeholder="Enter Name">
+                            <input type="text" name="name" class="form-control comment-input"
+                                placeholder="Enter Name">
+                            <span class="text-danger error-text name_error"></span>
                         </div>
 
                         <div class="mb-3">
-                            <input type="email" class="form-control comment-input" placeholder="Enter Email">
+                            <input type="email" name="email" class="form-control comment-input"
+                                placeholder="Enter Email">
+                            <span class="text-danger error-text email_error"></span>
                         </div>
 
                         <div class="mb-3">
-                            <textarea class="form-control comment-textarea" rows="5" placeholder="Write your comment"></textarea>
+                            <textarea name="comment" class="form-control comment-textarea" rows="5" placeholder="Write your comment"></textarea>
+                            <span class="text-danger error-text comment_error"></span>
                         </div>
 
                         <button class="btn submitt-btn">Submit</button>
@@ -576,18 +583,19 @@
                 <!-- ================= RIGHT COLUMN ================= -->
                 <div class="col-lg-6 col-md-6">
 
-                    <h3 class="comment-heading mb-3">Comments [1]</h3>
+                    <h3 class="comment-heading mb-3">Comments [{{ $comments->count() }}]</h3>
 
                     <!-- Outer Box -->
                     <div class="comments-box">
-
-                        <!-- Inner Comment -->
-                        <div class="single-comment">
-                            <h5 class="comment-name">Danial</h5>
-                            <p class="comment-by">By test</p>
-                        </div>
-
-
+                        @forelse ($comments as $comment)
+                            <!-- Inner Comment -->
+                            <div class="single-comment">
+                                <h5 class="comment-name">{{ $comment->name ?? '' }}</h5>
+                                <p class="comment-by">{{ $comment->comment ?? '' }}</p>
+                            </div>
+                        @empty
+                            <p>No comments available for this blog.</p>
+                        @endforelse
                     </div>
 
                 </div>
@@ -599,261 +607,61 @@
     {{-- =============== feature section ===================== --}}
     <x-featured-blogs-section :limit="4" />
 
-    {{-- <section class="featured-section container my-5">
-
-        <h2 class="latest-blog-heading mb-4 text-center">Featured <span>Updates</span> </h2>
-
-        <div class="row g-4 mt-4">
-
-            <!-- Card 1 -->
-            <div class="col-lg-6">
-                <div class="featured-card d-flex">
-
-                    <!-- Image -->
-                    <img src="/frontend/images/recent-news-img.png" class="featured-img" alt="image">
-
-                    <!-- Content -->
-                    <div class="featured-content">
-
-                        <!-- Categories -->
-                        <div class="mb-2">
-                            <button class="cate-btn">Category 1</button>
-                            <button class="cate-btn">Category 2</button>
-                        </div>
-
-                        <!-- Title -->
-                        <h4 class="featured-title">Suscipit dolor eveni</h4>
-
-                        <!-- Description -->
-                        <p class="featured-desc">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Dolor esse amet ratione dignissimos.
-                        </p>
-
-                        <!-- Read time -->
-                        <span class="read-time">1 Min Read</span>
-
-                        <hr>
-
-                        <!-- Footer Row -->
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="post-date">06.Nov.2025</span>
-
-                            <div class="social-icons">
-                                <i class="fab fa-facebook-f"></i>
-                                <i class="fab fa-twitter"></i>
-                                <i class="fab fa-linkedin-in"></i>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2 (Duplicate Structure) -->
-            <div class="col-lg-6">
-                <div class="featured-card d-flex">
-
-                    <img src="/frontend/images/recent-news-img.png" class="featured-img" alt="image">
-
-                    <div class="featured-content">
-
-                        <div class="mb-2">
-                            <button class="cate-btn">Category 1</button>
-                            <button class="cate-btn">Category 2</button>
-                        </div>
-
-                        <h4 class="featured-title">Suscipit dolor eveni</h4>
-
-                        <p class="featured-desc">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Dolor esse amet ratione dignissimos.
-                        </p>
-
-                        <span class="read-time">1 Min Read</span>
-
-                        <hr>
-
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="post-date">06.Nov.2025</span>
-
-                            <div class="social-icons">
-                                <i class="fab fa-facebook-f"></i>
-                                <i class="fab fa-twitter"></i>
-                                <i class="fab fa-linkedin-in"></i>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="featured-card d-flex">
-
-                    <!-- Image -->
-                    <img src="/frontend/images/recent-news-img.png" class="featured-img" alt="image">
-
-                    <!-- Content -->
-                    <div class="featured-content">
-
-                        <!-- Categories -->
-                        <div class="mb-2">
-                            <button class="cate-btn">Category 1</button>
-                            <button class="cate-btn">Category 2</button>
-                        </div>
-
-                        <!-- Title -->
-                        <h4 class="featured-title">Suscipit dolor eveni</h4>
-
-                        <!-- Description -->
-                        <p class="featured-desc">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Dolor esse amet ratione dignissimos.
-                        </p>
-
-                        <!-- Read time -->
-                        <span class="read-time">1 Min Read</span>
-
-                        <hr>
-
-                        <!-- Footer Row -->
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="post-date">06.Nov.2025</span>
-
-                            <div class="social-icons">
-                                <i class="fab fa-facebook-f"></i>
-                                <i class="fab fa-twitter"></i>
-                                <i class="fab fa-linkedin-in"></i>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2 (Duplicate Structure) -->
-            <div class="col-lg-6">
-                <div class="featured-card d-flex">
-
-                    <img src="/frontend/images/recent-news-img.png" class="featured-img" alt="image">
-
-                    <div class="featured-content">
-
-                        <div class="mb-2">
-                            <button class="cate-btn">Category 1</button>
-                            <button class="cate-btn">Category 2</button>
-                        </div>
-
-                        <h4 class="featured-title">Suscipit dolor eveni</h4>
-
-                        <p class="featured-desc">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Dolor esse amet ratione dignissimos.
-                        </p>
-
-                        <span class="read-time">1 Min Read</span>
-
-                        <hr>
-
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="post-date">06.Nov.2025</span>
-
-                            <div class="social-icons">
-                                <i class="fab fa-facebook-f"></i>
-                                <i class="fab fa-twitter"></i>
-                                <i class="fab fa-linkedin-in"></i>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="featured-card d-flex">
-
-                    <!-- Image -->
-                    <img src="/frontend/images/recent-news-img.png" class="featured-img" alt="image">
-
-                    <!-- Content -->
-                    <div class="featured-content">
-
-                        <!-- Categories -->
-                        <div class="mb-2">
-                            <button class="cate-btn">Category 1</button>
-                            <button class="cate-btn">Category 2</button>
-                        </div>
-
-                        <!-- Title -->
-                        <h4 class="featured-title">Suscipit dolor eveni</h4>
-
-                        <!-- Description -->
-                        <p class="featured-desc">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Dolor esse amet ratione dignissimos.
-                        </p>
-
-                        <!-- Read time -->
-                        <span class="read-time">1 Min Read</span>
-
-                        <hr>
-
-                        <!-- Footer Row -->
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="post-date">06.Nov.2025</span>
-
-                            <div class="social-icons">
-                                <i class="fab fa-facebook-f"></i>
-                                <i class="fab fa-twitter"></i>
-                                <i class="fab fa-linkedin-in"></i>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2 (Duplicate Structure) -->
-            <div class="col-lg-6">
-                <div class="featured-card d-flex">
-
-                    <img src="/frontend/images/recent-news-img.png" class="featured-img" alt="image">
-
-                    <div class="featured-content">
-
-                        <div class="mb-2">
-                            <button class="cate-btn">Category 1</button>
-                            <button class="cate-btn">Category 2</button>
-                        </div>
-
-                        <h4 class="featured-title">Suscipit dolor eveni</h4>
-
-                        <p class="featured-desc">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Dolor esse amet ratione dignissimos.
-                        </p>
-
-                        <span class="read-time">1 Min Read</span>
-
-                        <hr>
-
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="post-date">06.Nov.2025</span>
-
-                            <div class="social-icons">
-                                <i class="fab fa-facebook-f"></i>
-                                <i class="fab fa-twitter"></i>
-                                <i class="fab fa-linkedin-in"></i>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section> --}}
-
 @endsection
 
 @push('frontend-scripts')
+    <script>
+        $(document).ready(function() {
+            $('#blogCommentForm').on('submit', function(e) {
+                e.preventDefault(); // prevent default form submission
+
+                // Clear previous errors
+                $('.error-text').text('');
+
+                var form = $(this);
+                var actionUrl = form.attr('action');
+
+                $.ajax({
+                    url: actionUrl,
+                    method: 'POST',
+                    data: form.serialize(),
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                            // Clear form fields
+                            form[0].reset();
+
+                            // Show success toast
+                            if (typeof toastr !== 'undefined') {
+                                toastr.success(response.message ||
+                                    'Comment submitted successfully!');
+                            } else {
+                                alert(response.message || 'Comment submitted successfully!');
+                            }
+                        }
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 422) { // validation errors
+                            var errors = xhr.responseJSON.errors;
+                            $.each(errors, function(key, value) {
+                                $('.' + key + '_error').text(value[0]);
+                            });
+
+                            // Optional: show a toast for error
+                            if (typeof toastr !== 'undefined') {
+                                toastr.error('Please fix the errors in the form.');
+                            }
+                        } else {
+                            // General server error
+                            if (typeof toastr !== 'undefined') {
+                                toastr.error('Something went wrong. Please try again later.');
+                            } else {
+                                alert('Something went wrong. Please try again later.');
+                            }
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 @endpush

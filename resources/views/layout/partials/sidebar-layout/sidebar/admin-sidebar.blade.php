@@ -109,22 +109,6 @@
             </div>
         @endcan
 
-        @can('read faq')
-            <div class="menu-sub menu-sub-accordion">
-                <!--begin:View All-->
-                <div class="menu-item">
-                    <a class="menu-link {{ request()->routeIs('admin-faqs.*') ? 'active' : '' }}"
-                        href="{{ route('admin-faqs.index') }}">
-                        <span class="menu-bullet">
-                            <span class="bullet bullet-dot"></span>
-                        </span>
-                        <span class="menu-title">{{ __('FAQs') }}</span>
-                    </a>
-                </div>
-                <!--end:View All-->
-            </div>
-        @endcan
-
         <div class="menu-sub menu-sub-accordion">
             <div class="menu-item">
                 <a class="menu-link {{ request()->routeIs('admin-privacy-policy.*') ? 'active' : '' }}"
@@ -206,6 +190,48 @@
                 </a>
             </div>
         </div>
+    </div>
+
+    <div data-kt-menu-trigger="click"
+        class="menu-item menu-accordion {{ request()->routeIs('admin.faqs-landing-page.*', 'admin-faqs.*') ? 'here show' : '' }}">
+        <!--begin:Menu link-->
+        <span class="menu-link">
+            <span class="menu-icon"><i class="ki-duotone ki-wrench fs-2x">
+                    <i class="path1"></i>
+                    <i class="path2"></i>
+                </i></span>
+            <span class="menu-title">FAQs</span>
+            <span class="menu-arrow"></span>
+        </span>
+
+        <div class="menu-sub menu-sub-accordion">
+            <div class="menu-item">
+                <a class="menu-link {{ request()->routeIs('admin.faqs-landing-page.*') ? 'active' : '' }}"
+                    href="{{ route('admin.faqs-landing-page.page') }}">
+                    <span class="menu-bullet">
+                        <span class="bullet bullet-dot"></span>
+                    </span>
+                    <span class="menu-title">FAQ Landing Page</span>
+                </a>
+            </div>
+        </div>
+
+        @can('read faq')
+            <div class="menu-sub menu-sub-accordion">
+                <!--begin:View All-->
+                <div class="menu-item">
+                    <a class="menu-link {{ request()->routeIs('admin-faqs.*') ? 'active' : '' }}"
+                        href="{{ route('admin-faqs.index') }}">
+                        <span class="menu-bullet">
+                            <span class="bullet bullet-dot"></span>
+                        </span>
+                        <span class="menu-title">{{ __('Create FAQs') }}</span>
+                    </a>
+                </div>
+                <!--end:View All-->
+            </div>
+        @endcan
+
     </div>
 
     <div data-kt-menu-trigger="click"
@@ -366,7 +392,7 @@
     </div>
 
     <div data-kt-menu-trigger="click"
-        class="menu-item menu-accordion {{ request()->routeIs('admin.blog.main.*', 'admin-blogs.*') ? 'here show' : '' }}">
+        class="menu-item menu-accordion {{ request()->routeIs('admin.blog.main.*', 'admin-blogs.*', 'admin-blogs-comment.*') ? 'here show' : '' }}">
         <!--begin:Menu link-->
         <span class="menu-link">
             <span class="menu-icon"><i class="ki-duotone ki-tablet-text-down fs-2tx"><span
@@ -402,12 +428,74 @@
                         <span class="menu-bullet">
                             <span class="bullet bullet-dot"></span>
                         </span>
-                        <span class="menu-title">Blogs</span>
+                        <span class="menu-title">Create Blogs</span>
                     </a>
                 </div>
             </div>
         @endcan
+
+        <div class="menu-sub menu-sub-accordion">
+            <div class="menu-item">
+                <a class="menu-link {{ request()->routeIs('admin-blogs-comment.*') ? 'active' : '' }}"
+                    href="{{ route('admin-blogs-comment.list') }}">
+                    <span class="menu-bullet">
+                        <span class="bullet bullet-dot"></span>
+                    </span>
+                    <span class="menu-title">Blog Comments</span>
+                </a>
+            </div>
+        </div>
         <!--end:Menu sub-->
+    </div>
+
+    <div data-kt-menu-trigger="click"
+        class="menu-item menu-accordion {{ request()->routeIs('admin.reviews.*') ? 'here show' : '' }}">
+        <span class="menu-link">
+            <span class="menu-icon"><i class="ki-duotone ki-tablet-text-down fs-2tx"><span
+                        class="path1"></span><span class="path2"></span><span class="path3"></span><span
+                        class="path4"></span></i>
+                <i class="path1"></i>
+                <i class="path2"></i>
+                </i></span>
+            <span class="menu-title">Reviews</span>
+            <span class="menu-arrow"></span>
+        </span>
+
+        <div class="menu-sub menu-sub-accordion">
+            <div class="menu-item">
+                <a class="menu-link {{ request()->routeIs('admin.reviews.*') ? 'active' : '' }}"
+                    href="{{ route('admin.reviews.page') }}">
+                    <span class="menu-bullet">
+                        <span class="bullet bullet-dot"></span>
+                    </span>
+                    <span class="menu-title">Review Landing Page</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="menu-sub menu-sub-accordion">
+            <div class="menu-item">
+                <a class="menu-link {{ request()->routeIs('admin.feedback.*') ? 'active' : '' }}"
+                    href="{{ route('admin.feedback.list') }}">
+                    <span class="menu-bullet">
+                        <span class="bullet bullet-dot"></span>
+                    </span>
+                    <span class="menu-title">Reviews List</span>
+                </a>
+            </div>
+        </div>
+
+        {{-- <div class="menu-sub menu-sub-accordion">
+            <div class="menu-item">
+                <a class="menu-link {{ request()->routeIs('admin-blogs-comment.*') ? 'active' : '' }}"
+                    href="{{ route('admin-blogs-comment.list') }}">
+                    <span class="menu-bullet">
+                        <span class="bullet bullet-dot"></span>
+                    </span>
+                    <span class="menu-title">Blog Comments</span>
+                </a>
+            </div>
+        </div> --}}
     </div>
 
     @can('read general settings')

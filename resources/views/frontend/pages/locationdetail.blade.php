@@ -250,40 +250,45 @@
 
             <h2 class=" mb-4 query-heading">Submit Your Query Here</h2>
 
-            <form>
-
+            <form id="serviceRequestFormAreaPage" action="{{ route('service.request.submit') }}" method="POST">
+                @csrf
                 <!-- Name -->
                 <div class="mb-3">
                     <label class="form-label">Name</label>
-                    <input type="text" class="form-control custom-input" placeholder="Enter your name">
+                    <input type="text" name="name" class="form-control custom-input" placeholder="Enter your name">
+                    <span class="text-danger error-text name_error"></span>
                 </div>
 
                 <!-- Email -->
                 <div class="mb-3">
                     <label class="form-label">Email</label>
-                    <input type="email" class="form-control custom-input" placeholder="Enter your email">
+                    <input type="email" name="email" class="form-control custom-input" placeholder="Enter your email">
+                    <span class="text-danger error-text email_error"></span>
                 </div>
 
                 <!-- Phone -->
                 <div class="mb-3">
                     <label class="form-label">Phone Number</label>
-                    <input type="text" class="form-control custom-input" placeholder="Enter phone number">
+                    <input type="text" name="phone" class="form-control custom-input" placeholder="Enter phone number">
+                    <span class="text-danger error-text phone_error"></span>
                 </div>
 
                 <!-- Company / Hospital -->
                 <div class="mb-3">
                     <label class="form-label">Company / Hospital Name</label>
-                    <input type="text" class="form-control custom-input" placeholder="Enter company / hospital name">
+                    <input type="text" name="company" class="form-control custom-input"
+                        placeholder="Enter company / hospital name">
+                    <span class="text-danger error-text company_error"></span>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Select Your Service Needs</label>
-                    <select class="form-select custom-select">
+                    <select name="service" class="form-select custom-select">
                         <option value=""> Select Service</option>
-                        <option value="medical">Medical Service</option>
-                        <option value="cleaning">Cleaning Service</option>
-                        <option value="security">Security Service</option>
-                        <option value="it-support">IT Support</option>
+                        @foreach (getServicesList() as $service)
+                            <option value="{{ $service }}">{{ $service }}</option>
+                        @endforeach
                     </select>
+                    <span class="text-danger error-text service_error"></span>
                 </div>
 
                 <!-- Service Needs -->
@@ -291,44 +296,22 @@
                     <label class="form-label fw-bold">Equipment Category</label>
 
                     <div class="d-flex gap-4 flex-wrap w-50">
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox">
-                            <label class="form-check-label">Consultation</label>
-                        </div>
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox">
-                            <label class="form-check-label">Medical Assistance</label>
-                        </div>
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox">
-                            <label class="form-check-label">Emergency Support</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox">
-                            <label class="form-check-label">Consultation</label>
-                        </div>
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox">
-                            <label class="form-check-label">Medical Assistance</label>
-                        </div>
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox">
-                            <label class="form-check-label">Emergency Support</label>
-                        </div>
-
+                        @foreach ($all_categories as $item)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="categories[]"
+                                    value="{{ $item->slug }}">
+                                <label class="form-check-label">{{ $item->name }}</label>
+                            </div>
+                        @endforeach
                     </div>
+                    <span class="text-danger error-text categories_error"></span>
                 </div>
-
 
                 <!-- Message -->
                 <div class="mb-3">
                     <label class="form-label">Message</label>
-                    <textarea rows="4" class="form-control custom-text" placeholder="Write your message..."></textarea>
+                    <textarea rows="4" name="message" class="form-control custom-text" placeholder="Write your message..."></textarea>
+                    <span class="text-danger error-text message_error"></span>
                 </div>
 
                 <!-- Preferred Contact -->
@@ -338,23 +321,28 @@
                     <div class="d-flex justify-content-between flex-wrap" style="width:100%; max-width: 1016px;">
                         <div class="d-flex gap-4 flex-wrap">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="contact">
+                                <input class="form-check-input" type="radio" name="preferred_contact" value="phone">
                                 <label class="form-check-label">Phone</label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="contact">
+                                <input class="form-check-input" type="radio" name="preferred_contact" value="email">
                                 <label class="form-check-label">Email</label>
                             </div>
+                            <span class="text-danger error-text preferred_contact_error"></span>
                         </div>
 
-                        <button type="submit" class="query-btn">Submit</button>
                     </div>
                 </div>
 
-                <!-- Submit -->
+                <div class="form-group mb-3">
+                    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+                    <div class="g-recaptcha w-100" data-sitekey="{{ config('services.recaptcha.sitekey') }}">
+                    </div>
+                    <span class="text-danger error-text g-recaptcha-response_error"></span>
+                </div>
 
-
+                <button type="submit" class="query-btn">Submit</button>
             </form>
 
         </div>
@@ -420,4 +408,83 @@
 @endsection
 
 @push('frontend-scripts')
+    <script>
+        $(document).ready(function() {
+
+            $(document).on('submit', '#serviceRequestFormAreaPage', function(e) {
+                e.preventDefault();
+
+                let form = $(this);
+
+                // Clear previous errors inside this form
+                form.find('.error-text').text('');
+                form.find('.invalid-feedback').remove();
+
+                // Collect form data
+                let formData = new FormData(this);
+
+                $.ajax({
+                    url: form.attr('action'),
+                    method: 'POST',
+                    data: formData,
+                    dataType: 'json',
+                    processData: false,
+                    contentType: false,
+
+                    success: function(response) {
+                        if (response.success) {
+                            // Reset form
+                            form[0].reset();
+
+                            // Reset reCAPTCHA
+                            if (typeof grecaptcha !== 'undefined') {
+                                grecaptcha.reset();
+                            }
+
+                            // Show success toast
+                            if (typeof toastr !== 'undefined') {
+                                toastr.success(response.message);
+                            } else {
+                                alert(response.message);
+                            }
+                        }
+                    },
+
+                    error: function(xhr) {
+                        if (xhr.status === 422) {
+                            let errors = xhr.responseJSON.errors;
+
+                            $.each(errors, function(key, value) {
+                                // Show errors below each field
+                                let errorField = form.find('.' + key + '_error');
+
+                                if (errorField.length) {
+                                    errorField.text(value[0]);
+                                } else {
+                                    // fallback for non-input fields (like captcha)
+                                    form.find('[name="' + key + '"]').after(
+                                        '<div class="invalid-feedback d-block">' +
+                                        value[0] + '</div>'
+                                    );
+                                }
+                            });
+
+                            // Optional toast for validation errors
+                            if (typeof toastr !== 'undefined') {
+                                toastr.error('Please fix the errors in the form.');
+                            }
+                        } else {
+                            // Server error
+                            if (typeof toastr !== 'undefined') {
+                                toastr.error('Something went wrong. Please try again later.');
+                            } else {
+                                alert('Something went wrong. Please try again later.');
+                            }
+                        }
+                    }
+                });
+            });
+
+        });
+    </script>
 @endpush

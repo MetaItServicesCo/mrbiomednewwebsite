@@ -30,26 +30,26 @@
                         <div class="col-md-4">
                             <ul class="primary-list">
                                 <li>Texas</li>
-                                <li>Florida</li>
-                                <li>Arkansas</li>
+                                {{-- <li>Florida</li>
+                                <li>Arkansas</li> --}}
                             </ul>
                         </div>
 
-                        <div class="col-md-4">
+                        {{-- <div class="col-md-4">
                             <ul class="primary-list">
                                 <li>Georgia</li>
                                 <li>Alabama</li>
                                 <li>Tennessee</li>
                             </ul>
-                        </div>
+                        </div> --}}
 
-                        <div class="col-md-4">
+                        {{-- <div class="col-md-4">
                             <ul class="primary-list">
                                 <li>Louisiana</li>
                                 <li>Mississippi</li>
                                 <li>Oklahoma</li>
                             </ul>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <h4 class="sub-title mt-4">
@@ -57,8 +57,27 @@
                         At The Scientific Safety Alliance.
                     </h4>
 
-                    <!-- 3 COLUMN LIST #2 -->
+                    @php
+                        $chunks = $serving_areas->chunk(3);
+                    @endphp
+
                     <div class="row mt-3">
+                        @foreach ($chunks as $chunk)
+                            @foreach ($chunk as $area)
+                                <div class="col-md-4">
+                                    <ul class="secondary-list">
+                                        <li>
+                                            <a href="{{ route('location.detail', $area->slug) }}" class="area-link">
+                                                {{ $area->area_name }}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            @endforeach
+                        @endforeach
+                    </div>
+                    <!-- 3 COLUMN LIST #2 -->
+                    {{-- <div class="row mt-3">
                         <div class="col-md-4">
                             <ul class="secondary-list">
                                 <li>New York</li>
@@ -91,7 +110,7 @@
                                 <li>Pennsylvania</li>
                             </ul>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div><!-- right box end -->
             </div>

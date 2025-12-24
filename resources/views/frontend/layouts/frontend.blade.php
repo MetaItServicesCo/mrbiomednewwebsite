@@ -76,7 +76,7 @@
     @yield('frontend-content')
 
     {{-- Global Service Request Modal --}}
-    <x-service-request-modal />
+    {{-- <x-service-request-modal /> --}}
 
     @include('frontend.layouts.partials.footer')
 

@@ -28,60 +28,66 @@
 </section>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    if (window.blogTabsInitialized) return;
-    window.blogTabsInitialized = true;
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.blogTabsInitialized) return;
+        window.blogTabsInitialized = true;
 
-    const container = document.getElementById('blogs-container');
-    const paginationContainer = document.getElementById('blogs-pagination-container');
-    const filterUrl = "{{ route('blogs.filter') }}";
-    let activeSlug = 'all';
+        const container = document.getElementById('blogs-container');
+        const paginationContainer = document.getElementById('blogs-pagination-container');
+        const filterUrl = "{{ route('blogs.filter') }}";
+        let activeSlug = 'all';
 
-    function fetchBlogs(slug, page = 1) {
-        activeSlug = slug;
-        container.innerHTML = `
+        function fetchBlogs(slug, page = 1) {
+            activeSlug = slug;
+
+            container.innerHTML = `
             <div class="col-12 text-center py-5">
                 <div class="spinner-border text-primary"></div>
                 <p class="mt-2">Loading blogs...</p>
             </div>
         `;
 
-        fetch(`${filterUrl}?slug=${slug}&page=${page}`, {
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'Accept': 'application/json'
-            }
-        })
-        .then(res => res.json())
-        .then(data => {
-            container.innerHTML = data.html;
-            paginationContainer.innerHTML = data.pagination;
-
-            // Attach click events for pagination links
-            document.querySelectorAll('#blogs-pagination-container .page-link').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const page = this.dataset.page;
-                    if (page) fetchBlogs(activeSlug, page);
-                });
-            });
-        })
-        .catch(() => {
-            container.innerHTML = `
+            fetch(`${filterUrl}?slug=${slug}&page=${page}`, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    container.innerHTML = data.html;
+                    paginationContainer.innerHTML = data.pagination;
+                })
+                .catch(() => {
+                    container.innerHTML = `
                 <div class="col-12 text-center text-danger py-5">
                     Failed to load blogs.
                 </div>
             `;
-        });
-    }
+                });
+        }
 
-    // Category click
-    document.querySelectorAll('.cat-item').forEach(item => {
-        item.addEventListener('click', function() {
-            document.querySelectorAll('.cat-item').forEach(i => i.classList.remove('active'));
-            this.classList.add('active');
-            fetchBlogs(this.dataset.slug);
+        /* FIX: Pagination Event Delegation */
+        paginationContainer.addEventListener('click', function(e) {
+            const link = e.target.closest('.page-link');
+            if (!link) return;
+
+            e.preventDefault();
+
+            const page = link.dataset.page;
+            if (page) {
+                fetchBlogs(activeSlug, page);
+            }
+        });
+
+        /* Category click */
+        document.querySelectorAll('.cat-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.cat-item').forEach(i => i.classList.remove(
+                    'active'));
+                this.classList.add('active');
+                fetchBlogs(this.dataset.slug, 1);
+            });
         });
     });
-});
 </script>

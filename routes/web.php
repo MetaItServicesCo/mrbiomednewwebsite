@@ -20,6 +20,7 @@ use App\Http\Controllers\DisclaimerController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\GeneralSettingController;
 use App\Http\Controllers\ImportantLinksController;
+use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\LocationPageController;
 use App\Http\Controllers\OemContentController;
@@ -369,6 +370,24 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/{id}/edit', 'edit')->name('edit');
         Route::put('/{id}/update', 'update')->name('update');
         Route::delete('/{id}/destroy', 'destroy')->name('destroy');
+    });
+
+    // ===========================
+    // Queries / Inquiry
+    // ===========================
+    Route::controller(InquiryController::class)->prefix('admin/inquiry/contact-us')->as('admin.contact-us.form.')->group(function () {
+        Route::get('/list', 'contactFormData')->name('list');
+        Route::delete('/{id}/destroy', 'contactFormdestroy')->name('destroy');
+    });
+
+    Route::controller(InquiryController::class)->prefix('admin/service/request')->as('admin.services-request.form.')->group(function () {
+        Route::get('/list', 'serviceRequestData')->name('list');
+        Route::delete('/{id}/destroy', 'serviceRequestdestroy')->name('destroy');
+    });
+
+    Route::controller(InquiryController::class)->prefix('admin/consultancy')->as('admin.consultancy.')->group(function () {
+        Route::get('/list', 'consultancyList')->name('list');
+        Route::delete('/{id}/destroy', 'consultancydestroy')->name('destroy');
     });
 });
 

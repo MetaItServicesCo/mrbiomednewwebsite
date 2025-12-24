@@ -51,6 +51,7 @@ Route::middleware('guest')->group(function () {
     Route::controller(InquiryController::class)->group(function () {
         Route::post('/contact-us', 'contactUsForm')->name('contact.us.form');
         Route::post('/service-request', 'serviceRequest')->name('service.request.submit');
+        Route::post('/consultancy', 'consultancyForm')->name('consultancy.submit');
     });
 
     Route::prefix('ajax')->group(function () {

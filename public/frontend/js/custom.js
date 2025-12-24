@@ -818,6 +818,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const overlay = document.getElementById('buyFormOverlay');
 
+    // Overlay hi nahi hai to script stop
+    if (!overlay) return;
+
     // Open form
     document.querySelectorAll('[data-open-form]').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -825,10 +828,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Close form
-    overlay.querySelector('.close-form').addEventListener('click', () => {
-        overlay.classList.remove('active');
-    });
+    // Close form (safe check)
+    const closeBtn = overlay.querySelector('.close-form');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            overlay.classList.remove('active');
+        });
+    }
 
     // Click outside close
     overlay.addEventListener('click', (e) => {
@@ -847,6 +853,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const items = document.querySelectorAll('.category-slider .col-auto');
     const prevBtn = document.querySelector('.cat-nav.prev');
     const nextBtn = document.querySelector('.cat-nav.next');
+
+     // Agar slider hi nahi hai to exit
+    if (!sliderRow || !items.length || !prevBtn || !nextBtn) return;
 
     let currentIndex = 0;
     let visibleItems = 7; // default for large screens

@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\ConsultancyFormDataTable;
+use App\DataTables\ContactUsInquiryFormDataTable;
+use App\DataTables\ServiceRequestDataTable;
+use App\Models\Category;
+use App\Models\ConsultancyForm;
 use App\Models\ContactUsFormInquiry;
 use App\Models\ServiceRequest;
 use Illuminate\Http\Request;
@@ -12,6 +17,23 @@ use Illuminate\Validation\ValidationException;
 
 class InquiryController extends Controller
 {
+    // ===========================
+    // Contact Us
+    // ===========================
+    public function contactFormData(ContactUsInquiryFormDataTable $dataTable)
+    {
+        try {
+            return $dataTable->render('pages.contact_us.inquiry_form_list');
+        } catch (\Throwable $e) {
+
+            Log::error('Contact Inquiry DataTable Load Failed', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            abort(500, 'Unable to load contact inquiries at the moment.');
+        }
+    }
     public function contactUsForm(Request $request)
     {
         try {
@@ -83,17 +105,72 @@ class InquiryController extends Controller
         }
     }
 
+    public function contactFormdestroy(int $id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $inquiry = ContactUsFormInquiry::findOrFail($id);
+            $inquiry->delete();
+
+            DB::commit();
+
+            return redirect()
+                ->back()
+                ->with('success', 'Deleted successfully.');
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+
+            DB::rollBack();
+
+            return redirect()
+                ->back()
+                ->with('error', 'Data not found.');
+        } catch (\Throwable $e) {
+
+            DB::rollBack();
+
+            Log::error('Contact Delete Failed', [
+                'inquiry_id' => $id,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()
+                ->back()
+                ->with('error', 'Something went wrong. Please try again later.');
+        }
+    }
+
+    // ===========================
+    // Service Request
+    // ===========================
+    public function serviceRequestData(ServiceRequestDataTable $dataTable)
+    {
+        try {
+            return $dataTable->render('pages.biomed_services.servies_request_form_list');
+        } catch (\Throwable $e) {
+
+            Log::error('Contact Inquiry DataTable Load Failed', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            abort(500, 'Unable to load contact inquiries at the moment.');
+        }
+    }
+
+
     public function serviceRequest(Request $request)
     {
         $validated = $request->validate([
             'name'              => 'required|string|max:255',
             'email'             => 'required|email|max:255',
-            'phone'             => 'nullable|string|max:50',
+            'phone'             => 'required|string|max:50',
             'company'           => 'nullable|string|max:255',
             'service'           => 'required|string|max:255',
             'categories'        => 'nullable|array',
             'categories.*'      => 'string|max:255',
-            'message'           => 'nullable|string|max:2000',
+            'message'           => 'required|string|max:2000',
             'preferred_contact' => 'required|in:email,phone',
             'g-recaptcha-response' => 'required',
         ], [
@@ -118,13 +195,21 @@ class InquiryController extends Controller
         DB::beginTransaction();
 
         try {
+            // ---------------- Convert slugs to IDs ----------------
+            $categoryIds = [];
+            if (!empty($validated['categories'])) {
+                $categoryIds = Category::whereIn('slug', $validated['categories'])
+                    ->pluck('id')
+                    ->toArray();
+            }
+
             ServiceRequest::create([
                 'name'              => $validated['name'],
                 'email'             => $validated['email'],
                 'phone'             => $validated['phone'] ?? null,
                 'company'           => $validated['company'] ?? null,
                 'service'           => $validated['service'],
-                'categories'        => $validated['categories'] ?? [],
+                'categories'        => $categoryIds, // JSON of IDs
                 'message'           => $validated['message'] ?? null,
                 'preferred_contact' => $validated['preferred_contact'],
             ]);
@@ -143,6 +228,155 @@ class InquiryController extends Controller
                 'success' => false,
                 'message' => 'Something went wrong. Please try again later.',
             ], 500);
+        }
+    }
+
+    public function serviceRequestdestroy(int $id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $data = ServiceRequest::findOrFail($id);
+            $data->delete();
+
+            DB::commit();
+
+            return redirect()
+                ->back()
+                ->with('success', 'Deleted successfully.');
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+
+            DB::rollBack();
+
+            return redirect()
+                ->back()
+                ->with('error', 'Data not found.');
+        } catch (\Throwable $e) {
+
+            DB::rollBack();
+
+            Log::error('Services Delete Failed', [
+                'service_id' => $id,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()
+                ->back()
+                ->with('error', 'Something went wrong. Please try again later.');
+        }
+    }
+
+    // ===========================
+    // Consultancy
+    // ===========================
+    public function consultancyForm(Request $request)
+    {
+        // Validation
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'organization' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:20',
+            'help' => 'nullable|string|max:255',
+            'message' => 'required|string',
+            'g-recaptcha-response' => 'required',
+        ], [
+            'g-recaptcha-response.required' => 'Please confirm you are not a robot.',
+        ]);
+
+        // Verify Google reCAPTCHA manually
+        $recaptcha = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+            'secret' => config('services.recaptcha.secret'),
+            'response' => $request->input('g-recaptcha-response'),
+            'remoteip' => $request->ip(),
+        ])->json();
+
+        if (!($recaptcha['success'] ?? false)) {
+            return response()->json([
+                'success' => false,
+                'errors' => ['g-recaptcha-response' => ['Captcha verification failed.']],
+            ], 422);
+        }
+
+        // 3️⃣ DB Transaction with try-catch
+        DB::beginTransaction();
+
+        try {
+            ConsultancyForm::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'organization' => $validated['organization'] ?? null,
+                'phone' => $validated['phone'] ?? null,
+                'help' => $validated['help'] ?? null,
+                'message' => $validated['message'],
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Thank you! We will get back to you shortly.',
+            ]);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            Log::error('Consultancy Form Submission Error: ' . $e->getMessage(), ['request' => $request->all()]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Something went wrong. Please try again later.',
+            ], 500);
+        }
+    }
+
+    public function consultancyList(ConsultancyFormDataTable $dataTable)
+    {
+        try {
+            return $dataTable->render('pages.consultancy.list');
+        } catch (\Throwable $e) {
+
+            Log::error('consultancy DataTable Load Failed', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            abort(500, 'Unable to load consultancy at the moment.');
+        }
+    }
+
+    public function consultancydestroy(int $id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $data = ConsultancyForm::findOrFail($id);
+            $data->delete();
+
+            DB::commit();
+
+            return redirect()
+                ->back()
+                ->with('success', 'Deleted successfully.');
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+
+            DB::rollBack();
+
+            return redirect()
+                ->back()
+                ->with('error', 'Data not found.');
+        } catch (\Throwable $e) {
+
+            DB::rollBack();
+
+            Log::error('consultancy Delete Failed', [
+                'consultancy_id' => $id,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()
+                ->back()
+                ->with('error', 'Something went wrong. Please try again later.');
         }
     }
 }

@@ -50,10 +50,10 @@
                                             </h6>
 
                                             <ul class="list-unstyled">
-                                                <li><a href="#"> Beds and Surfaces ›</a></li>
-                                                <li><a href="#">Infusion ›</a></li>
-                                                <li><a href="#"> Anesthesia ›</a></li>
-                                                <li><a href="#"> Monitors ›</a></li>
+                                                <li><a href="#" class="bottomm"> Beds and Surfaces ›</a></li>
+                                                <li><a href="#" class="bottomm">Infusion ›</a></li>
+                                                <li><a href="#" class="bottomm"> Anesthesia ›</a></li>
+                                                <li><a href="#" class="bottomm"> Monitors ›</a></li>
 
 
 
@@ -64,10 +64,10 @@
                                             </h6>
 
                                             <ul class="list-unstyled">
-                                                <li><a href="#"> Beds and Surfaces ›</a></li>
-                                                <li><a href="#">Infusion ›</a></li>
-                                                <li><a href="#"> Anesthesia ›</a></li>
-                                                <li><a href="#"> Monitors ›</a></li>
+                                                <li><a href="#" class="bottomm"> Beds and Surfaces ›</a></li>
+                                                <li><a href="#" class="bottomm">Infusion ›</a></li>
+                                                <li><a href="#" class="bottomm"> Anesthesia ›</a></li>
+                                                <li><a href="#" class="bottomm"> Monitors ›</a></li>
 
 
 
@@ -84,10 +84,10 @@
                                             </h6>
 
                                             <ul class="list-unstyled">
-                                                <li><a href="#"> Beds and Surfaces ›</a></li>
-                                                <li><a href="#">Infusion ›</a></li>
-                                                <li><a href="#"> Anesthesia ›</a></li>
-                                                <li><a href="#"> Monitors ›</a></li>
+                                                <li><a href="#" class="bottomm"> Beds and Surfaces ›</a></li>
+                                                <li><a href="#" class="bottomm">Infusion ›</a></li>
+                                                <li><a href="#" class="bottomm"> Anesthesia ›</a></li>
+                                                <li><a href="#" class="bottomm"> Monitors ›</a></li>
 
 
 
@@ -98,10 +98,10 @@
                                             </h6>
 
                                             <ul class="list-unstyled">
-                                                <li><a href="#"> Beds and Surfaces ›</a></li>
-                                                <li><a href="#">Infusion ›</a></li>
-                                                <li><a href="#"> Anesthesia ›</a></li>
-                                                <li><a href="#"> Monitors ›</a></li>
+                                                <li><a href="#" class="bottomm"> Beds and Surfaces ›</a></li>
+                                                <li><a href="#" class="bottomm">Infusion ›</a></li>
+                                                <li><a href="#" class="bottomm"> Anesthesia ›</a></li>
+                                                <li><a href="#" class="bottomm"> Monitors ›</a></li>
 
 
 
@@ -119,8 +119,8 @@
                                             </h6>
 
                                             <ul class="list-unstyled">
-                                                <li><a href="#"> Beds and Surfaces ›</a></li>
-                                                <li><a href="#">Infusion ›</a></li>
+                                                <li><a href="#" class="bottomm"> Beds and Surfaces ›</a></li>
+                                                <li><a href="#" class="bottomm">Infusion ›</a></li>
 
 
 
@@ -146,10 +146,10 @@
                                             </h6>
 
                                             <ul class="list-unstyled">
-                                                <li><a href="#"> Beds and Surfaces ›</a></li>
-                                                <li><a href="#">Infusion ›</a></li>
-                                                <li><a href="#"> Anesthesia ›</a></li>
-                                                <li><a href="#"> Monitors ›</a></li>
+                                                <li><a href="#" class="bottomm"> Beds and Surfaces ›</a></li>
+                                                <li><a href="#" class="bottomm">Infusion ›</a></li>
+                                                <li><a href="#" class="bottomm"> Anesthesia ›</a></li>
+                                                <li><a href="#" class="bottomm"> Monitors ›</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -179,11 +179,14 @@
                                             </h6>
 
                                             @foreach ($areas as $area)
-                                                <p><a
-                                                        href="{{ route('location.detail', $area->slug) }}">{{ $area->area_name ?? $area->city_name }}</a>
+                                                <p>
+                                                    <a href="{{ route('location.detail', $area->slug) }}"
+                                                        class="bottomm">{{ $area->area_name ?? $area->city_name }}</a>
                                                 </p>
                                             @endforeach
-                                            <p class="mt-3"><a href="#">Nearby communities</a></p>
+                                            <p class="mt-3"><a href="#" class="bottomm">Nearby
+                                                    communities</a>
+                                            </p>
                                             <button class="nav-mega-btn mt-3">Talk To Expert</button>
                                         </div>
                                     @endforeach
@@ -213,7 +216,8 @@
                                                     </p>
                                                 @endforeach
                                             @endif
-                                            <p class="mt-3"><a href="#">Nearby communities</a></p>
+                                            <p class="mt-3"><a href="#" class="bottomm">Nearby
+                                                    communities</a></p>
                                         </div>
                                     @endforeach
                                 </div>

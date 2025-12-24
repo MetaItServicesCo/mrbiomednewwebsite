@@ -1,6 +1,6 @@
 <section class="contact-section py-5">
     <div class="container">
-        <div class="row g-2">
+        <div class="row g-3">
 
             <!-- Left Column -->
             <div class="col-lg-6 animate-card">

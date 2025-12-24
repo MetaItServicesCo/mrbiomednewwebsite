@@ -270,13 +270,11 @@
 
 
 
-        /* Single Comment Inside */
         .single-comment {
             background: #fff;
             width: 518px;
             height: 71px;
             border-left: 10px solid #0168A4;
-            /* border-radius: 10px 0px 10px 10px; */
             padding: 2px 15px;
             margin-top: 10px;
         }

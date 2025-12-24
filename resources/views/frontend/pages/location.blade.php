@@ -83,21 +83,26 @@
 
 
         /*======================= form section css =======================*/
-
+        @media (max-width: 768px) {
+            .city-title {
+                margin-left: -43px;
+            }
+        }
 
         /* Mobile Responsive Fix */
         @media (max-width: 767px) {
 
             .contact-section .row {
                 display: block !important;
-                /* FORCE stacking */
             }
 
+            .city-title {
+                margin-left: -17px !important;
+            }
 
 
             .col-lg-6 {
                 width: 100% !important;
-                /* left + right column full width */
                 max-width: 100% !important;
                 margin-bottom: 20px;
             }
@@ -142,7 +147,19 @@
                 font-size: 23px !important;
 
             }
+
         }
+
+        .latest-products-wrapper {
+            margin-top: 10px;
+        }
+
+        @media (max-width: 767px) {
+            .latest-products-wrapper {
+                margin-top: 740px;
+            }
+        }
+
 
         /* @media(max-width:767px) {} */
     </style>
@@ -248,8 +265,10 @@
                     <h2 class="austin-heading">
                         {!! highlightBracketText($data->serve_heading ?? '') !!}
                     </h2>
+                    <div class="austin-desc">
+                        {!! $data->serve_description ?? '' !!}
 
-                    {!! $data->serve_description ?? '' !!}
+                    </div>
                     {{-- <p class="austin-desc">
                         nec Praesent libero, placerat nec non dignissim, viverra Lorem tempor vitae elit. viverra turpis
                         faucibus non. sit fringilla risus Nam ex nisl. fringilla Donec sit nisi nec Quisque Vestibulum
@@ -382,7 +401,10 @@
 
 
     {{-- ================= pruduct sectiion ============= --}}
-    <x-our-latest-products />
+
+    <div class="latest-products-wrapper">
+        <x-our-latest-products />
+    </div>
 
    {{-- ============= reveiw sectiion ================== --}}
     <x-testimonial-slider />

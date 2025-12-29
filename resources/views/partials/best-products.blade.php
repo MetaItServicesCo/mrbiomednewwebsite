@@ -17,7 +17,10 @@
                     alt="{{ $product->image_alt }}" class="product-img img-fluid">
 
                 <h4 class="product-title">{{ $product->name }}</h4>
-                <p class="product-desc">{{ $product->short_description }}</p>
+                <p class="product-desc">
+                    {{ \Illuminate\Support\Str::limit($product->short_description ?? '', 180) }}
+                </p>
+
 
                 <div class="price-box d-flex justify-content-between">
                     @if (!empty($product->price) && $product->price > 0)

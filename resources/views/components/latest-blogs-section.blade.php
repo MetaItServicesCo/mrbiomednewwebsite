@@ -56,15 +56,6 @@
                 .then(data => {
                     container.innerHTML = data.html;
                     paginationContainer.innerHTML = data.pagination;
-
-                    // Attach click events for pagination links
-                    document.querySelectorAll('#blogs-pagination-container .page-link').forEach(link => {
-                        link.addEventListener('click', function(e) {
-                            e.preventDefault();
-                            const page = this.dataset.page;
-                            if (page) fetchBlogs(activeSlug, page);
-                        });
-                    });
                 })
                 .catch(() => {
                     container.innerHTML = `
@@ -75,13 +66,26 @@
                 });
         }
 
-        // Category click
+        /* FIX: Pagination Event Delegation */
+        paginationContainer.addEventListener('click', function(e) {
+            const link = e.target.closest('.page-link');
+            if (!link) return;
+
+            e.preventDefault();
+
+            const page = link.dataset.page;
+            if (page) {
+                fetchBlogs(activeSlug, page);
+            }
+        });
+
+        /* Category click */
         document.querySelectorAll('.cat-item').forEach(item => {
             item.addEventListener('click', function() {
                 document.querySelectorAll('.cat-item').forEach(i => i.classList.remove(
                     'active'));
                 this.classList.add('active');
-                fetchBlogs(this.dataset.slug);
+                fetchBlogs(this.dataset.slug, 1);
             });
         });
     });

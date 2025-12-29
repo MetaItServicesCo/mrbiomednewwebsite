@@ -1142,7 +1142,7 @@
  }
 
  .product-desc {
-     font-size: 10px;
+     font-size: 12px;
      font-weight: 400;
      font-family: Inter, sans-serif;
      opacity: 0.9;
@@ -1626,7 +1626,7 @@
  }
 
  .xray-desc {
-     font-size: 15px;
+     font-size: 20px;
      color: #555;
      margin-bottom: 15px;
  }
@@ -2086,6 +2086,16 @@
  .secondary-list li {
      color: #333;
  }
+
+ .secondary-list .area-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.secondary-list .area-link:hover {
+    color: #01395C; /* ya jo bhi primary color hai */
+    text-decoration: underline;
+}
 
  /* chose section css */
 
@@ -2858,7 +2868,7 @@
  }
 
  .card-text {
-     font-size: 10px;
+     font-size: 13px;
      font-weight: 400;
      color: #202020;
      font-family: Inter, sans-serif;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\LocationPage;
 use App\Models\ServingCity;
 use Illuminate\Http\Request;
@@ -51,7 +52,7 @@ class LocationPageController extends Controller
 
             // How We Serve
             'serve_heading'             => 'nullable|string|max:255',
-            'serve_description'         => 'nullable|string',           
+            'serve_description'         => 'nullable|string',
 
             // SEO
             'meta_title'                => 'nullable|string|max:255',
@@ -79,7 +80,7 @@ class LocationPageController extends Controller
                 // How We Serve
                 'serve_heading'          => $validatedData['serve_heading'] ?? null,
                 'serve_description'      => $validatedData['serve_description'] ?? null,
-                
+
                 // SEO
                 'meta_title'             => $validatedData['meta_title'] ?? null,
                 'meta_keywords'          => $validatedData['meta_keywords'] ?? null,
@@ -170,7 +171,13 @@ class LocationPageController extends Controller
 
             $faqs = getFaqs('location');
 
-            return view('frontend.pages.locationdetail', compact('data', 'faqs'));
+            $all_categories = Category::select('name', 'slug')
+                ->where([
+                    'status'      => true,
+                ])
+                ->get();
+
+            return view('frontend.pages.locationdetail', compact('data', 'faqs', 'all_categories'));
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             // Show 404 page instead of redirect
             abort(404, 'The requested location was not found.');
@@ -183,7 +190,7 @@ class LocationPageController extends Controller
                 'trace' => $e->getTraceAsString(),
             ]);
 
-            return redirect()->route('frontend.home')->with('error', 'Unable to load location details. Please try again later.');
+            return redirect()->route('home')->with('error', 'Unable to load location details. Please try again later.');
         }
     }
 }

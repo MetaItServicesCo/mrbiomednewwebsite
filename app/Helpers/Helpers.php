@@ -697,3 +697,40 @@ if (!function_exists('getServicesList')) {
         return $services;
     }
 }
+
+
+if (!function_exists('getConsultancyServicesList')) {
+    /**
+     * Get the list of consultancy/service options in alphabetical order
+     * with "Other Inquiry" always at the end
+     *
+     * @return array
+     */
+    function getConsultancyServicesList(): array
+    {
+        $services = [
+            'Equipment Inspection',
+            'Repair & Maintenance',
+            'Calibration',
+            'Preventive Maintenance',
+            'Refurbishing',
+            'Equipment Sales',
+            'Equipment Rental',
+            'Service Contracts',
+            'MedRad Support',
+            'Free Consultation',
+            'Other Inquiry',
+        ];
+
+        // Remove "Other Inquiry" temporarily
+        $other = array_pop($services);
+
+        // Sort remaining services alphabetically
+        sort($services);
+
+        // Add "Other Inquiry" at the end
+        $services[] = $other;
+
+        return $services;
+    }
+}

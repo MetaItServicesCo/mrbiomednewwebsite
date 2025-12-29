@@ -107,7 +107,7 @@
         }
 
         /* Remove blue color and underline from links inside li */
-        .categories-list li a {
+        .categories-list li{
             color: #000000;
             /* default text color */
             text-decoration: none;
@@ -115,7 +115,7 @@
             transition: all 0.2s ease-in;
         }
 
-        .categories-list li a:hover {
+        .categories-list li:hover {
             /* color: #036CA0; */
             color: #FE0000;
 
@@ -505,9 +505,7 @@
                             @foreach ($categories as $category)
                                 <li>
                                     <i class="bi bi-chevron-right"></i>
-                                    <a href="">
-                                        {{ $category->name }}
-                                    </a>
+                                    {{ $category->name }}
                                 </li>
                             @endforeach
                         </ul>

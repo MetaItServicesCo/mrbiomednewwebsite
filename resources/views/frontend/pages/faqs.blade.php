@@ -481,17 +481,19 @@
                     our
                     team will get back to you.</p>
 
-                <form class="contact-form">
-
+                <form class="contact-form" id="consultancyForm" action="{{ route('consultancy.submit') }}" method="POST">
+                    @csrf
                     <!-- Row 1: Name & Email -->
                     <div class="form-row">
                         <div class="form-group half-width">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" class="input-field">
+                            <label for="name">Name *</label>
+                            <input type="text" id="name" name="name" class="input-field" required>
+                            <span class="text-danger error-text name_error"></span>
                         </div>
                         <div class="form-group half-width">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" class="input-field">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" class="input-field" required>
+                            <span class="text-danger error-text email_error"></span>
                         </div>
                     </div>
 
@@ -500,36 +502,48 @@
                         <div class="form-group full-width">
                             <label for="organization">Organization</label>
                             <input type="text" id="organization" name="organization" class="input-field">
+                            <span class="text-danger error-text organization_error"></span>
                         </div>
                         <div class="form-group full-width">
                             <label for="phone">Phone</label>
                             <input type="text" id="phone" name="phone" class="input-field">
+                            <span class="text-danger error-text phone_error"></span>
                         </div>
                         <div class="form-group full-width">
                             <label for="help">How can we help?</label>
-                            <select id="help" name="help" class="input-field">
-                                <option value="">Select</option>
-                                <option value="support">Support</option>
-                                <option value="sales">Sales</option>
-                                <option value="other">Other</option>
-                            </select>
+                            <input list="helpOptions" id="help" name="help" class="input-field">
+                            <span class="text-danger error-text help_error"></span>
+
+                            <datalist id="helpOptions">
+                                @foreach (getConsultancyServicesList() as $service)
+                                    <option value="{{ $service }}"></option>
+                                @endforeach
+                            </datalist>
                         </div>
                     </div>
 
                     <!-- Row 3: Message -->
                     <div class="form-row">
                         <div class="form-group full-width">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" class="input-field message-field"></textarea>
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" class="input-field message-field" required></textarea>
+                            <span class="text-danger error-text message_error"></span>
                         </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+                        <div class="g-recaptcha w-100" data-sitekey="{{ config('services.recaptcha.sitekey') }}">
+                        </div>
+                        <span class="text-danger error-text g-recaptcha-response_error"></span>
                     </div>
 
                     <!-- Row 4: Send Button -->
                     <div class="form-row">
                         <button type="submit" class="btn-send">Send</button>
                     </div>
-
                 </form>
+
 
             </div>
         </section>
@@ -581,4 +595,75 @@
 
 
 @push('frontend-scripts')
+    <script>
+        $(document).ready(function() {
+
+            $(document).on('submit', '#consultancyForm', function(e) {
+                e.preventDefault();
+
+                let form = $(this);
+
+                // Clear previous errors
+                form.find('.error-text').text('');
+                form.find('.invalid-feedback').remove();
+
+                $.ajax({
+                    url: form.attr('action'),
+                    method: 'POST',
+                    data: form.serialize(),
+                    dataType: 'json',
+
+                    success: function(response) {
+                        if (response.success) {
+                            form[0].reset();
+
+                            // Reset captcha
+                            if (typeof grecaptcha !== 'undefined') {
+                                grecaptcha.reset();
+                            }
+
+                            // Show toastr success
+                            if (typeof toastr !== 'undefined') {
+                                toastr.success(response.message);
+                            } else {
+                                alert(response.message);
+                            }
+                        }
+                    },
+
+                    error: function(xhr) {
+                        if (xhr.status === 422) {
+                            let errors = xhr.responseJSON.errors;
+
+                            $.each(errors, function(key, value) {
+                                let errorField = form.find('.' + key + '_error');
+
+                                if (errorField.length) {
+                                    errorField.text(value[0]);
+                                } else {
+                                    // For captcha or non-input errors
+                                    form.find('[name="' + key + '"]').after(
+                                        '<div class="invalid-feedback d-block">' +
+                                        value[0] + '</div>'
+                                    );
+                                }
+                            });
+
+                            if (typeof toastr !== 'undefined') {
+                                toastr.error('Please fix the errors in the form.');
+                            }
+
+                        } else {
+                            if (typeof toastr !== 'undefined') {
+                                toastr.error('Something went wrong. Please try again later.');
+                            } else {
+                                alert('Something went wrong. Please try again later.');
+                            }
+                        }
+                    }
+                });
+            });
+
+        });
+    </script>
 @endpush

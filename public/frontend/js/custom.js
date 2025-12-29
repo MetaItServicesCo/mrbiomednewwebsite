@@ -813,13 +813,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // ============= moddel open js =====================
 
-
 document.addEventListener('DOMContentLoaded', function () {
 
     const overlay = document.getElementById('buyFormOverlay');
+
+    // Agar overlay exist hi nahi karta to script stop
+    if (!overlay) return;
+
     const openBtns = document.querySelectorAll('[data-open-form]');
     const closeBtn = overlay.querySelector('.close-form');
 
+    // Open form
     openBtns.forEach(btn => {
         btn.addEventListener('click', function (e) {
             e.preventDefault();
@@ -827,17 +831,22 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    closeBtn.addEventListener('click', () => {
-        overlay.classList.remove('active');
-    });
+    // Close form (close button)
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function () {
+            overlay.classList.remove('active');
+        });
+    }
 
-    overlay.addEventListener('click', (e) => {
+    // Close form (overlay background click)
+    overlay.addEventListener('click', function (e) {
         if (e.target === overlay) {
             overlay.classList.remove('active');
         }
     });
 
 });
+
 
 
 // ====================== home category slider ===============================
@@ -848,6 +857,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const items = document.querySelectorAll('.category-slider .col-auto');
     const prevBtn = document.querySelector('.cat-nav.prev');
     const nextBtn = document.querySelector('.cat-nav.next');
+
+     // Agar slider hi nahi hai to exit
+    if (!sliderRow || !items.length || !prevBtn || !nextBtn) return;
 
     let currentIndex = 0;
     let visibleItems = 7; // default for large screens

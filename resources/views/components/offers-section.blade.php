@@ -25,8 +25,9 @@
 
                                 <h4 class="card-title">{{ $offer->title }}</h4>
                                 <hr>
-                                <p class="card-desc">{{ $offer->short_description }}</p>
-                                <button class="readd-btn">Read More</button>
+                                <p class="card-desc">
+                                    {{ \Illuminate\Support\Str::limit($offer->short_description, 110) }}</p>
+                                <button class="read-btn">Read More</button>
                             </div>
                         @endforeach
 

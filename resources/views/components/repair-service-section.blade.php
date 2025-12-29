@@ -29,7 +29,7 @@
                                     </h3>
 
                                     <p class="xray-desc ">
-                                        {{ $item->short_description ?? '' }}
+                                        {{ \Illuminate\Support\Str::limit($item->short_description ?? '', 150) }}
                                     </p>
 
                                     {{-- <button class="xray-btn">Read More</button> --}}

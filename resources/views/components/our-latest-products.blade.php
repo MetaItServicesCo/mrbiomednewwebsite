@@ -35,46 +35,68 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+
+        // prevent double init
         if (window.latestProductsInitialized) return;
         window.latestProductsInitialized = true;
 
-        const container = document.getElementById('latest-products-container');
-        const filterUrl = "{{ route('latest.products.filter') }}"; // aap route define karein
+        const section = document.querySelector('.products-series-section');
+        const tabsWrapper = section?.querySelector('.product-filter-tabs');
+        const container = section?.querySelector('#latest-products-container');
+        const filterUrl = "{{ route('latest.products.filter') }}";
 
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove(
-                    'active'));
-                this.classList.add('active');
+        if (!section || !tabsWrapper || !container) return;
 
-                const slug = this.dataset.slug;
+        // ✅ EVENT DELEGATION (SCOPED)
+        tabsWrapper.addEventListener('click', function(e) {
 
-                container.innerHTML = `
-                <div class="col-12 text-center py-5">
-                    <div class="spinner-border"></div>
-                    <p class="mt-2">Loading...</p>
+            const btn = e.target.closest('button.filter-btn');
+            if (!btn) return;
+
+            const slug = btn.dataset.slug;
+            if (!slug) return;
+
+            // Active state only inside latest component
+            tabsWrapper.querySelectorAll('.filter-btn').forEach(b => {
+                b.classList.remove('active');
+            });
+            btn.classList.add('active');
+
+            // Loader
+            container.innerHTML = `
+            <div class="col-12 text-center py-5">
+                <div class="spinner-border"></div>
+                <p class="mt-2">Loading...</p>
+            </div>
+        `;
+
+            fetch(`${filterUrl}?slug=${slug}`, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(res => {
+                    if (!res.ok) throw new Error('Request failed');
+                    return res.json();
+                })
+                .then(data => {
+                    container.innerHTML = data.html;
+
+                    // remove animation on ajax load
+                    container.querySelectorAll('.animate-card').forEach(card => {
+                        card.classList.remove('animate-card');
+                    });
+                })
+                .catch(() => {
+                    container.innerHTML = `
+                <div class="col-12 text-center text-danger py-5">
+                    Failed to load products
                 </div>
             `;
+                });
 
-                fetch(`${filterUrl}?slug=${slug}`, {
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest'
-                        }
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-                        container.innerHTML = data.html;
-
-                        // Remove animation on AJAX load
-                        container.querySelectorAll('.animate-card').forEach(card => {
-                            card.classList.remove('animate-card');
-                        });
-                    })
-                    .catch(() => {
-                        container.innerHTML =
-                            `<div class="col-12 text-center text-danger py-5">Failed to load products</div>`;
-                    });
-            });
         });
+
     });
 </script>

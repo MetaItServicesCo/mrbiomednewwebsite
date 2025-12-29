@@ -27,59 +27,60 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Sirf ek baar initialize ho, chahe component 10 baar bhi lage page par
-        if (window.rentalTabsInitialized) return;
-        window.rentalTabsInitialized = true;
 
         const filterUrl = "{{ route('rentals.filter') }}";
+        const wrapper = document.querySelector('.product-filter-tabs');
+        const container = document.getElementById('rental-products-container');
 
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const slug = this.dataset.filter;
-                const container = document.getElementById('rental-products-container');
+        if (!wrapper || !container) return;
 
-                // Sab buttons se active hatao aur text-dark lagao
-                document.querySelectorAll('.filter-btn').forEach(b => {
-                    b.classList.remove('active');
-                    b.classList.add('text-dark'); // inactive tabs black text
+        wrapper.addEventListener('click', function(e) {
+
+            const btn = e.target.closest('button.filter-btn');
+            if (!btn) return;
+
+            const slug = btn.dataset.filter; // ✅ SAFE
+
+            if (!slug) {
+                console.error('Slug missing', btn);
+                return;
+            }
+
+            wrapper.querySelectorAll('.filter-btn').forEach(b => {
+                b.classList.remove('active');
+                b.classList.add('text-dark');
+            });
+
+            btn.classList.add('active');
+            btn.classList.remove('text-dark');
+
+            container.innerHTML = `
+            <div class="col-12 text-center py-5">
+                <div class="spinner-border text-primary"></div>
+                <p class="mt-3">Loading products...</p>
+            </div>
+        `;
+
+            fetch(`${filterUrl}?slug=${slug}`, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    container.innerHTML = data.html;
+
+                    // Remove animation on AJAX load
+                    container.querySelectorAll('.animate-card').forEach(card => {
+                        card.classList.remove('animate-card');
+                    });
+                })
+                .catch(() => {
+                    container.innerHTML = `<p class="text-danger text-center">Failed to load</p>`;
                 });
 
-                // Current button ko active karo aur text-dark hatao (kyunki active white hai)
-                this.classList.add('active');
-                this.classList.remove('text-dark');
-
-                // Loading spinner
-                container.innerHTML = `
-                <div class="col-12 text-center py-5">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                    <p class="mt-3">Loading products...</p>
-                </div>`;
-
-                // AJAX call
-                fetch(`${filterUrl}?slug=${slug}`, {
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest',
-                            'Accept': 'application/json'
-                        }
-                    })
-                    .then(response => {
-                        if (!response.ok) throw new Error('Network error');
-                        return response.json();
-                    })
-                    .then(data => {
-                        container.innerHTML = data.html;
-                    })
-                    .catch(err => {
-                        console.error('Rental filter error:', err);
-                        container.innerHTML = `
-                    <div class="col-12 text-center py-5 text-danger">
-                        <i class="fas fa-exclamation-triangle fa-2x mb-3"></i>
-                        <p>Failed to load products. Please try again.</p>
-                    </div>`;
-                    });
-            });
         });
+
     });
 </script>

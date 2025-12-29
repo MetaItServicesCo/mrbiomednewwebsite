@@ -1,32 +1,85 @@
 @if ($paginator->hasPages())
-    <ul class="pagination justify-content-center mt-4">
-        {{-- Previous Page Link --}}
-        @if ($paginator->onFirstPage())
-            <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+    @php
+        $current = $paginator->currentPage();
+        $last = $paginator->lastPage();
+
+        // window size (left/right pages)
+        $start = max(1, $current - 2);
+        $end = min($last, $current + 2);
+    @endphp
+
+    <ul class="pagination">
+
+        {{-- Previous --}}
+        @if ($current == 1)
+            <li><span class="page-link">&laquo;</span></li>
         @else
-            <li class="page-item">
-                <a href="javascript:void(0)" class="page-link" data-page="{{ $paginator->currentPage() - 1 }}">&laquo;</a>
+            <li>
+                <a href="javascript:void(0)"
+                   class="page-link"
+                   data-page="{{ $current - 1 }}">
+                    &laquo;
+                </a>
             </li>
         @endif
 
-        {{-- Page Numbers --}}
-        @foreach ($paginator->getUrlRange(1, $paginator->lastPage()) as $page => $url)
-            @if ($page == $paginator->currentPage())
-                <li class="page-item active"><span class="page-link">{{ $page }}</span></li>
+        {{-- First page --}}
+        @if ($start > 1)
+            <li>
+                <a href="javascript:void(0)"
+                   class="page-link"
+                   data-page="1">1</a>
+            </li>
+
+            @if ($start > 2)
+                <li><span class="page-link">…</span></li>
+            @endif
+        @endif
+
+        {{-- Window pages --}}
+        @for ($page = $start; $page <= $end; $page++)
+            @if ($page == $current)
+                <li>
+                    <span class="page-link active">{{ $page }}</span>
+                </li>
             @else
-                <li class="page-item">
-                    <a href="javascript:void(0)" class="page-link" data-page="{{ $page }}">{{ $page }}</a>
+                <li>
+                    <a href="javascript:void(0)"
+                       class="page-link"
+                       data-page="{{ $page }}">
+                        {{ $page }}
+                    </a>
                 </li>
             @endif
-        @endforeach
+        @endfor
 
-        {{-- Next Page Link --}}
-        @if ($paginator->hasMorePages())
-            <li class="page-item">
-                <a href="javascript:void(0)" class="page-link" data-page="{{ $paginator->currentPage() + 1 }}">&raquo;</a>
+        {{-- Last page --}}
+        @if ($end < $last)
+            @if ($end < $last - 1)
+                <li><span class="page-link">…</span></li>
+            @endif
+
+            <li>
+                <a href="javascript:void(0)"
+                   class="page-link"
+                   data-page="{{ $last }}">
+                    {{ $last }}
+                </a>
+            </li>
+        @endif
+
+        {{-- Next --}}
+        @if ($current < $last)
+            <li>
+                <a href="javascript:void(0)"
+                   class="page-link"
+                   data-page="{{ $current + 1 }}">
+                    &raquo;
+                </a>
             </li>
         @else
-            <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+            <li><span class="page-link">&raquo;</span></li>
         @endif
+
     </ul>
 @endif

@@ -12,7 +12,7 @@
         .faq-section {
             position: relative;
             /* padding: 80px 20px; */
-            overflow: hidden;
+            overflow: visible;
             /* height: 100vh; */
         }
 
@@ -33,22 +33,7 @@
             z-index: -5;
         }
 
-        @media(max-width: 768px) {
-            .faq-section::before {
-                content: "";
-                position: absolute;
-                top: 44%;
-                left: 50%;
-                width: 100% !important;
-                height: 55% !important;
 
-            }
-
-            .faq-section {
-
-                height: 100vh !important;
-            }
-        }
 
         /* 🎨 OVERLAY LAYER */
         .faq-section::after {
@@ -559,7 +544,6 @@
                     <div class="d-flex gap-5">
 
                         <div class="cta-contact-box">
-                            {{-- <img src="left-icon.png" alt="left icon" class="contact-icon"> --}}
                             <span class="cta-contact-sp">|</span>
 
                             <a href="{{ route('contact-us') }}">

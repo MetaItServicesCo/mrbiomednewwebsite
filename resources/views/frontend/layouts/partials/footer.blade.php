@@ -649,7 +649,11 @@
                         class="separator">|</span>
                     <a href="{{ route('privacy') }}" class="text-decoration-none mx-2">Privacy Policy</a><span
                         class="separator">|</span>
-                    <a href="{{ route('disclaimer') }}" class="text-decoration-none mx-2">Disclaimer</a>
+                    <a href="{{ route('disclaimer') }}" class="text-decoration-none mx-2">Disclaimer</a><span
+                        class="separator">|</span>
+                    <a href="{{ route('feedback') }}" class="text-decoration-none mx-2">FeedBack</a><span
+                        class="separator">|</span>
+                    <a href="{{ route('faqs') }}" class="text-decoration-none mx-2">FAQ's</a>
                 </div>
             </div>
             <p class="copyright mb-0 t">

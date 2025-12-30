@@ -341,7 +341,7 @@
         }
 
         .news-card img {
-            height: 100% !important;
+            /* height: 100% !important; */
 
         }
 

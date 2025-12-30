@@ -10,7 +10,7 @@
         <div class="container">
             <div class="row g-4">
                 @foreach ($blogs as $item)
-                    <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="col-lg-3 col-md-6 col-sm-12 animate-card">
                         <div class="news-card bg-white   ">
                             <img src="{{ $item->image ? asset('storage/blog/images/' . $item->image) : '' }}"
                                 class="img-fluid w-100" alt="{{ $item->image_alt_text ?? '' }}">

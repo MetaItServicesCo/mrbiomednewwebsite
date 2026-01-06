@@ -126,16 +126,25 @@
 
 
  /*============= Navbar css============== */
- .navbar {
+ /* .navbar {
      height: 180px;
      position: relative;
      padding: 0;
- }
+ } */
 
  .nav-logo {
      width: 200px;
      height: 180px;
+     object-fit: contain;
+     margin-top: -22px;
  }
+
+ /* .nav-logo {
+     height: 100%;
+     width: 200px;
+     max-height: 137px;
+     object-fit: contain;
+ } */
 
  .blue-block {
      position: absolute;
@@ -208,7 +217,7 @@
  .mega-menu {
      position: fixed;
      top: 119px;
-     left: 55%;
+     left: 50.5%;
      transform: translateX(-50%);
      width: 85vw;
      background: linear-gradient(90deg, #006A9E, #658392);
@@ -586,13 +595,25 @@
 
 
      /* Baki existing mobile styles */
-     .blue-block {
+     /* .blue-block {
          position: static;
          width: 100% !important;
          height: 763px !important;
          padding: 10px 0;
 
          z-index: 10000 !important;
+     } */
+     .blue-block {
+         position: static;
+         width: 100%;
+         height: auto;
+         /* 🔥 FIX */
+         min-height: 100vh;
+         /* full screen menu */
+         padding: 20px 15px;
+         margin-top: 0;
+         z-index: 10000;
+         border-radius: 0;
      }
 
      .mega-menu {
@@ -4394,12 +4415,17 @@
 
  .service-modal-overlay {
      position: fixed;
+     /* top: 54%;
+     left: 50%;
+     transform: translate(-50%, -50%); */
      inset: 0;
      background: rgba(0, 0, 0, 0.3);
      display: none;
      justify-content: center;
      align-items: center;
-     z-index: 9999;
+     z-index: 20000;
+     border-radius: 14px;
+
  }
 
  .service-modal-overlay.active {
@@ -4416,21 +4442,17 @@
      background: linear-gradient(to right, #66b9e2, #7DAAC0);
 
      position: relative;
-     max-height: 90vh;
+     max-height: 94vh;
      overflow-y: auto;
      scrollbar-width: none;
      /* Firefox */
      -ms-overflow-style: none;
+
  }
 
  .service-modal-box::-webkit-scrollbar {
      display: none;
  }
-
- /* .checkbox-group {
-                                            max-height: 90px;
-                                            overflow-y: auto;
-                                        } */
 
  /* 🔹 Heading compact */
  .service-modal-heading {
@@ -4450,7 +4472,7 @@
      width: 100%;
      padding: 8px 10px;
      /* kam padding */
-     margin-bottom: 12px;
+     margin-bottom: 10px;
      /* kam gap */
      border-radius: 6px;
      border: 1px solid #ccc;
@@ -4511,7 +4533,7 @@
  }
 
  .service-submit-btn:hover {
-     transform: scale(1.01);
+     transform: scale(1.03);
  }
 
  /* 🔹 Close icon */
@@ -4550,7 +4572,7 @@
      display: none;
      justify-content: center;
      align-items: center;
-     z-index: 9999;
+     z-index: 20000;
  }
 
  .buy-form-overlay.active {

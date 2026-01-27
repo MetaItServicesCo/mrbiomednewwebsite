@@ -110,20 +110,12 @@
             </button>
             <!-- SLIDER -->
             <div class="category-slider">
-                <div class="row g-2-4 flex-nowrap ">
+                <div class="row g-2-4 flex-nowrap" id="categorySlider">
 
                     <!-- ALL -->
                     <div class="col-auto">
                         <button class="cat-btn active" data-slug="all">All</button>
                     </div>
-
-                    @foreach ($categories as $category)
-                        <div class="col-auto">
-                            <button class="cat-btn" data-slug="{{ $category->slug }}">
-                                {{ $category->name }}
-                            </button>
-                        </div>
-                    @endforeach
 
                 </div>
             </div>
@@ -140,7 +132,7 @@
     <section class="best-products mt-4">
         <div class="container">
             <div class="row g-4 justify-content-center" id="best-products-container">
-                @include('partials.best-products', ['products' => $initialProducts])
+                <!-- Products load here -->
             </div>
 
             <div class="text-center mt-5">
@@ -151,19 +143,47 @@
 
 </section>
 
+{{-- ===================== JS ===================== --}}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
 
-        if (window.bestSellingInitialized) return;
-        window.bestSellingInitialized = true;
+        if (window.bestSellingLoaded) return;
+        window.bestSellingLoaded = true;
 
-        const filterUrl = "{{ route('best.products.filter') }}";
-        const container = document.getElementById('best-products-container');
+        const API_BASE = document.querySelector('meta[name="api-base"]').content;
+
+        const categorySlider = document.getElementById('categorySlider');
+        const productsContainer = document.getElementById('best-products-container');
         const searchInput = document.getElementById('bestSearchInput');
 
+        /* ===============================
+            LOAD CATEGORIES (API)
+        =============================== */
+        fetch(`${API_BASE}/api/categories`)
+            .then(res => res.json())
+            .then(res => {
+                if (!res.data) return;
+
+                res.data.forEach(cat => {
+                    categorySlider.innerHTML += `
+                    <div class="col-auto">
+                        <button class="cat-btn" data-slug="${cat.slug}">
+                            ${cat.name}
+                        </button>
+                    </div>
+                `;
+                });
+            })
+            .catch(() => {
+                console.error('Failed to load categories');
+            });
+
+        /* ===============================
+            LOAD PRODUCTS (API)
+        =============================== */
         function loadProducts(params = {}) {
 
-            container.innerHTML = `
+            productsContainer.innerHTML = `
             <div class="col-12 text-center py-5">
                 <div class="spinner-border"></div>
                 <p class="mt-2">Loading...</p>
@@ -172,62 +192,149 @@
 
             const query = new URLSearchParams(params).toString();
 
-            fetch(`${filterUrl}?${query}`, {
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                })
+            fetch(`${API_BASE}/api/products?${query}`)
                 .then(res => res.json())
-                .then(data => {
-                    container.innerHTML = data.html;
-
-                    // Remove animation on AJAX load
-                    container.querySelectorAll('.animate-card').forEach(card => {
-                        card.classList.remove('animate-card');
-                    });
+                .then(res => {
+                    renderProducts(res.data);
                 })
                 .catch(() => {
-                    container.innerHTML = `
-                <div class="col-12 text-center text-danger py-5">
-                    Failed to load products
-                </div>
-            `;
+                    productsContainer.innerHTML = `
+                    <div class="col-12 text-center text-danger py-5">
+                        Failed to load products
+                    </div>
+                `;
                 });
         }
 
-        // Category click
-        document.querySelectorAll('.cat-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
+        /* ===============================
+            RENDER PRODUCTS (UI)
+        =============================== */
+        function renderProducts(products) {
 
-                document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove(
-                    'active'));
-                this.classList.add('active');
+            productsContainer.innerHTML = '';
 
-                loadProducts({
-                    category: this.dataset.slug,
-                    search: searchInput.value
-                });
+            if (!products || products.length === 0) {
+                productsContainer.innerHTML = `
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted">No products found.</p>
+                </div>`;
+                return;
+            }
+
+            products.forEach(product => {
+
+                const discountBadge = product.discount_percent > 0 ?
+                    `<span class="discount-badge">${product.discount_percent}% OFF</span>` :
+                    '';
+
+                const oldPrice = product.price && product.price > 0 ?
+                    `<span class="old-price">$${Number(product.price).toLocaleString()}</span>` :
+                    '';
+
+                const shortDesc = product.short_description ?
+                    product.short_description.substring(0, 180) :
+                    '';
+
+                productsContainer.innerHTML += `
+                <div class="col-lg-3 col-md-6">
+                    <div class="product-card">
+
+                        ${discountBadge}
+
+                        <img src="${product.thumbnail ?? ''}"
+                             alt="${product.image_alt ?? ''}"
+                             class="product-img img-fluid">
+
+                        <h4 class="product-title">${product.name}</h4>
+
+                        <p class="product-desc">
+                            ${shortDesc}
+                        </p>
+
+                        <div class="price-box d-flex justify-content-between">
+                            ${oldPrice}
+                            <span class="new-price">
+                                $${Number(product.sale_price).toLocaleString()}
+                            </span>
+                            <button class="buy-btn" id="productBuyBtn"
+                                data-slug="${product.slug ?? ''}">
+                                Buy Now
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            `;
             });
+        }
+
+        /* ===============================
+            PAGE LOAD → ALL PRODUCTS
+        =============================== */
+        loadProducts({
+            category: 'all'
         });
 
-        // Search
-        // searchInput.addEventListener('keyup', function() {
-        //     const activeCat = document.querySelector('.cat-btn.active').dataset.slug;
-        //     loadProducts({
-        //         category: activeCat,
-        //         search: this.value
-        //     });
-        // });
+        /* ===============================
+            CATEGORY CLICK
+        =============================== */
+        document.addEventListener('click', function(e) {
 
-        document.querySelector('.search-btn').addEventListener('click', function() {
+            if (!e.target.classList.contains('cat-btn')) return;
 
-            const activeCat = document.querySelector('.cat-btn.active')?.dataset.slug || 'all';
+            document.querySelectorAll('.cat-btn')
+                .forEach(btn => btn.classList.remove('active'));
+
+            e.target.classList.add('active');
 
             loadProducts({
-                category: activeCat,
-                search: searchInput.value.trim()
+                category: e.target.dataset.slug,
+                search: searchInput.value
             });
         });
+
+
+
+        /* ===============================
+            BUY NOW BUTTON CLICK (dynamic)
+        =============================== */
+        document.addEventListener('click', function(e) {
+
+            // Check if clicked element has 'buy-btn' class
+            if (e.target.classList.contains('buy-btn')) {
+                const slug = e.target.dataset.slug;
+                if (!slug) return;
+
+                window.location.href = `${API_BASE}/product/${slug}`;
+            }
+        });
+
+
+        /* ===============================
+            ALL PRODUCTS BUTTON CLICK
+        =============================== */
+        document.querySelector('.all-products-btn')
+            .addEventListener('click', function() {
+
+                // Redirect to full products API page
+                window.location.href = `${API_BASE}/products`;
+            });
+
+
+        /* ===============================
+            SEARCH
+        =============================== */
+        document.querySelector('.search-btn')
+            .addEventListener('click', function() {
+
+                const activeCategory =
+                    document.querySelector('.cat-btn.active')?.dataset.slug || 'all';
+
+                loadProducts({
+                    category: activeCategory,
+                    search: searchInput.value.trim()
+                });
+            });
 
     });
 </script>

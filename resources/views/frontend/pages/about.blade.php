@@ -571,7 +571,7 @@
                 <h3 class="about-sub-title">{{ $value['second_text'] ?? '' }}</h3>
 
                 <div class="desc">
-                    {!! $about->value_section_description !!}
+                    {!! $about->value_section_description ?? '' !!}
 
                 </div>
                 <a href="{{ route('contact-us') }}">

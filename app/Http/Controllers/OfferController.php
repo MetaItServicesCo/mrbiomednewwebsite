@@ -376,6 +376,11 @@ class OfferController extends Controller
             ->where('is_active', true)
             ->first();
 
+        // If page not found → 404
+        if (!$data) {
+            abort(404, 'The requested offer was not found.');
+        }
+
         // Merge images
         merge_images(
             $data,
@@ -385,11 +390,6 @@ class OfferController extends Controller
             'storage/offers/thumbnails',          // thumbnail path
             'storage/offers/gallery'   // gallery path
         );
-
-        // If page not found → 404
-        if (!$data) {
-            abort(404, 'The requested offer was not found.');
-        }
 
         $faqs = getFaqs('offer');
 

@@ -156,7 +156,7 @@
                     <h2 class="info-heading fade-left">{!! highlightBracketText($data?->content_heading ?? '') !!} </h2>
 
                     <div class="info-para fade-right">
-                        {!! $data->content_description !!}
+                        {!! $data->content_description ?? '' !!}
                     </div>
 
                     <a href="{{ route('about-us') }}">

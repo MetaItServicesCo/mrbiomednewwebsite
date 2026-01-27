@@ -15,6 +15,7 @@
     <meta property="og:title" content="@yield('meta_title', config('app.name'))" />
     <meta property="og:description" content="@yield('meta_description', '')" />
     <link rel="canonical" href="{{ url()->current() }}" />
+    <meta name="api-base" content="{{ env('STORE_URL') }}">
 
     <meta name="author" content="" />
 

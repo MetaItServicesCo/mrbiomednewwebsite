@@ -569,6 +569,11 @@ if (!function_exists('merge_images')) {
      */
     function merge_images($items, $thumbnailColumn, $galleryColumn, $finalKey = 'all_images', $thumbnailPath = '', $galleryPath = '')
     {
+        // NULL safety
+        if (empty($items)) {
+            return $items;
+        }
+
         /**
          * SMALL INTERNAL FUNCTION TO BUILD IMAGE PATHS
          */
@@ -605,27 +610,29 @@ if (!function_exists('merge_images')) {
         /**
          * CASE 2 — PAGINATOR / COLLECTION
          */
-        $items->getCollection()->transform(function ($item) use ($thumbnailColumn, $galleryColumn, $finalKey, $thumbnailPath, $galleryPath, $buildPath) {
+        if (method_exists($items, 'getCollection')) {
+            $items->getCollection()->transform(function ($item) use ($thumbnailColumn, $galleryColumn, $finalKey, $thumbnailPath, $galleryPath, $buildPath) {
 
-            $images = [];
+                $images = [];
 
-            if (!empty($item->{$thumbnailColumn})) {
-                $images[] = $buildPath($thumbnailPath, $item->{$thumbnailColumn});
-            }
-
-            $gallery = $item->{$galleryColumn};
-            $decoded = json_decode($gallery, true);
-
-            if (is_array($decoded)) {
-                foreach ($decoded as $img) {
-                    $images[] = $buildPath($galleryPath, $img);
+                if (!empty($item->{$thumbnailColumn})) {
+                    $images[] = $buildPath($thumbnailPath, $item->{$thumbnailColumn});
                 }
-            }
 
-            $item->{$finalKey} = $images;
+                $gallery = $item->{$galleryColumn};
+                $decoded = json_decode($gallery, true);
 
-            return $item;
-        });
+                if (is_array($decoded)) {
+                    foreach ($decoded as $img) {
+                        $images[] = $buildPath($galleryPath, $img);
+                    }
+                }
+
+                $item->{$finalKey} = $images;
+
+                return $item;
+            });
+        }
 
         return $items;
     }

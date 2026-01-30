@@ -460,10 +460,14 @@ function updateTooltip(swiper) {
 // Page load par slider initialize
 document.addEventListener("DOMContentLoaded", initReviewSlider);
 
+// ================ offer slider =================
+
 document.addEventListener("DOMContentLoaded", function () {
+
     const faqItems = Array.from(document.querySelectorAll(".faqs-list .faq-item"));
     const seeMoreBtn = document.querySelector(".btn-see-more");
-    const visibleCount = 4;
+
+    const visibleCount = 10;
     const totalFAQs = faqItems.length;
 
     const originalBg = "#0071A8";
@@ -471,12 +475,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let currentVisible = visibleCount;
 
-    // Hide extra FAQs initially
+    // 🔹 Initial hide
     faqItems.forEach((item, index) => {
         if (index >= visibleCount) item.style.display = "none";
     });
 
-    // Accordion toggle (one open at a time)
+    // 🔹 Accordion (one open at a time)
     faqItems.forEach(item => {
         const title = item.querySelector(".faq-title");
         const content = item.querySelector(".faq-content");
@@ -490,48 +494,52 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             item.classList.toggle("active");
-            if (item.classList.contains("active")) {
-                content.style.maxHeight = content.scrollHeight + "px";
-            } else {
-                content.style.maxHeight = "0px";
-            }
+            content.style.maxHeight = item.classList.contains("active")
+                ? content.scrollHeight + "px"
+                : "0px";
         });
     });
-    if (seeMoreBtn) {
-        // ⭐ FINAL UPDATED LOGIC — Show All at Once ⭐
-        seeMoreBtn.addEventListener("click", () => {
-            const hiddenItems = faqItems.filter(item => item.style.display === "none");
 
-            if (hiddenItems.length > 0) {
-                // 👉 Show ALL hidden FAQs at once
-                hiddenItems.forEach(item => item.style.display = "block");
+    if (!seeMoreBtn) return;
 
-                currentVisible = totalFAQs;
+    // 🔹 See More / Show Less Logic
+    seeMoreBtn.addEventListener("click", () => {
+
+        // 👉 SHOW MORE (10 at a time)
+        if (currentVisible < totalFAQs) {
+
+            const nextLimit = currentVisible + visibleCount;
+
+            faqItems.forEach((item, index) => {
+                if (index < nextLimit) {
+                    item.style.display = "block";
+                }
+            });
+
+            currentVisible = Math.min(nextLimit, totalFAQs);
+
+            // 👉 Reached end
+            if (currentVisible >= totalFAQs) {
                 seeMoreBtn.textContent = "Show Less";
                 seeMoreBtn.style.backgroundColor = lessBg;
-
-            } else {
-                // 👉 Hide all except first 4
-                faqItems.forEach((item, index) => {
-                    if (index >= visibleCount) {
-                        item.style.display = "none";
-                        item.classList.remove("active");
-                        item.querySelector(".faq-content").style.maxHeight = "0px";
-                    }
-                });
-
-                currentVisible = visibleCount;
-                seeMoreBtn.textContent = "See More";
-                seeMoreBtn.style.backgroundColor = originalBg;
             }
-        });
-    }
+
+        } else {
+            // 👉 SHOW LESS (Reset)
+            faqItems.forEach((item, index) => {
+                if (index >= visibleCount) {
+                    item.style.display = "none";
+                    item.classList.remove("active");
+                    item.querySelector(".faq-content").style.maxHeight = "0px";
+                }
+            });
+
+            currentVisible = visibleCount;
+            seeMoreBtn.textContent = "See More";
+            seeMoreBtn.style.backgroundColor = originalBg;
+        }
+    });
 });
-
-
-
-// ================ offer slider =================
-
 
 
 

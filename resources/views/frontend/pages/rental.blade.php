@@ -1,6 +1,9 @@
 @extends('frontend.layouts.frontend')
 
-@section('title', 'Rental')
+{{-- @section('title', 'Rental') --}}
+@section('meta_title', $data->meta_title ?? 'Rental')
+@section('meta_keywords', $data->meta_keywords ?? '')
+@section('meta_description', $data->meta_description ?? '')
 
 @push('frontend-styles')
     <style>
@@ -575,7 +578,7 @@
 
                         <span class="breadcrumb-separator">|</span>
 
-                        <span class="breadcrumb-active"> Rental Services Detail Page</span>
+                        <span class="breadcrumb-active"> {!! plainBracketText($data->hero_title ?? '') !!}</span>
                     </div>
                 </div>
 

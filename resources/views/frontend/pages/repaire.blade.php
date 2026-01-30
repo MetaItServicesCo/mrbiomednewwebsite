@@ -1,6 +1,9 @@
 @extends('frontend.layouts.frontend')
 
-@section('title', 'Repaire')
+{{-- @section('title', 'Repaire') --}}
+@section('meta_title', $data->meta_title ?? 'Repaire')
+@section('meta_keywords', $data->meta_keywords ?? '')
+@section('meta_description', $data->meta_description ?? '')
 
 @push('frontend-styles')
     <style>
@@ -283,7 +286,7 @@
 
                         <span class="breadcrumb-separator">|</span>
 
-                        <span class="breadcrumb-active"> Repair Main Page</span>
+                        <span class="breadcrumb-active"> {!! plainBracketText($data->main_heading ?? '') !!}</span>
                     </div>
                 </div>
 
@@ -317,7 +320,7 @@
     </section>
 
     {{-- ============ x ray section ===================== --}}
-    <x-repair-service-section :types="['repair-service', 'x-ray', 'c-arm']" />
+    <x-repair-service-section :types="['repair-service', 'x-ray-repairing', 'c-arm-repairing']" />
     <!-- Output: X-Ray → C-Arm -->
 
     {{-- ======================== special section ===================== --}}

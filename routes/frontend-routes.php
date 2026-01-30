@@ -19,30 +19,28 @@ use App\Http\Controllers\TermsAndConditionsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LandingPageController::class, 'landingPage'])->name('home');
-Route::get('/BioMed-Service', [BiomedServicesController::class, 'mainPage'])->name('biomed-services');
+Route::get('/services', [BiomedServicesController::class, 'mainPage'])->name('biomed-services');
 
-Route::get('/medical-equipment-rental', [RentalServiceController::class, 'landingPage'])->name('rental-services');
-Route::get('/about', [AboutUsController::class, 'landingPage'])->name('about-us');
+Route::get('/rental-services', [RentalServiceController::class, 'landingPage'])->name('rental-services');
+Route::get('/about-us', [AboutUsController::class, 'landingPage'])->name('about-us');
 
 Route::get('/locations', [LocationPageController::class, 'landingPage'])->name('location');
 Route::get('/locations/{slug}', [LocationPageController::class, 'locationDetail'])->name('location.detail');
-Route::get('/contact', [ContactUsController::class, 'landingPage'])->name('contact-us');
+Route::get('/contact-us', [ContactUsController::class, 'landingPage'])->name('contact-us');
 Route::get('/privacy-policy', [PrivacyPolicyController::class, 'landingPage'])->name('privacy');
 Route::get('/terms-and-conditions', [TermsAndConditionsController::class, 'landingPage'])->name('terms');
 Route::get('/disclaimer', [DisclaimerController::class, 'landingPage'])->name('disclaimer');
-Route::get('/blogs', [BlogController::class, 'landingPage'])->name('blogs');
+Route::get('/blog', [BlogController::class, 'landingPage'])->name('blogs');
 Route::get('/blog/{slug}', [BlogController::class, 'blogDetail'])->name('blog.detail');
 Route::post('/blog-comment/{slug}', [BlogController::class, 'blogComment'])->name('post.blog.comment');
 Route::get('/feedback', [ReviewsController::class, 'landingPage'])->name('feedback');
 Route::post('/feedback', [ReviewsController::class, 'store'])->name('post.feedback');
 
-Route::get('/offer/{slug}', [OfferController::class, 'offerDetail'])->name('offer.detail');
-
 // web.php
 Route::get('/rentals/filter', [AjaxController::class, 'filterRentalProducts'])->name('rentals.filter');
 Route::get('/faqs', [FaqController::class, 'landingPage'])->name('faqs');
-
 Route::get('/medical-equipment-repair', [RepairServiceController::class, 'landingPage'])->name('repair');
+
 Route::get('/{category}/{slug}', [RepairServiceController::class, 'repairServiceDetail'])->name('repair.service.detail');
 
 // ===========================
@@ -55,6 +53,10 @@ Route::controller(InquiryController::class)->group(function () {
     Route::post('/buy-product', 'buyProductForm')->name('buy.product.submit');
     Route::post('/quote-submit', 'getAQuote')->name('get-a-quote.submit');
 });
+
+// ===========================
+// Ajax Routes
+// ===========================
 
 Route::prefix('ajax')->group(function () {
 
@@ -71,3 +73,7 @@ Route::prefix('ajax')->group(function () {
     // Reviews filter route
     Route::get('/feedbacks/filter', [ReviewsController::class, 'filterReviews'])->name('reviews.filter');
 });
+
+// IMPORTANT: Generic slug routes should be placed LAST
+// This ensures all specific routes are matched first
+Route::get('/{slug}', [OfferController::class, 'offerDetail'])->name('offer.detail');

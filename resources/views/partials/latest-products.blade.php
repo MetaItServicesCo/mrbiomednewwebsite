@@ -20,7 +20,7 @@
                          <i class="fas fa-star text-warning"></i>
                          <i class="fas fa-star text-warning"></i>
                      </div>
-                     <h5 class="product-title fw-bold">{{ $product->name ?? '' }}</h5>
+                     <h5 class="product-title fw-bold">{!! plainBracketText($product->name ?? '') !!}</h5>
                      <p class="card-text small mb-3">{{ \Illuminate\Support\Str::limit($product->short_description ?? '', 35) }}</p>
 
                      <div class="price-action-row d-flex justify-content-between align-items-center">

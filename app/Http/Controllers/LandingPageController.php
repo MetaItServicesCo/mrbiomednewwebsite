@@ -259,14 +259,14 @@ class LandingPageController extends Controller
         ])->first();
 
         // Single query for x-rays and c-arms
-        $repairSubPages = RepairServiceSubPage::whereIn('page_category', ['x-ray', 'c-arm'])
+        $repairSubPages = RepairServiceSubPage::whereIn('page_category', ['x-ray-repairing', 'c-arm-repairing'])
             ->where('is_active', true)
             ->select(['page_category', 'title', 'slug', 'short_description'])
             ->get()
             ->groupBy('page_category');
 
-        $xrays = $repairSubPages->get('x-ray', collect());
-        $carms = $repairSubPages->get('c-arm', collect());
+        $xrays = $repairSubPages->get('x-ray-repairing', collect());
+        $carms = $repairSubPages->get('c-arm-repairing', collect());
 
         $faqs = getFaqs('landing');
 

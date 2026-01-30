@@ -188,7 +188,7 @@
 
                         <span class="breadcrumb-separator">|</span>
 
-                        <span class="breadcrumb-active">Blog’s Main Page</span>
+                        <span class="breadcrumb-active"> Blog</span>
                     </div>
                 </div>
 

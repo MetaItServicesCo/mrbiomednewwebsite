@@ -87,7 +87,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const maxSize = 300 * 1024; // 300 KB
+            const maxSize = 2 * 1024 * 1024; // 300 KB
 
             // Global function for file validation
             window.validateFile = function(input, errorContainerId) {
@@ -96,7 +96,7 @@
 
                 for (let i = 0; i < files.length; i++) {
                     if (files[i].size > maxSize) {
-                        errorMessage = `File "${files[i].name}" is too large. Maximum allowed size is 300 KB.`;
+                        errorMessage = `File "${files[i].name}" is too large. Maximum allowed size is 2MB.`;
                         input.value = '';
                         break;
                     }

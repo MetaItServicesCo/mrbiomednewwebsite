@@ -1,9 +1,9 @@
 @extends('frontend.layouts.frontend')
 
 {{-- @section('title', 'Blog’s Details Page ') --}}
-@section('meta_title', $data->meta_title ?? 'Blog Details')
-@section('meta_keywords', $data->meta_keywords ?? '')
-@section('meta_description', $data->meta_description ?? '')
+@section('meta_title', $blog->meta_title ?? 'Blog')
+@section('meta_keywords', $blog->meta_keywords ?? '')
+@section('meta_description', $blog->meta_description ?? '')
 
 @push('frontend-styles')
     <style>
@@ -340,7 +340,7 @@
                         <span class="breadcrumb-separator">|</span>
                         <a href="{{ route('blogs') }}" class="breadcrumb-link">Blog</a>
                         <span class="breadcrumb-separator">|</span>
-                        <span class="breadcrumb-active">{{ $blog->title ?? '' }}</span>
+                        <span class="breadcrumb-active"> {!! plainBracketText($blog->title ?? '') !!}</span>
                     </div>
                 </div>
 

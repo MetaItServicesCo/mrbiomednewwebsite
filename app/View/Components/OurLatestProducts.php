@@ -22,8 +22,8 @@ class OurLatestProducts extends Component
         $this->latestProductCategories = [
             ['label' => 'Featured',         'slug' => 'featured',         'category_name' => 'Featured'],
             ['label' => 'Medical Equipment', 'slug' => 'medical-equipment', 'category_name' => 'Medical Equipment'],
-            ['label' => 'Supplies',         'slug' => 'supplies',         'category_name' => 'Supplies'],
-            ['label' => 'Parts',            'slug' => 'parts',            'category_name' => 'Parts'],
+            ['label' => 'Hospital Beds',     'slug' => 'hospital-beds',         'category_name' => 'Hospital Beds'],
+            ['label' => 'C Arm',            'slug' => 'c-arm',            'category_name' => 'C Arm'],
         ];
 
         // Resolve category IDs from DB

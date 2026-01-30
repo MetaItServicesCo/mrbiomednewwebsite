@@ -37,8 +37,8 @@ class RepairServicesSubPageDataTable extends DataTable
             ->addColumn('page_category', function ($page) {
                 $categories = [
                     'repair-service' => ['Repairing Services', 'badge-primary'],
-                    'x-ray' => ['X Ray', 'badge-info'],
-                    'c-arm' => ['C Arm', 'badge-warning'],
+                    'x-ray-repairing' => ['X Ray', 'badge-info'],
+                    'c-arm-repairing' => ['C Arm', 'badge-warning'],
                 ];
 
                 if (!isset($categories[$page->page_category])) {

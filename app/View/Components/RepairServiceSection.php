@@ -16,18 +16,18 @@ class RepairServiceSection extends Component
     // Mapping: DB page_category value → Clean URL segment
     private array $urlMap = [
         'repair-service' => 'repairing-services',  // DB: repair-service → URL: repairing-services
-        'x-ray'          => 'x-ray',
-        'c-arm'          => 'c-arm',
+        'x-ray-repairing'          => 'x-ray-repairing',
+        'c-arm-repairing'          => 'c-arm-repairing',
         // Add more in future: 'ct-scan' => 'ct-scan-services',
     ];
 
     /**
-     * @param string|array $types  e.g. 'x-ray' or ['x-ray', 'c-arm', 'repairing']
+     * @param string|array $types  e.g. 'x-ray-repairing' or ['x-ray-repairing', 'c-arm-repairing', 'repairing']
      * @param array $types        Order will be preserved exactly as passed
      */
-    public function __construct(string|array $types = ['x-ray', 'c-arm'])
+    public function __construct(string|array $types = ['x-ray-repairing', 'c-arm-repairing'])
     {
-        $typeList = is_string($types) ? [$types] : ($types ?? ['x-ray', 'c-arm']);
+        $typeList = is_string($types) ? [$types] : ($types ?? ['x-ray-repairing', 'c-arm-repairing']);
 
         // Sab relevant columns select kar lo ek baar
         $repairService = RepairService::select([

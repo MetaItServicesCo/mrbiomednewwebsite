@@ -42,11 +42,11 @@
                                     <option value="repair-service"
                                         {{ old('page_category', $data->page_category ?? '') == 'repair-service' ? 'selected' : '' }}>
                                         {{ __('Repairing Services') }} </option>
-                                    <option value="x-ray"
-                                        {{ old('page_category', $data->page_category ?? '') == 'x-ray' ? 'selected' : '' }}>
+                                    <option value="x-ray-repairing"
+                                        {{ old('page_category', $data->page_category ?? '') == 'x-ray-repairing' ? 'selected' : '' }}>
                                         {{ __('X Ray') }} </option>
-                                    <option value="c-arm"
-                                        {{ old('page_category', $data->page_category ?? '') == 'c-arm' ? 'selected' : '' }}>
+                                    <option value="c-arm-repairing"
+                                        {{ old('page_category', $data->page_category ?? '') == 'c-arm-repairing' ? 'selected' : '' }}>
                                         {{ __('C Arm') }} </option>
                                 </select>
 

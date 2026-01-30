@@ -640,7 +640,7 @@
 
                         <span class="breadcrumb-separator">|</span>
 
-                        <span class="breadcrumb-active">Mr Biomed Services</span>
+                        <span class="breadcrumb-active">{!! plainBracketText($data->hero_title ?? '') !!}</span>
                     </div>
                 </div>
 

@@ -27,12 +27,12 @@ class RepairServiceSection extends Component
         ],
         'x-ray-repairing' => [
             'fieldPrefix' => 'x_ray',
-            'page_category' => 'x-ray',
+            'page_category' => 'x-ray-repairing', // ✅ DB MATCH
             'url' => 'x-ray-repairing',
         ],
         'c-arm-repairing' => [
             'fieldPrefix' => 'c_arm',
-            'page_category' => 'c-arm',
+            'page_category' => 'c-arm-repairing', // ✅ DB MATCH
             'url' => 'c-arm-repairing',
         ],
     ];

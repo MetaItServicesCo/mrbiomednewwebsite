@@ -16,7 +16,7 @@ class ImportBlogsFromApiSeeder extends Seeder
     public function run(): void
     {
         // API endpoint
-        $apiUrl = 'https://mrbiomedtechservices.com/api/blogs/active';
+        $apiUrl = 'http://mbmts.com/api/blogs/active';
 
         try {
             // Fetch data from API

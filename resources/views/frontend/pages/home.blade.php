@@ -89,8 +89,7 @@
 
                         <!-- Service Request -->
                         <div class="d-flex align-items-center gap-2 fade-left">
-                            {{-- <i class="bi bi-key" id="service-icon"></i> --}}
-                            <img src="{{ asset('frontend/images/home-icon.png') }}" alt="">
+                            <i class="bi bi-key" id="service-icon"></i>
                             <button class="hero-btn" data-open-service-modal>
                                 Service Request
                             </button>

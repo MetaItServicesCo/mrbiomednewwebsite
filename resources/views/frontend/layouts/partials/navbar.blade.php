@@ -85,7 +85,7 @@
                     <li class="nav-item dropdown  has-mega">
                         <a class="nav-link mega-toggle {{ request()->routeIs('biomed-services*') ? 'active' : '' }}"
                             href="{{ route('biomed-services') }}">
-                            Mr Biomed Service
+                            Mr. Biomed Services
                             <i class="bi bi-chevron-down dropdown-icon"></i>
                         </a>
                         <div class="mega-menu">

@@ -131,6 +131,34 @@
             line-height: 160%;
         }
 
+        /* =============== map ================== */
+        .map-section {
+            width: 100%;
+            padding: 0;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 453.2987976074219px;
+            /* aap isko change kar sakte ho */
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        @media (max-width: 767px) {
+
+
+
+            .map-section {
+                margin-top: 233% !important;
+            }
+        }
+
+
         @media(max-width: 767px) {
             .query-btn {
                 max-width: 121px !important;
@@ -249,35 +277,31 @@
     </section>
 
     <!-- ===== SECTION START ===== -->
-    <section class="query-section py-5 d-flex justify-content-center">
+    {{-- <section class="query-section py-5 d-flex justify-content-center">
         <div class="query-box p-4 p-md-5">
 
             <h2 class=" mb-4 query-heading">Submit Your Query Here</h2>
 
             <form id="serviceRequestFormAreaPage" action="{{ route('service.request.submit') }}" method="POST">
                 @csrf
-                <!-- Name -->
                 <div class="mb-3">
                     <label class="form-label">Name</label>
                     <input type="text" name="name" class="form-control custom-input" placeholder="Enter your name">
                     <span class="text-danger error-text name_error"></span>
                 </div>
 
-                <!-- Email -->
                 <div class="mb-3">
                     <label class="form-label">Email</label>
                     <input type="email" name="email" class="form-control custom-input" placeholder="Enter your email">
                     <span class="text-danger error-text email_error"></span>
                 </div>
 
-                <!-- Phone -->
                 <div class="mb-3">
                     <label class="form-label">Phone Number</label>
                     <input type="text" name="phone" class="form-control custom-input" placeholder="Enter phone number">
                     <span class="text-danger error-text phone_error"></span>
                 </div>
 
-                <!-- Company / Hospital -->
                 <div class="mb-3">
                     <label class="form-label">Company / Hospital Name</label>
                     <input type="text" name="company" class="form-control custom-input"
@@ -295,30 +319,18 @@
                     <span class="text-danger error-text service_error"></span>
                 </div>
 
-                <!-- Service Needs -->
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Equipment Category</label>
-
-                    <div class="d-flex gap-4 flex-wrap w-50">
-                        @foreach ($all_categories as $item)
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="categories[]"
-                                    value="{{ $item->slug }}">
-                                <label class="form-check-label">{{ $item->name }}</label>
-                            </div>
-                        @endforeach
-                    </div>
-                    <span class="text-danger error-text categories_error"></span>
+                    <label class="form-label fw-bold">What You Looking For ?</label>                    
+                    <input type="text" name="looking_for" class="form-control custom-input"required>
+                    <span class="text-danger error-text looking_for_error"></span>
                 </div>
 
-                <!-- Message -->
                 <div class="mb-3">
                     <label class="form-label">Message</label>
                     <textarea rows="4" name="message" class="form-control custom-text" placeholder="Write your message..."></textarea>
                     <span class="text-danger error-text message_error"></span>
                 </div>
 
-                <!-- Preferred Contact -->
                 <div class="mb-3">
                     <label class="form-label fw-bold">Preferred Contact Method</label>
 
@@ -350,9 +362,15 @@
             </form>
 
         </div>
+    </section> --}}
+
+    <section class="map-section mt-5">
+        <div class="map-container">
+            {!! $data->map_iframe ?? '' !!}
+        </div>
     </section>
     <!-- ===== SECTION END ===== -->
-    <section class="austin">
+    <section class="austin mt-5">
         <div class="container-fluid">
 
             <div class="row">

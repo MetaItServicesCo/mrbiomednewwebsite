@@ -146,6 +146,27 @@
                                 @enderror
                             </div>
 
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label fw-semibold">Redirect URL ( Link )</label>
+                                <input type="url" name="link"
+                                    class="form-control @error('link') is-invalid @enderror"
+                                    value="{{ old('link', $data->link ?? '') }}">
+                                @error('link')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- ================= Map Section ================= --}}
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label fw-semibold">Map Iframe</label>
+                                <textarea name="map_iframe" rows="4"
+                                    class="form-control form-control-lg @error('map_iframe') is-invalid @enderror"
+                                    placeholder="Paste Google Map iframe here">{{ old('map_iframe', $data->map_iframe ?? '') }}</textarea>
+                                @error('map_iframe')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <hr class="my-4">
 
                             {{-- ================= CONTENT SECTION ================= --}}

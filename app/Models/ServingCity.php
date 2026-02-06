@@ -18,6 +18,8 @@ class ServingCity extends Model
         'show_on_header',
         'city_image',
         'city_image_alt',
+        'link',
+        'map_iframe',
 
         // Content Section
         'content_title',

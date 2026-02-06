@@ -120,7 +120,7 @@ class AppServiceProvider extends ServiceProvider
                     ->get(['id', 'name', 'country_id']);
             });
 
-            $servingAreas = ServingCity::select('area_name', 'slug')
+            $servingAreas = ServingCity::select('area_name', 'slug', 'link')
                 ->where([
                     'show_on_header' => true,
                     'is_active'      => true,

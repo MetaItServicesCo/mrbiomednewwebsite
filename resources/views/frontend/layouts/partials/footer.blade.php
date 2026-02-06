@@ -652,7 +652,7 @@
                         <div class="col-6">
                             @foreach ($chunk as $area)
                                 <p class="mb-1">
-                                    <a href="{{ route('location.detail', $area->slug) }}"
+                                    <a href="{{ $area->link }}" target="_blank"
                                         class="text-decoration-none location-link">
                                         {{ $area->area_name }}
                                     </a>
